@@ -10,6 +10,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@mdi/font": "^7.3.67",
+    "material-design-icons-iconfont": "^6.7.0",
     "pinia": "^2.1.7",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
