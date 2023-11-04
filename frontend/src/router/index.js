@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import WishListView from '../views/WishListView.vue'
 import BookDetailView from '../views/BookDetailView.vue'
 import AchievementsView from '../views/AchievementsView.vue'
+import AddBook from "@/views/AddBookView.vue";
+import AddBookView from "@/views/AddBookView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +28,11 @@ const router = createRouter({
       path: '/achievements',
       name: 'achievements',
       component: AchievementsView
+    },
+    {
+      path: '/add-book',
+      name: 'add-book',
+      component: AddBookView
     }
   ]
 })
