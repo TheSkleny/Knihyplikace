@@ -8,7 +8,6 @@ const books = ref([])
 async function getBooks() {
 
     const { data, error } = await supabase
-
       .from('Book')
       .select()
     if (error) console.log('error', error)
@@ -26,8 +25,9 @@ onMounted(() => {
       <h1>Home Screen</h1>
 
       <ul>
-        <li v-for="book in books" :key="book.id">{{ book.name }}</li>
+        <li v-for="book in books" :key="book.Id">{{ book.Name }}: {{ book.Author }} <v-btn @click="$router.push({name: 'book-detail', params: {id: book.Id}})">See detail</v-btn></li>
       </ul>
+      <v-btn @click="$router.push({name: 'add-book'})">Add book</v-btn>
     </div>
   </main>
 </template>
