@@ -1,15 +1,10 @@
 <script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true
-  }
-})
+
 </script>
 
 <template>
   <v-bottom-navigation
-    active
+    active="true"
     color="secondary"
   > 
         <v-btn icon @click="$router.push({name: 'wish-list'})">

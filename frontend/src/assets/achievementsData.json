@@ -1,0 +1,29 @@
+{
+  "header": "Achievements",
+  "data": [
+    {
+      "id": "1",
+      "name": "So it begins",
+      "description": "Read 1 book",
+      "points": 10,
+      "value": 1,
+      "image": ""
+    },
+    {
+      "id": "2",
+      "name": "Ten out of ten",
+      "description": "Read 10 books",
+      "points": 20,
+      "value": 10,
+      "image": ""
+    },
+    {
+      "id": "3",
+      "name": "It's over 9000",
+      "description": "Read 9001 books",
+      "points": 30,
+      "value": 9001,
+      "image": ""
+    }
+  ]
+}
