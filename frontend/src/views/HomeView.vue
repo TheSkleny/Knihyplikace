@@ -20,14 +20,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <main>
+  <main style="margin-bottom: 200px;">
     <div>
       <h1>Home Screen</h1>
 
             <v-list>
               <v-list-item v-for="book in books" :key="book.Id">
                 <v-list-item>
-                  <v-list-item-title>{{ book.Name }}</v-list-item-title>
+                  <v-list-item-title><h3>{{ book.Name }}</h3></v-list-item-title>
                   <v-list-item-subtitle>{{ book.Author }}</v-list-item-subtitle>
                 </v-list-item>
                 <v-list-item>
