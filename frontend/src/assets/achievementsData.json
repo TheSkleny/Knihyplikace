@@ -7,7 +7,7 @@
       "description": "Read 1 book",
       "points": 10,
       "value": 1,
-      "image": ""
+      "image": "https://i1.sndcdn.com/artworks-000650501692-3qmr87-t500x500.jpg"
     },
     {
       "id": "2",
@@ -15,7 +15,7 @@
       "description": "Read 10 books",
       "points": 20,
       "value": 10,
-      "image": ""
+      "image": "https://media.makeameme.org/created/nice-10-out.jpg"
     },
     {
       "id": "3",
@@ -23,7 +23,7 @@
       "description": "Read 9001 books",
       "points": 30,
       "value": 9001,
-      "image": ""
+      "image": "https://upload.wikimedia.org/wikipedia/en/9/9f/Over_9000%21.png"
     }
   ]
 }
