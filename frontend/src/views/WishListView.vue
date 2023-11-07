@@ -13,7 +13,9 @@
               <v-list-item-content>
                 <v-list-item-title class="text-h5">{{ book.Name }}</v-list-item-title>
                 <v-list-item-subtitle class="text-body-1">{{ book.Author }}</v-list-item-subtitle>
-                <v-list-item-subtitle class="text-body-1">{{ book.BookList?.Name || '' }}</v-list-item-subtitle>
+                <v-list-item-subtitle class="text-body-1">{{
+                  book.BookList?.Name || ''
+                }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>

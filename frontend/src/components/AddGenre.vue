@@ -12,13 +12,10 @@ const name = ref('')
  */
 async function addGenre() {
   try {
-    const { data, error } = await supabase.from('BookGenre').insert([
-      { Name: name.value }
-    ])
+    const { data, error } = await supabase.from('BookGenre').insert([{ Name: name.value }])
     if (error) {
       console.log('error', error)
-    }
-    else {
+    } else {
       console.log('data', data)
       genre.value = data
     }
@@ -26,23 +23,17 @@ async function addGenre() {
     console.log('error', error)
   }
 }
-
 </script>
 
 <template>
   <div>
     <v-sheet width="300" class="mx-auto">
       <v-form @submit="addGenre">
-        <v-text-field
-            v-model="name"
-            label="First name"
-        ></v-text-field>
+        <v-text-field v-model="name" label="First name"></v-text-field>
         <v-btn type="submit" class="mt-2">Submit</v-btn>
       </v-form>
     </v-sheet>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

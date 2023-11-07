@@ -2,7 +2,7 @@
   <v-container class="achievements-container" fluid>
     <v-row>
       <v-col cols="12">
-        <h1 class="achievements-header">{{achievementsData.header}}</h1>
+        <h1 class="achievements-header">{{ achievementsData.header }}</h1>
       </v-col>
     </v-row>
     <v-row>
@@ -11,7 +11,7 @@
           <v-list-item-group>
             <v-list-item v-for="item in achievementsData.data" :key="item.id">
               <v-list-item-avatar>
-                <img :src="item.image" alt="Achievement Image" class="achievement-image">
+                <img :src="item.image" alt="Achievement Image" class="achievement-image" />
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title>{{ item.name }}</v-list-item-title>
