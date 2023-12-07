@@ -1,3 +1,16 @@
 @import 'modules/base';
 
 @import 'modules/demo';
+
+$color-subtitle: gray;
+
+h1 {
+  font-size: 26px;
+}
+
+h2 {
+  font-size: 20px;
+  color: $color-subtitle;
+}
+
+

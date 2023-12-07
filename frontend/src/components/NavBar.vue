@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <v-bottom-navigation active="true" color="secondary">
+  <v-bottom-navigation active color="secondary">
     <v-btn icon @click="$router.push({ name: 'wish-list' })">
       <v-icon>mdi-heart</v-icon>
       <span> Wish list </span>

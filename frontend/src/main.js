@@ -24,7 +24,8 @@ const vuetify = createVuetify({
         dark: false,
         colors: {
           primary: '#000000', // Black
-          secondary: '#0000FF' // Blue
+          secondary: '#666666', // Gray
+          card_bg: '#aaaaaa'
         }
       }
     }

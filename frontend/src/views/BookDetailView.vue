@@ -8,7 +8,7 @@ const bookData = ref(null)
 
 async function getBook() {
   const { data, error } = await supabase
-    .from('Book')
+    .from('Books')
     .select(
       'Name, Author, GenreId (Name), PublishDate, Publisher, Language, Pages, PagesRead, Description, CoverImageLink'
     )
