@@ -31,7 +31,10 @@ const router = createRouter({
         {
             path: '/book-detail/:id',
             name: 'book-detail',
-            component: BookDetailView
+            component: BookDetailView,
+            meta: {
+                title: "Detail knihy",
+            }
         },
         {
             path: '/achievements',
