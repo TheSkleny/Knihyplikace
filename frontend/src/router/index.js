@@ -16,7 +16,7 @@ const router = createRouter({
             name: 'home',
             component: HomeView,
             meta: {
-                title: "Doma pička",
+                title: "Moje knihy",
             }
         },
         {
@@ -24,7 +24,7 @@ const router = createRouter({
             name: 'wish-list',
             component: WishListView,
             meta: {
-                title: "wiš list",
+                title: "Seznam přání",
             }
 
         },
