@@ -35,6 +35,11 @@ const newPagesRead = ref(0)
 const pages = computed(() => bookData.value.Pages ?? 0)
 const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
 
+const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
+
+const cover = computed(() => bookData.value.CoverImageLink ?? DEFAULT_COVER)
+
+
 
 async function addPages(num, isActive) {
   const {data, error} = await supabase
@@ -67,7 +72,7 @@ getBook()
       <v-container>
         <v-row>
           <v-col cols="4">
-            <v-img :src="bookData.CoverImageLink" class="book_card_img"/>
+            <v-img :src="cover" class="book_card_img" cover/>
           </v-col>
           <v-col>
             <h1>{{ bookData.Name }}</h1>
