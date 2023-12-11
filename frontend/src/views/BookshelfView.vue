@@ -1,0 +1,67 @@
+<script setup>
+import {ref} from 'vue'
+import {supabase} from '@/lib/supabaseClient'
+import BookCard from "@/components/BookCard.vue";
+
+const result = ref([])
+
+
+async function getLists() {
+  const {data, error} = await supabase.from('Lists').select()
+  if (error) console.log('error', error)
+  else {
+    result.value = data.map(list => ({ ListName: list.Name, Books: [] }));
+    console.log(result.value)
+  }
+}
+
+async function getBooksInLists() {
+  const {data, error} = await supabase
+      .from('BookInList')
+      .select(`
+        Books (*),
+        Lists (
+          Name
+        )
+      `)
+
+  if (error) {
+    console.log('error', error)
+  }
+  else {
+    await getLists()
+    data.forEach(bookInList => {
+      const list = result.value.find(list => list.ListName === bookInList.Lists.Name);
+      if (list) {
+        list.Books.push(bookInList.Books);
+      }
+    });
+  }
+  return result.value;
+}
+
+getBooksInLists()
+</script>
+
+<template>
+  <v-expansion-panels>
+    <v-expansion-panel v-for="list in result" :key="list.ListName">
+
+      <v-expansion-panel-title>
+        <h2>{{ list.ListName }}</h2>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <div v-if="list.Books.length === 0">
+              <h2 style="margin-top: 10px">No books in this category</h2>
+        </div>
+        <div v-else>
+          <BookCard  v-for="book in list.Books" :key="book.id" :book="book"/>
+        </div>
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+  </v-expansion-panels>
+</template>
+
+<style scoped>
+
+</style>

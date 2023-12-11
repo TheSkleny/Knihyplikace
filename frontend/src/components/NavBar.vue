@@ -11,7 +11,7 @@ const navItems = [
     color: 'pink',
   },
   {
-    name: 'my-lists',
+    name: 'bookshelf',
     icon: 'mdi-bookshelf',
     text: 'Bookshelfs',
     color: 'blue'
