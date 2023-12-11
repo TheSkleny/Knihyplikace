@@ -10,8 +10,8 @@ const props = defineProps({
     required: true
   }
 })
-const image = props.achievement.image ?? DEFAULT_COVER
-const progress = props.achievement.current / props.achievement.goal * 100
+const image = props.achievement.ImageUri ?? DEFAULT_COVER
+const progress = props.achievement.Current / props.achievement.Goal * 100
 
 </script>
 
@@ -24,11 +24,11 @@ const progress = props.achievement.current / props.achievement.goal * 100
 
       <v-col>
         <v-row style="margin-top: 10px">
-          <h1>{{ props.achievement.name }}</h1>
+          <h1>{{ props.achievement.Name }}</h1>
         </v-row>
 
         <v-row style="margin-top: 20px">
-          <h3>{{props.achievement.description}}</h3>
+          <h3>{{props.achievement.Description}}</h3>
         </v-row>
 
         <v-row style="margin-top: 40px">
