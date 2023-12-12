@@ -63,6 +63,7 @@ getWishListBooks()
 
 
  <WishListBookCard v-for="book in books" :key="book.id" :book="book" />
+  <div style="display: block; height: 100px;"/>
 
 
 </template>

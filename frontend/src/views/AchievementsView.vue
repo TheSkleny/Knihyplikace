@@ -25,6 +25,8 @@ getAchievements();
   <div>
     <AchievementCard v-for="achievement in achievements" :key="achievement.Id" :achievement="achievement" />
   </div>
+  <div style="display: block; height: 100px;"/>
+
 </template>
 
 

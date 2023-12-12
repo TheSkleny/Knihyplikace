@@ -64,7 +64,8 @@ getBooks()
   </div>
   <div v-else>
     <BookCard  v-for="book in booksRead" :key="book.id" :book="book" @onReload="getBooks"/>
-  </div>  <div style="display: block; height: 100px;"/>
+  </div>
+  <div style="display: block; height: 100px;"/>
 </template>
 <style scoped>
   .book_card {

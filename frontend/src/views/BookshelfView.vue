@@ -46,7 +46,6 @@ getBooksInLists()
 <template>
   <v-expansion-panels>
     <v-expansion-panel v-for="list in result" :key="list.ListName">
-
       <v-expansion-panel-title>
         <h2>{{ list.ListName }}</h2>
       </v-expansion-panel-title>

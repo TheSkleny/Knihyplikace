@@ -47,7 +47,6 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
 <style scoped>
 .achievement_card {
   width: 90%;
-  max-height: 14rem;
   display: block;
   margin-left: auto;
   margin-right: auto;
