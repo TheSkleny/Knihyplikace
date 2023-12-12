@@ -5,6 +5,7 @@ import BookDetailView from '../views/BookDetailView.vue'
 import AchievementsView from '../views/AchievementsView.vue'
 import AddBookView from '@/views/AddBookView.vue'
 import BookshelfView from '@/views/BookshelfView.vue'
+import EditBookView from '@/views/EditBookView.vue'
 
 import changeTitleMiddleware from "@/middleware/changeTitle";
 
@@ -35,6 +36,14 @@ const router = createRouter({
             component: BookDetailView,
             meta: {
                 title: "Detail knihy",
+            }
+        },
+        {
+            path: '/book-edit/:id',
+            name: 'book-edit',
+            component: EditBookView,
+            meta: {
+                title: "Upravit knihu",
             }
         },
         {
