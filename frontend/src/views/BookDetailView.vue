@@ -48,8 +48,6 @@ async function onSave(newData) {
       .eq('Id', route.params.id)
   if (error) console.log('error', error)
   else console.log(data)
-  // refresh page
-  // location.reload()
   await getBook()
 }
 

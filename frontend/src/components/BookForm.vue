@@ -1,37 +1,13 @@
 <script setup>
 import {ref, onMounted, defineProps, defineEmits, computed} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
-import {isNumberOrNull, isRequired} from '@/utils/inputRules'
+// import {isNumberOrNull, isRequired} from '@/utils/inputRules'
 import {useRouter} from 'vue-router'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
 
 import cloneDeep from 'lodash/cloneDeep'
 
-const props = defineProps({
-  bookData: {
-    type: Object,
-    required: true
-  },
-  isCreate: {
-    type: Boolean,
-    default: false
-  }
-})
-
-const emit = defineEmits(['onSave', 'onDelete', 'onReload'])
-
-const newBookData = ref(null)
-newBookData.value = cloneDeep(props.bookData)
-
-const formType = {
-  EDIT: 1,
-  ADD: 2,
-  READ: 3
-}
-
-
-const router = useRouter()
-const formData = ref({
+const formDataBase = {
   Name: null,
   Author: null,
   GenreId: null,
@@ -42,7 +18,37 @@ const formData = ref({
   PagesRead: null,
   Description: null,
   CoverImageLink: null
+}
+
+const props = defineProps({
+  bookData: {
+    type: Object,
+    required: false,
+    default: () => {
+      return {}
+    }
+  },
+  isCreate: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
 })
+
+const emit = defineEmits(['onSave', 'onDelete', 'onReload'])
+
+const newBookData = ref(null)
+
+newBookData.value = cloneDeep({...formDataBase, ...props.bookData})
+
+const formType = {
+  EDIT: 1,
+  ADD: 2,
+  READ: 3
+}
+
+
+const router = useRouter()
 
 const genre_list = ref([])
 
@@ -69,33 +75,6 @@ async function getGenre() {
   }
 }
 
-/**
- * @function AddBook
- * @async
- *
- * Adds a book to a database and performs navigation.
- *
- * @throws {Error} If there is an error during the Supabase operation.
- *
- * @returns {Promise<void>} A Promise that resolves after successful addition and navigation.
- */
-async function AddBook() {
-  const {data, error} = await supabase
-      .from('Book')
-      .insert([{...formData.value}])
-      .select()
-  if (error) {
-    console.log('error', error)
-  } else {
-    console.log('data', data)
-    Object.keys(formData.value).forEach((key) => {
-      formData.value[key] = null
-    })
-    const bookId = data[0].Id
-    await router.push({name: 'book-detail', params: {id: bookId}})
-    return bookId
-  }
-}
 
 const pagesRead = computed(() => props.bookData.PagesRead ?? 0)
 
@@ -110,15 +89,10 @@ const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
 
 function save() {
-  if (props.isCreate) {
-    const bookId = AddBook()
-    router.push({name: 'book-detail', params: {id: bookId}})
-  }
-  else {
-    emit('onSave', newBookData.value)
-    selectedFormType.value = formType.READ
-    isReadonly.value = true
-  }
+  console.log('newBookData.value', newBookData.value)
+  emit('onSave', newBookData.value)
+  selectedFormType.value = formType.READ
+  isReadonly.value = true
 }
 
 onMounted(async () => {

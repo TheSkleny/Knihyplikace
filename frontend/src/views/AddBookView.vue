@@ -1,24 +1,40 @@
 <script setup>
-import {ref} from 'vue'
 import BookForm from '@/components/BookForm.vue'
+import {supabase} from "@/lib/supabaseClient";
+import {useRouter} from 'vue-router'
 
-// empty book
-const emptyBookData = ref({
-  Id: null,
-  Name: null,
-  Author: null,
-  GenreId: null,
-  PublishDate: null,
-  Publisher: null,
-  Language: null,
-  Rating: null,
-  Pages: null,
-  PagesRead: null,
-  Description: null,
-  CoverImageLink: null,
-})
+const router = useRouter()
+
+
+/**
+ * @function AddBook
+ * @async
+ *
+ * Adds a book to a database and performs navigation.
+ *
+ * @throws {Error} If there is an error during the Supabase operation.
+ *
+ * @returns {Promise<void>} A Promise that resolves after successful addition and navigation.
+ */
+async function AddBook(formData) {
+  console.log('formData', formData)
+  const {data, error} = await supabase
+      .from('Books')
+      .insert({...formData, IsOwned: true})
+      .select()
+  if (error) {
+    console.log('error', error)
+  }
+  else {
+    console.log('data', data)
+    const bookId = data[0].Id
+    console.log('bookId', bookId)
+    await router.push({name: 'book-detail', params: {id: bookId}})
+  }
+}
+
 </script>
 
 <template>
-  <BookForm :book-data="emptyBookData" :is-create="true"/>
+  <BookForm @on-save="AddBook" :is-create="true"/>
 </template>
