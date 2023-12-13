@@ -17,6 +17,7 @@ async function getBook() {
       .from('Books')
       .select(
           `
+          Id,
           Name,
           Author,
           GenreId,
@@ -40,32 +41,6 @@ async function getBook() {
   }
 }
 
-const pagesRead = computed(() => bookData.value.PagesRead ?? 0)
-
-
-const newPagesRead = ref(0)
-
-const pages = computed(() => bookData.value.Pages ?? 0)
-const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
-
-const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
-
-const cover = computed(() => bookData.value.CoverImageLink ?? DEFAULT_COVER)
-
-
-async function addPages(num, isActive) {
-  const {data, error} = await supabase
-      .from('Books')
-      .update({PagesRead: num})
-      .eq('Id', route.params.id)
-  if (error) console.log('error', error)
-  else console.log(data)
-  // refresh page
-  // location.reload()
-  await getBook()
-  isActive.value = false
-}
-
 console.log("bookData")
 console.log(bookData)
 
@@ -83,10 +58,6 @@ async function onSave(newData) {
   await getBook()
 }
 
-function onShowDialog() {
-  newPagesRead.value = bookData.value.PagesRead ?? 0
-}
-
 async function onDelete() {
   console.log("delete")
   await supabase
@@ -98,12 +69,11 @@ async function onDelete() {
         router.push({name: 'home'})
       })
 }
-//const percent = bookData.PagesRead / bookData.Pages * 100 ?? 0
 getBook()
 </script>
 
 <template>
-  <BookForm v-if="bookData" :book-data="bookData" :on-reload="getBook" @on-save="(newData) => onSave(newData)" @on-delete="onDelete"/>
+  <BookForm v-if="bookData" :book-data="bookData" @on-reload="getBook" @on-save="(newData) => onSave(newData)" @on-delete="onDelete"/>
 <!--    <div v-if="!bookData">Loading ...</div>-->
 <!--    <div v-else>-->
 <!--      <v-container>-->

@@ -1,8 +1,9 @@
 <script setup>
-import {ref, onMounted, defineProps, defineEmits} from 'vue'
+import {ref, onMounted, defineProps, defineEmits, computed} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import {isNumberOrNull, isRequired} from '@/utils/inputRules'
 import {useRouter} from 'vue-router'
+import AddPagesDialog from "@/components/AddPagesDialog.vue";
 
 import cloneDeep from 'lodash/cloneDeep'
 
@@ -10,11 +11,15 @@ const props = defineProps({
   bookData: {
     type: Object,
     required: true
+  },
+  isCreate: {
+    type: Boolean,
+    default: false
   }
 })
 console.log('DATA')
 console.log(props.bookData)
-const emit = defineEmits(['onSave', 'onDelete'])
+const emit = defineEmits(['onSave', 'onDelete', 'onReload'])
 
 const newBookData = ref(null)
 newBookData.value = cloneDeep(props.bookData)
@@ -57,7 +62,6 @@ async function getGenre() {
   if (error) {
     console.log('error', error)
   } else {
-    // save genres to genre_list wher Name is save to title and Id is saved to value
     genre_list.value = data.map((genre) => {
       return {
         title: genre.Name,
@@ -79,7 +83,8 @@ async function getGenre() {
  * @returns {Promise<void>} A Promise that resolves after successful addition and navigation.
  */
 async function AddBook() {
-  console.log({...formData.value})
+  console.log('formData.newBookData')
+  console.log({newBookData})
   const {data, error} = await supabase
       .from('Book')
       .insert([{...formData.value}])
@@ -93,15 +98,31 @@ async function AddBook() {
     })
     const bookId = data[0].Id
     await router.push({name: 'book-detail', params: {id: bookId}})
+    return bookId
   }
 }
 
+const pagesRead = computed(() => props.bookData.PagesRead ?? 0)
 
-const cover = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
+
+
+const pages = computed(() => props.bookData.Pages ?? 0)
+const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
+
+
+const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
+
+const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
 
 function save() {
-  emit('onSave', newBookData.value)
-  selectedFormType.value = formType.READ
+  if (props.isCreate) {
+    const bookId = AddBook()
+    router.push({name: 'book-detail', params: {id: bookId}})
+  }
+  else {
+    emit('onSave', newBookData.value)
+    selectedFormType.value = formType.READ
+  }
 }
 
 onMounted(async () => {
@@ -113,17 +134,29 @@ function edit() {
   isReadonly.value = false
 }
 
-function cancelEdit() {
-  newBookData.value = cloneDeep(props.bookData)
-  selectedFormType.value = formType.READ
-  isReadonly.value = true
+function cancel() {
+  if (props.isCreate) {
+    router.push({name: 'home'})
+  }
+  else {
+    newBookData.value = cloneDeep(props.bookData)
+    selectedFormType.value = formType.READ
+    isReadonly.value = true
+
+  }
 }
 
 function deleteBook() {
   emit('onDelete')
 }
 
-const selectedFormType = ref(formType.READ)
+function getBook() {
+  emit('onReload')
+}
+
+const selectedFormType = ref(props.isCreate ? formType.ADD : formType.READ)
+console.log('selectedFormType')
+console.log(selectedFormType.value)
 const isReadonly = ref(selectedFormType.value === formType.READ)
 </script>
 
@@ -138,7 +171,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         <v-col>
           <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
             <v-text-field variant="underlined" label="Name" v-model="newBookData.Name"/>
-            <v-text-field variant="underlined" label="Author"/>
+            <v-text-field variant="underlined" label="Author" v-model="newBookData.Author"/>
           </div>
           <div v-if="selectedFormType === formType.READ">
             <h1>{{ newBookData.Name }}</h1>
@@ -169,7 +202,24 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         </v-row>
       </div>
       <div v-if="selectedFormType === formType.READ">
-        HERE WILL BE PROGRESS BAR AND ADD READ PAGES BUTTON
+        <v-row>
+          <v-col>
+            <AddPagesDialog
+                :book="bookData"
+                @on-reload="getBook"
+            />
+          </v-col>
+          <v-col>
+            <p style="text-align: right">{{ pagesRead }} / {{ pages }} stránek </p>
+            <v-progress-linear
+                :model-value="pagesPercent"
+                :height="10"
+                color="secondary"
+                style="border-radius: 5px"
+            />
+          </v-col>
+        </v-row>
+
       </div>
       <!--  -->
       <v-row>
@@ -261,6 +311,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         <v-textarea
             class="details_textarea"
             auto-grow
+            rounded="lg"
             :readonly="isReadonly"
             v-model="newBookData.Description"
         />
@@ -278,7 +329,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
     />
     <v-btn
         v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
-        @click="cancelEdit"
+        @click="cancel"
         icon="mdi-close"
         elevation="24"
         size="50"

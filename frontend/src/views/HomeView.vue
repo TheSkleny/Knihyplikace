@@ -3,6 +3,10 @@ import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import BookCategoryHeader from "@/components/BookCategoryHeader.vue";
+import {useRouter} from 'vue-router'
+
+
+const router = useRouter()
 
 const booksRead = ref([])
 const booksUnread = ref([])
@@ -29,6 +33,11 @@ async function getBooks() {
     })
   }
 }
+
+async function routeToAddBook() {
+  await router.push({name: 'add-book'})
+}
+
 getBooks()
 </script>
 
@@ -66,6 +75,15 @@ getBooks()
     <BookCard  v-for="book in booksRead" :key="book.id" :book="book" @onReload="getBooks"/>
   </div>
   <div style="display: block; height: 100px;"/>
+  <v-btn
+      class="btn-bottom-right"
+      icon="mdi-plus"
+      color="primary"
+      elevation="24"
+      size="50"
+      @click="routeToAddBook"
+  />
+
 </template>
 <style scoped>
   .book_card {
@@ -75,5 +93,10 @@ getBooks()
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
+  }
+  .btn-bottom-right {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
   }
 </style>
