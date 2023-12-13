@@ -1,6 +1,7 @@
 <script setup>
 import { computed, defineProps, defineEmits } from 'vue'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
+import "@/assets/styles/BookCard.scss";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
@@ -66,29 +67,3 @@ function getBook() {
   </v-card>
 </template>
 
-<style scoped lang="scss">
-.book_card {
-  max-height: 14rem;
-  padding: 20px;
-  margin-bottom: 20px;
-  background: lightgray;
-}
-
-.book_card_img {
-  height: 140px;
-  width: 100px;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-
-}
-
-.book_card_content {
-  width: 50%;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-}
-
-
-</style>

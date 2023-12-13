@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabaseClient'
 import { useRouter } from 'vue-router'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
 import cloneDeep from 'lodash/cloneDeep'
+import "@/assets/styles/BookCard.scss";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
@@ -296,48 +297,3 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
   <div style="display: block; height: 80px;"/>
 
 </template>
-
-
-<style scoped>
-.btn_menu {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.details_textarea {
-  width: 90%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-
-}
-
-.details_text_field {
-  margin-top: -20px
-}
-
-h3 {
-  text-align: right;
-}
-
-.book_card_img {
-  height: 140px;
-  width: 100px;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-
-}
-
-.btn-bottom-right {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-
-  button {
-    margin-left: 10px;
-  }
-}
-</style>

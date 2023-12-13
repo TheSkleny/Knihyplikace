@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps, computed } from 'vue'
+import "@/assets/styles/BookCard.scss";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
@@ -54,34 +55,3 @@ async function moveToLibrary() {
     </v-row>
   </v-card>
 </template>
-
-<style scoped lang="scss">
-.book_card {
-  width: 90%;
-  max-height: 14rem;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  margin-bottom: 20px;
-  background: lightgray;
-}
-
-.book_card_img {
-  height: 140px;
-  width: 100px;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-
-}
-
-.book_card_content {
-  width: 50%;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-}
-
-
-</style>
