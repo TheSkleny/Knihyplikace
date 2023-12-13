@@ -43,7 +43,7 @@ const navItems = [
 <template>
   <v-bottom-navigation mode="shift">
     <v-btn
-        class="max-width-20%"
+        class="max-width-20"
         :color="item.color"
         v-for="item in navItems"
         :key="item.name"
