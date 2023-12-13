@@ -7,19 +7,19 @@ const books = ref([])
 
 async function getWishListBooks() {
   const {data, error} = await supabase
-      .from('BookInList')
+      .from('BookInBookList')
       .select(`
-        Books (
+        Book (
           Id,
           Name,
           Author,
           CoverImageLink
         ),
-        Lists (
+        BookList (
           Name
         )
       `)
-      .eq('Lists.Name', 'V seznamu přání')
+      .eq('BookList.Name', 'V seznamu přání')
 
   if (error) {
     console.log('error', error)
@@ -58,7 +58,6 @@ getWishListBooks()
 
 
 
-  {{books}}
  <WishListBookCard v-for="book in books" :key="book.Id" :book="book" />
   <div style="display: block; height: 100px;"/>
 

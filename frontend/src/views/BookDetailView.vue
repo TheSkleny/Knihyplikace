@@ -14,7 +14,7 @@ async function getBook() {
   console.log("route.params.id")
   console.log(route.params.id)
   const {data, error} = await supabase
-      .from('Books')
+      .from('Book')
       .select(
           `
           Id,
@@ -43,7 +43,7 @@ async function getBook() {
 
 async function onSave(newData) {
   const {data, error} = await supabase
-      .from('Books')
+      .from('Book')
       .update(newData)
       .eq('Id', route.params.id)
   if (error) console.log('error', error)
@@ -53,7 +53,7 @@ async function onSave(newData) {
 
 async function onDelete() {
   await supabase
-      .from('Books')
+      .from('Book')
       .delete()
       .eq('Id', route.params.id)
       .then(() => {

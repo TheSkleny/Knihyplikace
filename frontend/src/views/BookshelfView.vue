@@ -7,10 +7,10 @@ const result = ref([])
 
 
 async function getLists() {
-  const {data, error} = await supabase.from('Lists').select()
+  const {data, error} = await supabase.from('BookList').select()
   if (error) console.log('error', error)
   else {
-    result.value = data.map(list => ({ ListName: list.Name, Books: [] }));
+    result.value = data.map(list => ({ ListName: list.Name, Book: [] }));
     console.log(result.value)
     result.value = result.value.filter(list => list.ListName !== 'V seznamu přání');
   }
@@ -18,10 +18,10 @@ async function getLists() {
 
 async function getBooksInLists() {
   const {data, error} = await supabase
-      .from('BookInList')
+      .from('BookInBookList')
       .select(`
-        Books (*),
-        Lists (
+        Book (*),
+        BookList (
           Name
         )
       `)
@@ -32,9 +32,9 @@ async function getBooksInLists() {
   else {
     await getLists()
     data.forEach(bookInList => {
-      const list = result.value.find(list => list.ListName === bookInList.Lists.Name);
+      const list = result.value.find(list => list.ListName === bookInList.BookList.Name);
       if (list) {
-        list.Books.push(bookInList.Books);
+        list.Book.push(bookInList.Book);
       }
     });
   }
@@ -51,12 +51,12 @@ getBooksInLists()
         <h2>{{ list.ListName }}</h2>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
-        <div v-if="list.Books.length === 0">
+        <div v-if="list.Book.length === 0">
               <h2 style="margin-top: 10px">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
-              v-for="book in list.Books"
+              v-for="book in list.Book"
               :key="book.id"
               :book="book"
               @on-reload="getBooksInLists"

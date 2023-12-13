@@ -11,7 +11,7 @@ const props = defineProps({
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 
-const cover = computed(() => props.book.Books?.CoverImageLink ?? DEFAULT_COVER)
+const cover = computed(() => props.book.Book?.CoverImageLink ?? DEFAULT_COVER)
 
 
 function test() {
@@ -24,7 +24,7 @@ function test2() {
 </script>
 
 <template>
-  <v-card class="book_card" :to="`/book-detail/${props.book.Books.Id}`">
+  <v-card class="book_card" :to="`/book-detail/${props.book.Book.Id}`">
     <v-row>
       <v-col style="max-width: 150px">
         <v-img class="book_card_img"
@@ -35,12 +35,12 @@ function test2() {
       <v-col class="book_card_content">
         <v-row>
           <h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
-            {{ props.book.Books.Name }}
+            {{ props.book.Book.Name }}
           </h1>
         </v-row>
         <v-row>
           <h2>
-            {{ props.book.Books.Author }}
+            {{ props.book.Book.Author }}
           </h2>
         </v-row>
         <v-row>

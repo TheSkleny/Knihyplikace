@@ -7,7 +7,7 @@ const achievements = ref([]);
 
 async function getAchievements() {
   const { data, error } = await supabase
-    .from('Achievements')
+    .from('Achievement')
     .select(
       'Id, Name, Description, Reward, Goal, Current, ImageUri'
     );

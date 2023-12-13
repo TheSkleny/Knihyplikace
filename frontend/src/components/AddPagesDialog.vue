@@ -28,7 +28,7 @@ async function updatePages(num, isActive) {
   console.log('addPagesPAPAPA')
   console.log(props.book.Id)
   const {data, error} = await supabase
-      .from('Books')
+      .from('Book')
       .update({PagesRead: num, LastPageUpdate: 'now()'})
       .eq('Id', props.book.Id)
   if (error) console.log('error', error)

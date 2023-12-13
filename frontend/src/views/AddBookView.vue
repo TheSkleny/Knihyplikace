@@ -19,16 +19,14 @@ const router = useRouter()
 async function AddBook(formData) {
   console.log('formData', formData)
   const {data, error} = await supabase
-      .from('Books')
+      .from('Book')
       .insert({...formData, IsOwned: true})
       .select()
   if (error) {
     console.log('error', error)
   }
   else {
-    console.log('data', data)
     const bookId = data[0].Id
-    console.log('bookId', bookId)
     await router.push({name: 'book-detail', params: {id: bookId}})
   }
 }
