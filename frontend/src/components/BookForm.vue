@@ -21,6 +21,10 @@ const formDataBase = {
   CoverImageLink: null
 }
 
+/**
+ * @type {Prettify<Readonly<ExtractPropTypes<{isCreate: {default: boolean, type: BooleanConstructor, required: boolean},
+ *        bookData: {default: (function(): Book), type: ObjectConstructor, required: boolean}}>>>}
+ */
 const props = defineProps({
   bookData: {
     type: Object,

@@ -6,6 +6,9 @@ import BookForm from "@/components/BookForm.vue";
 
 const route = useRoute()
 const router = useRouter()
+/**
+ * @type {Book}
+ */
 const bookData = ref(null)
 
 async function getBook() {
@@ -27,7 +30,9 @@ async function getBook() {
           CoverImageLink`
       )
       .eq('Id', route.params.id)
-  if (error) console.log('error', error)
+  if (error) {
+    console.log('error', error)
+  } 
   else {
     bookData.value = data[0]
   }

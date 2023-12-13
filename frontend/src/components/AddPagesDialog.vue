@@ -3,6 +3,9 @@ import { ref, defineProps, defineEmits } from 'vue'
 import { supabase } from "@/lib/supabaseClient";
 import { isRequired } from "@/utils/inputRules";
 
+/**
+ * @type {Prettify<Readonly<ExtractPropTypes<{book: {default: (function(): Book), type: ObjectConstructor, required: boolean}}>>>}
+ */
 const props = defineProps({
   book: {
     type: Object,

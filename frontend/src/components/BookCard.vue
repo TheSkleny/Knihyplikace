@@ -5,6 +5,9 @@ import AddPagesDialog from "@/components/AddPagesDialog.vue";
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
 
+/**
+ * @type {Prettify<Readonly<ExtractPropTypes<{book: {default: (function(): Book), type: ObjectConstructor, required: boolean}}>>>}
+ */
 const props = defineProps({
   book: {
     type: Object,

@@ -3,6 +3,10 @@ import { defineProps } from 'vue'
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 
+/**
+ * @type {Prettify<Readonly<ExtractPropTypes<{achievement: {default: (function(): Achievement), type: ObjectConstructor,
+ *        required: boolean}}>>>}
+ */
 const props = defineProps({
   achievement: {
     type: Object,
