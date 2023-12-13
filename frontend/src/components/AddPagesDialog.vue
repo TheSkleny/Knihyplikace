@@ -53,6 +53,7 @@ async function addPages(num, isActive) {
               min="0"
               max="1000"
               v-model="newPagesRead"
+              
           />
         </v-card-text>
 
