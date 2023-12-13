@@ -25,5 +25,5 @@ getWishListBooks()
 
 <template>
   <WishListBookCard v-for="book in books" :key="book.Id" :book="book" />
-  <div style="display: block; height: 100px;"/>
+  <div class="bottom-div"/>
 </template>

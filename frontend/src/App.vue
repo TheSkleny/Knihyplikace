@@ -13,15 +13,15 @@ const {title} = storeToRefs(store)
 
 <template>
   <v-app>
-    <v-container style="margin-bottom: 50px">
+    <v-container class="margin-bottom-50">
       <v-app-bar>
         <v-row>
-          <v-col style="margin-left: 10px">
+          <v-col class="margin-left-10">
             <v-app-bar-nav-icon @click="$router.push({ name: 'home' })">
               <v-icon size="40px">mdi-book-open-variant</v-icon>
             </v-app-bar-nav-icon>
           </v-col>
-          <v-col style="margin-top: 10px">
+          <v-col class="margin-top-10">
             <v-app-bar-title style="font-weight: bold; font-size: 26px">
               {{ title }}
             </v-app-bar-title>
