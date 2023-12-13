@@ -34,6 +34,9 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
           <p>{{props.achievement.Description}}</p>
         </v-row>
         <v-row style="margin-top: 40px">
+          <p> // TODO: @sklynar: this is not working - make this 'text-aling right'
+            {{ progress === 100 ? 'Completed' : progress.toPrecision(2) + '%'}}
+          </p>
           <v-progress-linear
               :model-value="progress"
               :height="10"
