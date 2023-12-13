@@ -1,7 +1,6 @@
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
-import BookCard from "@/components/BookCard.vue";
 import WishListBookCard from "@/components/WishListBookCard.vue";
 
 const books = ref([])
@@ -26,10 +25,8 @@ async function getWishListBooks() {
     console.log('error', error)
   }
   else {
-    console.log(data)
     books.value = data
   }
-  return books.value
 }
 
 getWishListBooks()
@@ -61,8 +58,8 @@ getWishListBooks()
 
 
 
-
- <WishListBookCard v-for="book in books" :key="book.id" :book="book" />
+  {{books}}
+ <WishListBookCard v-for="book in books" :key="book.Id" :book="book" />
   <div style="display: block; height: 100px;"/>
 
 
@@ -70,8 +67,4 @@ getWishListBooks()
 
 
 <style scoped>
-.wishlist-header {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
 </style>

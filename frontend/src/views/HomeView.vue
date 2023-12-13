@@ -16,7 +16,11 @@ async function getBooks() {
   booksRead.value = []
   booksUnread.value = []
   booksReading.value = []
-  const {data, error} = await supabase.from('Books').select().eq('IsOwned', true).order('LastPageUpdate', {ascending: false})
+  const {data, error} = await supabase
+      .from('Books')
+      .select()
+      .eq('IsOwned', true)
+      .order('LastPageUpdate', {ascending: false})
   if (error) console.log('error', error)
   else {
     console.log(data)
@@ -42,38 +46,62 @@ getBooks()
 </script>
 
 <template>
-  <BookCategoryHeader title="Reading" />
-  <div v-if="booksReading.length === 0">
-    <v-card class="book_card">
-      <v-card-title>
-        <h2>No books in this category</h2>
-      </v-card-title>
-    </v-card>
-  </div>
-  <div v-else>
-    <BookCard  v-for="book in booksReading" :key="book.id" :book="book" @onReload="getBooks"/>
-  </div>
-  <BookCategoryHeader title="Unread" />
-  <div v-if="booksUnread.length === 0">
-    <v-card class="book_card">
-      <v-card-title>
-        <h2>No books in this category</h2>
-      </v-card-title>
-    </v-card>
-  </div>
-  <div v-else>
-    <BookCard  v-for="book in booksUnread" :key="book.id" :book="book" @onReload="getBooks"/>
-  </div>  <BookCategoryHeader title="Read" />
-  <div v-if="booksRead.length === 0">
-    <v-card class="book_card">
-      <v-card-title>
-        <h2>No books in this category</h2>
-      </v-card-title>
-    </v-card>
-  </div>
-  <div v-else>
-    <BookCard  v-for="book in booksRead" :key="book.id" :book="book" @onReload="getBooks"/>
-  </div>
+  <v-expansion-panels :model-value="[0]">
+    <v-expansion-panel>
+      <v-expansion-panel-title>
+        <h2>Reading</h2>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <div v-if="booksReading.length === 0">
+          <h2 style="margin-top: 10px">No books in this category</h2>
+        </div>
+        <div v-else>
+          <BookCard
+              v-for="book in booksReading"
+              :key="book.Id"
+              :book="book"
+              @on-reload="getBooks"
+          />
+        </div>
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+    <v-expansion-panel>
+      <v-expansion-panel-title>
+        <h2>Unread</h2>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <div v-if="booksUnread.length === 0">
+          <h2 style="margin-top: 10px">No books in this category</h2>
+        </div>
+        <div v-else>
+          <BookCard
+              v-for="book in booksUnread"
+              :key="book.Id"
+              :book="book"
+              @on-reload="getBooks"
+          />
+        </div>
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+    <v-expansion-panel>
+      <v-expansion-panel-title>
+        <h2>Read</h2>
+      </v-expansion-panel-title>
+      <v-expansion-panel-text>
+        <div v-if="booksRead.length === 0">
+          <h2 style="margin-top: 10px">No books in this category</h2>
+        </div>
+        <div v-else>
+          <BookCard
+              v-for="book in booksRead"
+              :key="book.Id"
+              :book="book"
+              @on-reload="getBooks"
+          />
+        </div>
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+  </v-expansion-panels>
   <div style="display: block; height: 100px;"/>
   <v-btn
       class="btn-bottom-right"
@@ -86,14 +114,6 @@ getBooks()
 
 </template>
 <style scoped>
-  .book_card {
-    width: 90%;
-    display: block;
-    padding-left: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-  }
   .btn-bottom-right {
     position: fixed;
     bottom: 70px;

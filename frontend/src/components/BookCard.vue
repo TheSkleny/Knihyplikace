@@ -76,11 +76,7 @@ function getBook() {
 
 <style scoped lang="scss">
 .book_card {
-  width: 90%;
   max-height: 14rem;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
   padding: 20px;
   margin-bottom: 20px;
   background: lightgray;

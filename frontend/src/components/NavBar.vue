@@ -1,7 +1,7 @@
 <script setup>
-import {computed, ref} from 'vue'
-import router from "@/router";
+import {useRouter} from "vue-router";
 
+const router = useRouter()
 
 const navItems = [
   {
@@ -36,18 +36,17 @@ const navItems = [
   },
 ]
 
-// const activeItem = ref(0)
-// console.log(router.name)
-// activeItem.value = computed(() => {
-//   const index = navItems.findIndex((item) => item.name === router.name)
-//   return index > -1 ? index : 0
-// })
-// console.log(activeItem.value)
 </script>
 
 <template>
   <v-bottom-navigation mode="shift">
-    <v-btn style="max-width: 20%" :color="item.color" v-for="item in navItems" :key="item.name" @click="$router.push({ name: item.name })">
+    <v-btn
+        style="max-width: 20%"
+        :color="item.color"
+        v-for="item in navItems"
+        :key="item.name"
+        @click="router.push({ name: item.name })"
+    >
       <v-icon>{{ item.icon }}</v-icon>
       <span> {{ item.text }} </span>
     </v-btn>

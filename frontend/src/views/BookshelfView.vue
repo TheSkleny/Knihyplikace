@@ -12,6 +12,7 @@ async function getLists() {
   else {
     result.value = data.map(list => ({ ListName: list.Name, Books: [] }));
     console.log(result.value)
+    result.value = result.value.filter(list => list.ListName !== 'V seznamu přání');
   }
 }
 
@@ -54,7 +55,12 @@ getBooksInLists()
               <h2 style="margin-top: 10px">No books in this category</h2>
         </div>
         <div v-else>
-          <BookCard  v-for="book in list.Books" :key="book.id" :book="book" @on-reload="getBooksInLists"/>
+          <BookCard
+              v-for="book in list.Books"
+              :key="book.id"
+              :book="book"
+              @on-reload="getBooksInLists"
+          />
         </div>
       </v-expansion-panel-text>
     </v-expansion-panel>
