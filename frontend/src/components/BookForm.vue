@@ -17,14 +17,11 @@ const props = defineProps({
     default: false
   }
 })
-console.log('DATA')
-console.log(props.bookData)
+
 const emit = defineEmits(['onSave', 'onDelete', 'onReload'])
 
 const newBookData = ref(null)
 newBookData.value = cloneDeep(props.bookData)
-console.log('newBookData')
-console.log(newBookData.value.Name)
 
 const formType = {
   EDIT: 1,
@@ -83,8 +80,6 @@ async function getGenre() {
  * @returns {Promise<void>} A Promise that resolves after successful addition and navigation.
  */
 async function AddBook() {
-  console.log('formData.newBookData')
-  console.log({newBookData})
   const {data, error} = await supabase
       .from('Book')
       .insert([{...formData.value}])
@@ -122,6 +117,7 @@ function save() {
   else {
     emit('onSave', newBookData.value)
     selectedFormType.value = formType.READ
+    isReadonly.value = true
   }
 }
 
@@ -155,8 +151,6 @@ function getBook() {
 }
 
 const selectedFormType = ref(props.isCreate ? formType.ADD : formType.READ)
-console.log('selectedFormType')
-console.log(selectedFormType.value)
 const isReadonly = ref(selectedFormType.value === formType.READ)
 </script>
 

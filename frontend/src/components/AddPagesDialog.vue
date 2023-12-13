@@ -19,11 +19,9 @@ function onShowDialog() {
 
 
 async function addPages(num, isActive) {
-  console.log('addPagesPAPAPA')
-  console.log(props.book.Id)
   const {data, error} = await supabase
       .from('Books')
-      .update({PagesRead: num})
+      .update({PagesRead: num, LastPageUpdate: 'now()'})
       .eq('Id', props.book.Id)
   if (error) console.log('error', error)
   else console.log(data)

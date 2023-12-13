@@ -16,7 +16,7 @@ async function getBooks() {
   booksRead.value = []
   booksUnread.value = []
   booksReading.value = []
-  const {data, error} = await supabase.from('Books').select().eq('IsOwned', true)
+  const {data, error} = await supabase.from('Books').select().eq('IsOwned', true).order('LastPageUpdate', {ascending: false})
   if (error) console.log('error', error)
   else {
     console.log(data)

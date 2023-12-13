@@ -41,12 +41,7 @@ async function getBook() {
   }
 }
 
-console.log("bookData")
-console.log(bookData)
-
 async function onSave(newData) {
-  console.log("newData")
-  console.log(newData)
   const {data, error} = await supabase
       .from('Books')
       .update(newData)
@@ -59,13 +54,11 @@ async function onSave(newData) {
 }
 
 async function onDelete() {
-  console.log("delete")
   await supabase
       .from('Books')
       .delete()
       .eq('Id', route.params.id)
       .then(() => {
-        console.log("deleted")
         router.push({name: 'home'})
       })
 }
