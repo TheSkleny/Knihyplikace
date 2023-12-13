@@ -1,10 +1,12 @@
+<style>
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { ref, onMounted, defineProps, defineEmits, computed } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import { useRouter } from 'vue-router'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
 import cloneDeep from 'lodash/cloneDeep'
-import "@/assets/styles/BookCard.scss";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)

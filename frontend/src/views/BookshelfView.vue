@@ -1,10 +1,12 @@
+<style>
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import {useRouter} from 'vue-router'
 import CreateListDialog from '../components/CreateListDialog.vue';
-import "@/assets/styles/BookshelfView.scss";
 
 const result = ref([])
 

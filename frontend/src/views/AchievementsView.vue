@@ -1,8 +1,10 @@
+<style>
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { ref } from 'vue';
 import { supabase } from '@/lib/supabaseClient';
 import AchievementCard from "@/components/AchievementCard.vue";
-import "@/assets/styles/AchievementsView.scss";
 
 const achievements = ref([]);
 

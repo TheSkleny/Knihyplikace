@@ -1,6 +1,8 @@
+<style>
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { defineProps, computed } from 'vue'
-import "@/assets/styles/BookCard.scss";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)

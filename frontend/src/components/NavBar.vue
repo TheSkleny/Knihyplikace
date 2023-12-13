@@ -1,3 +1,6 @@
+<style>
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import {useRouter} from "vue-router";
 

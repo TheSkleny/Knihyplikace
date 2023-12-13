@@ -1,9 +1,11 @@
+<style>
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import { useRouter } from 'vue-router'
-import "@/assets/styles/HomeView.scss"
 
 const router = useRouter()
 

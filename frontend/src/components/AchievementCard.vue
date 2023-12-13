@@ -1,6 +1,8 @@
+<style>
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { defineProps } from 'vue'
-import "@/assets/styles/AchievementCard.scss";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 
