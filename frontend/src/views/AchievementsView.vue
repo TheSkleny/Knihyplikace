@@ -16,6 +16,16 @@ async function getAchievements() {
     console.error('Error fetching achievements:', error);
   } 
   else {
+    data.forEach(achievement => {
+      achievement.progress = achievement.Current / achievement.Goal;
+    });
+
+    data.sort((a, b) => {
+      if (a.Current === a.Goal) return 1;
+      if (b.Current === b.Goal) return -1;
+      return b.progress - a.progress;
+    });
+
     achievements.value = data;
   }
 }
