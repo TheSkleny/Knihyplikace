@@ -1,7 +1,9 @@
 <script setup>
-
-import {computed, defineProps, defineEmits} from 'vue'
+import { computed, defineProps, defineEmits } from 'vue'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
+
+const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
+const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
 
 const props = defineProps({
   book: {
@@ -9,31 +11,18 @@ const props = defineProps({
     required: true
   }
 })
-
-const pagesRead = computed(() => props.book.PagesRead ?? 0)
-
-
-
 const emit = defineEmits(['onReload'])
 
+const pagesRead = computed(() => props.book.PagesRead ?? 0)
 const pages = computed(() => props.book.Pages ?? 0)
 const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
-
-const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
-
-const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
-
 
 function getBook() {
   emit('onReload')
 }
-
 </script>
 
 <template>
-
-
-
   <v-card class="book_card" :to="`/book-detail/${props.book.Id}`">
     <v-row>
       <v-col style="max-width: 150px">

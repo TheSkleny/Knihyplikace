@@ -1,11 +1,12 @@
 <script setup>
-import {ref, onMounted, defineProps, defineEmits, computed} from 'vue'
-import {supabase} from '@/lib/supabaseClient'
-// import {isNumberOrNull, isRequired} from '@/utils/inputRules'
-import {useRouter} from 'vue-router'
+import { ref, onMounted, defineProps, defineEmits, computed } from 'vue'
+import { supabase } from '@/lib/supabaseClient'
+import { useRouter } from 'vue-router'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
-
 import cloneDeep from 'lodash/cloneDeep'
+
+const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
+const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
 
 const formDataBase = {
   Name: null,
@@ -24,9 +25,7 @@ const props = defineProps({
   bookData: {
     type: Object,
     required: false,
-    default: () => {
-      return {}
-    }
+    default: () => { return {} }
   },
   isCreate: {
     type: Boolean,
@@ -34,62 +33,36 @@ const props = defineProps({
     default: false
   }
 })
-
 const emit = defineEmits(['onSave', 'onDelete', 'onReload'])
 
-const newBookData = ref(null)
-
-newBookData.value = cloneDeep({...formDataBase, ...props.bookData})
+const newBookData = ref(cloneDeep({ ...formDataBase, ...props.bookData }))
 
 const formType = {
   EDIT: 1,
   ADD: 2,
   READ: 3
 }
-
-
 const router = useRouter()
-
 const genre_list = ref([])
 
-/**
- * @function getGenre
- * @async
- *
- * Gets a list of genres from a database.
- *
- * @returns {Promise<void>}
- */
 async function getGenre() {
-  const {data, error} = await supabase.from('BookGenre').select('Name, Id')
-  if (error) {
-    console.log('error', error)
-  } else {
+  const { data, error } = await supabase.from('BookGenre').select('Name, Id')
+  if (error) console.log('error', error)
+  else {
     genre_list.value = data.map((genre) => {
       return {
         title: genre.Name,
         value: genre.Id
       }
     })
-    console.log('genre_list', genre_list)
   }
 }
 
-
 const pagesRead = computed(() => props.bookData.PagesRead ?? 0)
-
-
-
 const pages = computed(() => props.bookData.Pages ?? 0)
 const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
 
-
-const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
-
-const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
-
 function save() {
-  console.log('newBookData.value', newBookData.value)
   emit('onSave', newBookData.value)
   selectedFormType.value = formType.READ
   isReadonly.value = true
@@ -106,13 +79,12 @@ function edit() {
 
 function cancel() {
   if (props.isCreate) {
-    router.push({name: 'home'})
+    router.push({ name: 'home' })
   }
   else {
     newBookData.value = cloneDeep(props.bookData)
     selectedFormType.value = formType.READ
     isReadonly.value = true
-
   }
 }
 
@@ -133,8 +105,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
     <v-form>
       <v-row>
         <v-col cols="4">
-          <v-img :src="cover" class="book_card_img"
-                 cover/>
+          <v-img :src="cover" class="book_card_img" cover/>
         </v-col>
         <v-col>
           <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
@@ -189,7 +160,6 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         </v-row>
 
       </div>
-      <!--  -->
       <v-row>
         <v-col>
           <h2>Details:</h2>
@@ -325,7 +295,6 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
 
 
 <style scoped>
-
 .btn_menu {
   display: block;
   margin-left: auto;

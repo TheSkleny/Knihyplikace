@@ -1,5 +1,8 @@
 <script setup>
-import {defineProps, computed, defineEmits} from 'vue'
+import { defineProps, computed } from 'vue'
+
+const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
+const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
 
 const props = defineProps({
   book: {
@@ -8,23 +11,18 @@ const props = defineProps({
   }
 })
 
-
-const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
-
-const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
-
-
-function test() {
-  console.log("hovno")
+async function removeBook() {
+  // TODO: remove book from wishlist
 }
-function test2() {
-  console.log("prdel")
+
+async function moveToLibrary() {
+  // TODO: move book from wishlist to library
 }
 
 </script>
 
 <template>
-  <v-card class="book_card" :to="`/book-detail/${props.book.Id}`">
+  <v-card class="book_card" :to="`/book-detail/${ props.book.Id }`">
     <v-row>
       <v-col style="max-width: 150px">
         <v-img class="book_card_img"
@@ -45,10 +43,10 @@ function test2() {
         </v-row>
         <v-row>
           <v-col>
-            <v-btn @click.prevent="test" color="red" size="40px" icon="mdi-trash-can"/>
+            <v-btn @click.prevent="removeBook" color="red" size="40px" icon="mdi-trash-can"/>
           </v-col>
           <v-col>
-            <v-btn style="margin-top: 5px" @click.prevent="test2">Bought</v-btn>
+            <v-btn style="margin-top: 5px" @click.prevent="moveToLibrary">Bought</v-btn>
           </v-col>
 
         </v-row>

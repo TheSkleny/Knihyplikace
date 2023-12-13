@@ -6,7 +6,7 @@ import WishListBookCard from "@/components/WishListBookCard.vue";
 const books = ref([])
 
 async function getWishListBooks() {
-  const {data, error} = await supabase
+  const { data, error } = await supabase
       .from('vWishListBooks')
       .select('Id, Name, Author, CoverImageLink')
   if (error) {

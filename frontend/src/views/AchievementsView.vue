@@ -8,12 +8,11 @@ const achievements = ref([]);
 async function getAchievements() {
   const { data, error } = await supabase
     .from('Achievement')
-    .select(
-      'Id, Name, Description, Reward, Goal, Current, ImageUri'
-    );
+    .select('Id, Name, Description, Reward, Goal, Current, ImageUri');
   if (error) {
     console.error('Error fetching achievements:', error);
-  } else {
+  } 
+  else {
     achievements.value = data;
   }
 }

@@ -2,25 +2,12 @@
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 
-const genre = ref([])
 const name = ref('')
 
-/**
- * Add a new genre to the database
- *
- * @returns {Promise<void>}
- */
 async function addGenre() {
-  try {
-    const { data, error } = await supabase.from('BookGenre').insert([{ Name: name.value }])
-    if (error) {
-      console.log('error', error)
-    } else {
-      genre.value = data
-    }
-  } catch (error) {
-    console.log('error', error)
-  }
+  await supabase
+      .from('BookGenre')
+      .insert([{ Name: name.value }])
 }
 </script>
 
@@ -34,5 +21,3 @@ async function addGenre() {
     </v-sheet>
   </div>
 </template>
-
-<style scoped></style>

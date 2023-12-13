@@ -4,16 +4,12 @@ import {supabase} from '@/lib/supabaseClient'
 import {useRoute, useRouter} from 'vue-router'
 import BookForm from "@/components/BookForm.vue";
 
-
-
 const route = useRoute()
 const router = useRouter()
 const bookData = ref(null)
 
 async function getBook() {
-  console.log("route.params.id")
-  console.log(route.params.id)
-  const {data, error} = await supabase
+  const { data, error } = await supabase
       .from('Book')
       .select(
           `
@@ -31,23 +27,17 @@ async function getBook() {
           CoverImageLink`
       )
       .eq('Id', route.params.id)
-  if (error) {
-    console.log('error', error)
-  } else {
-    console.log('data')
-    console.log(data[0])
+  if (error) console.log('error', error)
+  else {
     bookData.value = data[0]
-    console.log(bookData.value.Name)
   }
 }
 
 async function onSave(newData) {
-  const {data, error} = await supabase
+  await supabase
       .from('Book')
       .update(newData)
       .eq('Id', route.params.id)
-  if (error) console.log('error', error)
-  else console.log(data)
   await getBook()
 }
 
@@ -57,7 +47,7 @@ async function onDelete() {
       .delete()
       .eq('Id', route.params.id)
       .then(() => {
-        router.push({name: 'home'})
+        router.push({ name: 'home' })
       })
 }
 getBook()
@@ -72,7 +62,3 @@ getBook()
       @on-delete="onDelete"
   />
 </template>
-
-<style scoped>
-
-</style>

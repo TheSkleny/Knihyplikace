@@ -35,7 +35,6 @@ const navItems = [
     color: 'green'
   },
 ]
-
 </script>
 
 <template>

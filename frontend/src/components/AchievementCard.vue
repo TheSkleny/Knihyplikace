@@ -1,7 +1,6 @@
 <script setup>
 import { defineProps } from 'vue'
 
-
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 
 const props = defineProps({
@@ -12,7 +11,6 @@ const props = defineProps({
 })
 const image = props.achievement.ImageUri ?? DEFAULT_COVER
 const progress = props.achievement.Current / props.achievement.Goal * 100
-
 </script>
 
 <template>
@@ -21,16 +19,13 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
       <v-col cols="4">
         <v-img :src="image" class="achievement_card_img" cover />
       </v-col>
-
       <v-col>
         <v-row style="margin-top: 10px">
           <h1>{{ props.achievement.Name }}</h1>
         </v-row>
-
         <v-row style="margin-top: 20px">
           <h3>{{props.achievement.Description}}</h3>
         </v-row>
-
         <v-row style="margin-top: 40px">
           <v-progress-linear
               :model-value="progress"

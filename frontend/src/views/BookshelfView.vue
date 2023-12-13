@@ -5,19 +5,21 @@ import BookCard from "@/components/BookCard.vue";
 
 const result = ref([])
 
-
 async function getLists() {
-  const {data, error} = await supabase.from('BookList').select()
+  const { data, error } = await supabase.from('BookList').select()
   if (error) console.log('error', error)
   else {
-    result.value = data.map(list => ({ ListName: list.Name, Book: [] }));
-    console.log(result.value)
-    result.value = result.value.filter(list => list.ListName !== 'V seznamu přání');
+    result.value = data
+      .filter(list => list.Name !== 'V seznamu přání')
+      .map(list => ({
+        ListName: list.Name,
+        Book: []
+      }));
   }
 }
 
 async function getBooksInLists() {
-  const {data, error} = await supabase
+  const { data, error } = await supabase
       .from('BookInBookList')
       .select(`
         Book (*),
@@ -26,9 +28,7 @@ async function getBooksInLists() {
         )
       `)
 
-  if (error) {
-    console.log('error', error)
-  }
+  if (error) console.log('error', error)
   else {
     await getLists()
     data.forEach(bookInList => {
@@ -66,7 +66,3 @@ getBooksInLists()
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
-
-<style scoped>
-
-</style>
