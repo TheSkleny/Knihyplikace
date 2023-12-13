@@ -46,6 +46,14 @@ getBooks()
 </script>
 
 <template>
+  <v-btn
+      class="btn-bottom-right"
+      icon="mdi-plus"
+      color="primary"
+      elevation="24"
+      size="50"
+      @click="routeToAddBook"
+  />
   <v-expansion-panels :model-value="[0]">
     <v-expansion-panel>
       <v-expansion-panel-title>
@@ -103,14 +111,7 @@ getBooks()
     </v-expansion-panel>
   </v-expansion-panels>
   <div style="display: block; height: 100px;"/>
-  <v-btn
-      class="btn-bottom-right"
-      icon="mdi-plus"
-      color="primary"
-      elevation="24"
-      size="50"
-      @click="routeToAddBook"
-  />
+
 
 </template>
 <style scoped>
@@ -118,5 +119,6 @@ getBooks()
     position: fixed;
     bottom: 70px;
     right: 20px;
+    z-index: 9999;
   }
 </style>
