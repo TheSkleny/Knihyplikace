@@ -4,6 +4,7 @@ import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import {useRouter} from 'vue-router'
 import CreateListDialog from '../components/CreateListDialog.vue';
+import "@/assets/styles/BookshelfView.css";
 
 const result = ref([])
 
@@ -78,11 +79,3 @@ getBooksInLists()
   
   </CreateListDialog>
 </template>
-
-<style scoped>
-  .btn-bottom-right {
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-  }
-</style>
