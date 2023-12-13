@@ -25,7 +25,7 @@ async function moveToLibrary() {
 </script>
 
 <template>
-  <v-card class="book_card" :to="`/book-detail/${ props.book.Id }`">
+  <v-card class="book_card--wishlist" :to="`/book-detail/${ props.book.Id }`">
     <v-row>
       <v-col style="max-width: 150px">
         <v-img class="book_card_img"

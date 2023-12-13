@@ -31,7 +31,7 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
           <h1>{{ props.achievement.Name }}</h1>
         </v-row>
         <v-row style="margin-top: 20px">
-          <h3>{{props.achievement.Description}}</h3>
+          <p>{{props.achievement.Description}}</p>
         </v-row>
         <v-row style="margin-top: 40px">
           <v-progress-linear

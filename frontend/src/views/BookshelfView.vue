@@ -6,7 +6,7 @@ import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import {useRouter} from 'vue-router'
-import CreateListDialog from '../components/CreateListDialog.vue';
+import CreateListDialog from '@/components/CreateListDialog.vue';
 
 const result = ref([])
 
@@ -72,7 +72,7 @@ getBooksInLists()
     </v-expansion-panel>
   </v-expansion-panels>
   <div style="display: block; height: 100px;"/>
-  <CreateListDialog class="btn-bottom-right"
+  <CreateListDialog class="btn-bottom-right2"
       icon="mdi-plus"
       color="primary"
       elevation="24"
