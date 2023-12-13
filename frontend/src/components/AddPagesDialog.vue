@@ -19,6 +19,20 @@ function onShowDialog() {
 
 
 async function addPages(num, isActive) {
+  if (num != null && (requiredRule || pagesLimitRule)) {
+    console.log('num')
+    console.log(num)
+    console.log('props.book.PagesRead')
+    console.log(props.book.PagesRead)
+    console.log(requiredRule)
+    console.log(pagesLimitRule)
+    return
+  }
+  if (num === null) {
+    num = props.book.Pages
+  }
+  console.log('addPagesPAPAPA')
+  console.log(props.book.Id)
   const {data, error} = await supabase
       .from('Books')
       .update({PagesRead: num, LastPageUpdate: 'now()'})
@@ -28,6 +42,10 @@ async function addPages(num, isActive) {
   emit('onReload')
   isActive.value = false
 }
+
+
+const requiredRule = (value) => !!value || 'Field is required';
+const pagesLimitRule = (value) => value <= props.book.Pages || 'Pages read cannot be more than total pages';
 
 </script>
 
@@ -48,10 +66,8 @@ async function addPages(num, isActive) {
           <v-text-field
               label="Pages read"
               type="number"
-              min="0"
-              max="1000"
               v-model="newPagesRead"
-              
+              :rules="[requiredRule, pagesLimitRule]"
           />
         </v-card-text>
 
@@ -65,7 +81,7 @@ async function addPages(num, isActive) {
           <v-btn
               text="Finished reading"
               color="blue"
-              @click="addPages(props.book.Pages, isActive)"
+              @click="addPages(null, isActive)"
           ></v-btn>
         </v-card-actions>
       </v-card>

@@ -54,7 +54,7 @@ getBooksInLists()
               <h2 style="margin-top: 10px">No books in this category</h2>
         </div>
         <div v-else>
-          <BookCard  v-for="book in list.Books" :key="book.id" :book="book"/>
+          <BookCard  v-for="book in list.Books" :key="book.id" :book="book" @on-reload="getBooksInLists"/>
         </div>
       </v-expansion-panel-text>
     </v-expansion-panel>
