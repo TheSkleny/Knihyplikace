@@ -49,7 +49,14 @@ getBooks()
 </script>
 
 <template>
-
+  <v-btn
+      class="btn-bottom-right"
+      icon="mdi-plus"
+      color="primary"
+      elevation="24"
+      size="50"
+      @click="routeToAddBook"
+  />
   <v-expansion-panels :model-value="[0]">
     <v-expansion-panel>
       <v-expansion-panel-title>
@@ -57,7 +64,7 @@ getBooks()
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="books.reading.length === 0">
-          <h2 style="margin-top: 10px">No books in this category</h2>
+          <h2 class="margin-top-10">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
@@ -75,7 +82,7 @@ getBooks()
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="books.unread.length === 0">
-          <h2 style="margin-top: 10px">No books in this category</h2>
+          <h2 class="margin-top-10">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
@@ -93,7 +100,7 @@ getBooks()
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="books.read.length === 0">
-          <h2 style="margin-top: 10px">No books in this category</h2>
+          <h2 class="margin-top-10">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
@@ -106,14 +113,6 @@ getBooks()
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
-  <div style="display: block; height: 100px;"/>
-  <v-btn
-      class="btn-bottom-right"
-      icon="mdi-plus"
-      color="primary"
-      elevation="24"
-      size="50"
-      @click="routeToAddBook"
-  />
+  <div class="bottom-div"/>
 
 </template>

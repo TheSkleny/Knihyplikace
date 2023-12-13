@@ -27,7 +27,7 @@ async function moveToLibrary() {
 <template>
   <v-card class="book_card--wishlist" :to="`/book-detail/${ props.book.Id }`">
     <v-row>
-      <v-col style="max-width: 150px">
+      <v-col class="max-width-150px">
         <v-img class="book_card_img"
                :src="cover"
                cover
@@ -35,7 +35,7 @@ async function moveToLibrary() {
       </v-col>
       <v-col class="book_card_content">
         <v-row>
-          <h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+          <h1 class="h1-card">
             {{ props.book.Name }}
           </h1>
         </v-row>
@@ -49,7 +49,7 @@ async function moveToLibrary() {
             <v-btn @click.prevent="removeBook" color="red" size="40px" icon="mdi-trash-can"/>
           </v-col>
           <v-col>
-            <v-btn style="margin-top: 5px" @click.prevent="moveToLibrary">Bought</v-btn>
+            <v-btn class="margin-top-5" @click.prevent="moveToLibrary">Bought</v-btn>
           </v-col>
 
         </v-row>

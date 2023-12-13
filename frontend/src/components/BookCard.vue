@@ -31,7 +31,7 @@ function getBook() {
 <template>
   <v-card class="book_card" :to="`/book-detail/${props.book.Id}`">
     <v-row>
-      <v-col style="max-width: 150px">
+      <v-col class="max-width-150px">
         <v-img class="book_card_img"
                :src="cover"
                cover
@@ -39,7 +39,7 @@ function getBook() {
       </v-col>
       <v-col class="book_card_content">
         <v-row>
-          <h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+          <h1 class="h1-card">
             {{ props.book.Name }}
           </h1>
         </v-row>
@@ -55,12 +55,12 @@ function getBook() {
           <v-col
               class="book_card_content"
           >
-            <p style="text-align: right">{{ pagesRead }}/{{ pages }}</p>
+            <p class="text-align-center">{{ pagesRead }}/{{ pages }}</p>
             <v-progress-linear
                 :model-value="pagesPercent"
                 :height="10"
                 color="secondary"
-                style="border-radius: 5px"
+                class="border-radius-5"
             />
           </v-col>
         </v-row>

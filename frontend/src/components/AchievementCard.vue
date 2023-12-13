@@ -27,18 +27,18 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
         <v-img :src="image" class="achievement_card_img" cover />
       </v-col>
       <v-col>
-        <v-row style="margin-top: 10px">
+        <v-row class="margin-top-10">
           <h1>{{ props.achievement.Name }}</h1>
         </v-row>
-        <v-row style="margin-top: 20px">
+        <v-row class="margin-top-20">
           <p>{{props.achievement.Description}}</p>
         </v-row>
-        <v-row style="margin-top: 40px">
+        <v-row class="margin-top-40">
           <v-progress-linear
               :model-value="progress"
               :height="10"
               color="secondary"
-              style="border-radius: 5px"
+              class="border-radius-5"
           />
         </v-row>
       </v-col>
