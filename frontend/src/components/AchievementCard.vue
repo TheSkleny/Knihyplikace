@@ -24,7 +24,7 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
   <v-card class="achievement_card">
     <v-row>
       <v-col cols="4">
-        <v-img :src="image" class="achievement_card_img" cover />
+        <v-img :src="image" class="achievement_card_img" :style="{ filter: progress !== 100 ? 'grayscale(100%)' : 'none' }" cover />
       </v-col>
       <v-col>
         <v-row style="margin-top: 10px">
@@ -34,7 +34,7 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
           <p>{{props.achievement.Description}}</p>
         </v-row>
         <v-row style="margin-top: 40px">
-          <p> // TODO: @sklynar: this is not working - make this 'text-aling right'
+          <p>
             {{ progress === 100 ? 'Completed' : progress.toPrecision(2) + '%'}}
           </p>
           <v-progress-linear
