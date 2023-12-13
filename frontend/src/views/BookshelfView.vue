@@ -2,6 +2,9 @@
 import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
+import {useRouter} from 'vue-router'
+import CreateListDialog from '../components/CreateListDialog.vue';
+import "@/assets/styles/BookshelfView.scss";
 
 const result = ref([])
 
@@ -41,6 +44,7 @@ async function getBooksInLists() {
   return result.value;
 }
 
+
 getBooksInLists()
 </script>
 
@@ -65,4 +69,13 @@ getBooksInLists()
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
+  <div style="display: block; height: 100px;"/>
+  <CreateListDialog class="btn-bottom-right"
+      icon="mdi-plus"
+      color="primary"
+      elevation="24"
+      size="50"
+      >
+  
+  </CreateListDialog>
 </template>

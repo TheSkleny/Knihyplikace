@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { supabase } from '@/lib/supabaseClient';
 import AchievementCard from "@/components/AchievementCard.vue";
+import "@/assets/styles/AchievementsView.scss";
 
 const achievements = ref([]);
 
@@ -27,16 +28,3 @@ getAchievements();
   <div style="display: block; height: 100px;"/>
 
 </template>
-
-
-<style scoped>
-.achievements-header {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
-
-.achievement-image {
-  width: 100px;
-  height: 100px;
-}
-</style>

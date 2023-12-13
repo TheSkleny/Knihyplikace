@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps } from 'vue'
+import "@/assets/styles/AchievementCard.scss";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 
@@ -42,26 +43,3 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
     </v-row>
   </v-card>
 </template>
-
-<style scoped>
-.achievement_card {
-  width: 90%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  margin-bottom: 20px;
-  background: lightgray;
-}
-
-.achievement_card_img {
-  height: 140px;
-  width: 100px;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-
-}
-
-
-</style>

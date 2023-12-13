@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import { useRouter } from 'vue-router'
+import "@/assets/styles/HomeView.scss"
 
 const router = useRouter()
 
@@ -114,12 +115,3 @@ getBooks()
 
 
 </template>
-
-<style scoped>
-  .btn-bottom-right {
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    z-index: 9999;
-  }
-</style>
