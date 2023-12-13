@@ -5,6 +5,7 @@ import BookDetailView from '../views/BookDetailView.vue'
 import AchievementsView from '../views/AchievementsView.vue'
 import AddBookView from '@/views/AddBookView.vue'
 import BookshelfView from '@/views/BookshelfView.vue'
+import GiftsView from '@/views/GiftsView.vue'
 
 import changeTitleMiddleware from "@/middleware/changeTitle";
 
@@ -59,6 +60,14 @@ const router = createRouter({
             component: BookshelfView,
             meta: {
                 title: "Knihovnička",
+            }
+        },
+        {
+            path: '/gifts',
+            name: 'gifts',
+            component: GiftsView,
+            meta: {
+                title: "Dárky",
             }
         }
     ]
