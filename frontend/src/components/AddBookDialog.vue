@@ -26,21 +26,25 @@ const props = defineProps({
 })
 
 
-// TODO: get books from database
-const existingBooks = [
-  {
-    title: 'The Hobbit',
-    value: 'Id1'
-  },
-  {
-    title: 'The Lord of the Rings',
-    value: 'Id2'
-  },
-  {
-    title: 'The Silmarillion',
-    value: 'Id3'
+const existingBooks = ref([])
+
+async function fetchExistingBooks() {
+  const { data, error } = await supabase
+    .from('Book')
+    .select('Name, Id')
+
+  if (error) {
+    console.error('Error fetching existing books:', error)
+  } 
+  else {
+    existingBooks.value = data.map(book => ({
+      title: book.Name,
+      value: book.Id
+    }))
   }
-]
+}
+
+fetchExistingBooks()
 
 const showBookForm = ref(false)
 
