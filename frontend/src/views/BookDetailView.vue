@@ -50,13 +50,32 @@ async function onSave(newData) {
 }
 
 async function onDelete() {
+  const wishList = await supabase
+    .from('BookList')
+    .select('Id')
+    .eq('Name', 'V seznamu přání')
+    .single()
+
+  if (wishList.error) {
+    console.log('error', wishList.error)
+    return
+  }
+
+  const wishListId =  wishList.data.Id
+
   await supabase
-      .from('Book')
-      .delete()
-      .eq('Id', route.params.id)
-      .then(() => {
-        router.push({ name: 'home' })
-      })
+    .from('BookInBookList')
+    .delete()
+    .eq('BookId', route.params.id)
+    .eq('ListId', wishListId)
+
+  await supabase
+    .from('Book')
+    .update({ IsOwned: false })
+    .eq('Id', route.params.id)
+    .then(() => {
+      router.push({ name: 'home' })
+    })
 }
 getBook()
 </script>
