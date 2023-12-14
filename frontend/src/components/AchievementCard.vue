@@ -33,7 +33,7 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
         <v-row class="margin-top-20">
           <p>{{props.achievement.Description}}</p>
         </v-row>
-        <v-row style="margin-top: 40px">
+        <v-row class="margin-top-40">
           <p>
             {{ progress === 100 ? 'Completed' : progress.toPrecision(2) + '%'}}
           </p>

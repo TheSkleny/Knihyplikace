@@ -51,14 +51,7 @@ getBooksInLists()
 </script>
 
 <template>
-  <CreateListDialog class="btn-bottom-right2"
-      icon="mdi-plus"
-      color="primary"
-      elevation="24"
-      size="50"
-      >
-  
-  </CreateListDialog>
+  <CreateListDialog />
   <v-expansion-panels>
     <v-expansion-panel v-for="list in result" :key="list.ListName">
       <v-expansion-panel-title>

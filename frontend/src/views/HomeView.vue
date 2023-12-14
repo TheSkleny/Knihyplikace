@@ -50,7 +50,7 @@ getBooks()
 </script>
 
 <template>
-  <AddBookDialog />
+  <AddBookDialog/>
 <!--  <v-btn-->
 <!--      class="btn-bottom-right"-->
 <!--      icon="mdi-plus"-->
