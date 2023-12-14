@@ -34,7 +34,8 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
           <p class="achievement_card_text">{{props.achievement.Description}}</p>
         </v-row>
         <v-row class="margin-top-40">
-          <p>
+          <v-col>
+          <p class="text-align-right">
             {{ progress === 100 ? 'Completed' : progress.toPrecision(2) + '%'}}
           </p>
           <v-progress-linear
@@ -43,6 +44,7 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
               :color="progress === 100 ? 'primary_light' : 'primary'"
               class="border-radius-5"
           />
+          </v-col>
         </v-row>
       </v-col>
     </v-row>

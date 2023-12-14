@@ -9,7 +9,7 @@ import {storeToRefs} from "pinia";
 import {supabase} from "@/lib/supabaseClient";
 import {useRouter} from "vue-router";
 
-const $router = useRouter()
+const router = useRouter()
 
 const store = usePageTitleStore()
 const {title} = storeToRefs(store)
@@ -19,7 +19,7 @@ async function onLogoClick() {
     .rpc('increment_achievement', {
         name_param: 'For the statement'
   })
-  $router.push({name: 'home'})
+  await router.push({name: 'home'})
 }
 </script>
 
@@ -27,19 +27,13 @@ async function onLogoClick() {
   <v-app>
     <v-container class="margin-bottom-50">
       <v-app-bar>
-        <v-row>
-          <v-col class="margin-left-10">
             <v-app-bar-nav-icon @click="onLogoClick">
               <v-icon size="40px" color="primary">mdi-book-open-variant</v-icon>
             </v-app-bar-nav-icon>
-          </v-col>
-          <v-col class="margin-top-10">
-            <v-app-bar-title style="font-weight: bold; font-size: 26px">
+            <v-app-bar-title style="font-weight: bold; font-size: 26px; text-align: center">
               {{ title }}
             </v-app-bar-title>
-          </v-col>
-          <v-spacer/>
-        </v-row>
+            <v-btn icon="mdi-cog"/>
       </v-app-bar>
     </v-container>
     <RouterView/>

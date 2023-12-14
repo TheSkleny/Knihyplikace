@@ -60,7 +60,7 @@ function getBook() {
           <v-col
               class="book_card_content"
           >
-            <p class="text-align-center">{{ pagesRead }}/{{ pages }}</p>
+            <p class="text-align-right">{{ pagesRead }}/{{ pages }}</p>
             <v-progress-linear
                 :model-value="pagesPercent"
                 :height="10"
