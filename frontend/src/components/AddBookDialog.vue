@@ -61,9 +61,6 @@ function cancelDialog(isActive) {
   isActive.value = false
 }
 
-// TODO: remove this
-const WishListId = 'ed585e2b-d278-491f-ab15-c34d67f12fd4'
-
 async function addBook(isActive, bookId) {
   // TODO: add book to parent chosen list
 
@@ -81,11 +78,20 @@ async function addBook(isActive, bookId) {
         .eq('Id', bookId)
   }
   else if (props.isWish) {
-    await supabase
-        .from('BookInBookList')
-        .insert({BookId: bookId})
-        .eq('ListId', WishListId)
+    const { data: bookListData, error: bookListError } = await supabase
+      .from('BookList')
+      .select('Id')
+      .eq('Name', 'V seznamu přání')
 
+    if (bookListError) {
+      console.log('error', bookListError)
+    } 
+    else {
+      const bookListId = bookListData[0].Id
+      await supabase
+        .from('BookInBookList')
+        .insert({ BookId: bookId, ListId: bookListId })
+    }
   }
   else if (props.GiftPerson) {
     await supabase
