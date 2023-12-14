@@ -24,10 +24,6 @@ const addCoverImg = 'https://siddiquibookcompany.com/wp-content/themes/kidsy/ima
 
 const CoverImage = ref(addCoverImg)
 
-
-function test() {
-  console.log('lalalalala')
-}
 </script>
 
 <template>
@@ -38,7 +34,6 @@ function test() {
           :src="CoverImage"
           cover
           v-bind="props"
-          @click.prevent="test"
       />
     </template>
     <template #default="{ isActive }">

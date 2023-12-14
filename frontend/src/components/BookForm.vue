@@ -1,14 +1,14 @@
 <style scoped lang="scss">
- @import "@/assets/main.scss";
+@import "@/assets/main.scss";
 </style>
 <script setup>
-import { ref, onMounted, defineProps, defineEmits, computed } from 'vue'
-import { supabase } from '@/lib/supabaseClient'
+import {ref, onMounted, defineProps, defineEmits, computed} from 'vue'
+import {supabase} from '@/lib/supabaseClient'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
 import AddBookCoverDialog from "@/components/AddBookCoverDialog.vue";
 import cloneDeep from 'lodash/cloneDeep'
-import CoolLightBox from 'vue-cool-lightbox'
-import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
+import VueEasyLightbox from "vue-easy-lightbox";
+import 'vue-easy-lightbox-css'
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
@@ -34,7 +34,9 @@ const props = defineProps({
   bookData: {
     type: Object,
     required: false,
-    default: () => { return {} }
+    default: () => {
+      return {}
+    }
   },
   isCreate: {
     type: Boolean,
@@ -44,7 +46,7 @@ const props = defineProps({
 })
 const emit = defineEmits(['onSave', 'onDelete', 'onReload', 'onCancel'])
 
-const newBookData = ref(cloneDeep({ ...formDataBase, ...props.bookData }))
+const newBookData = ref(cloneDeep({...formDataBase, ...props.bookData}))
 
 const formType = {
   EDIT: 1,
@@ -55,7 +57,7 @@ const formType = {
 const genre_list = ref([])
 
 async function getGenre() {
-  const { data, error } = await supabase.from('BookGenre').select('Name, Id')
+  const {data, error} = await supabase.from('BookGenre').select('Name, Id')
   if (error) console.log('error', error)
   else {
     genre_list.value = data.map((genre) => {
@@ -89,8 +91,7 @@ function edit() {
 function cancel() {
   if (props.isCreate) {
     emit('onCancel')
-  }
-  else {
+  } else {
     newBookData.value = cloneDeep(props.bookData)
     selectedFormType.value = formType.READ
     isReadonly.value = true
@@ -108,26 +109,30 @@ function getBook() {
 const selectedFormType = ref(props.isCreate ? formType.ADD : formType.READ)
 const isReadonly = ref(selectedFormType.value === formType.READ)
 
-const items = [
-  cover.value,
+const lightboxImage = [
+    cover.value
 ]
-
-const index = ref(null)
-
-
+const isLightboxActive = ref(false)
+const lightboxIndex = ref(0)
+const lighboxToggle = () => {
+  isLightboxActive.value = !isLightboxActive.value
+}
 
 </script>
 
 <template>
+  <vue-easy-lightbox
+      :visible="isLightboxActive"
+      :imgs="lightboxImage"
+      :index="lightboxIndex"
+      @hide="lighboxToggle"
+      :scroll-disabled="true"
+  />
   <v-container>
     <v-form>
       <v-row>
         <v-col cols="4">
-<!--          <CoolLightBox-->
-<!--              :items="items"-->
-<!--              :index="index"-->
-<!--              @close="index = null">-->
-<!--          </CoolLightBox>-->
+
 
           <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
             <AddBookCoverDialog
@@ -135,7 +140,7 @@ const index = ref(null)
             />
           </div>
           <div v-if="selectedFormType === formType.READ">
-            <v-img :src="cover" class="book_card_img" cover/>
+            <v-img :src="cover" class="book_card_img" cover @click="lighboxToggle" />
           </div>
         </v-col>
         <v-col>

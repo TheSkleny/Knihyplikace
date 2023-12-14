@@ -18,7 +18,7 @@
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "vue": "^3.3.4",
-    "vue-cool-lightbox": "^2.7.5",
+    "vue-easy-lightbox": "^1.16.0",
     "vue-router": "^4.2.5",
     "vuetify": "^3.3.23"
   },
