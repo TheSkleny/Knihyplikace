@@ -27,3 +27,12 @@ type Achievement = {
     Current: number;
     ImageUri: string;
 }
+
+type Gift = {
+    GiftId: string;
+    Person: string;
+    BookId: string;
+    Name: string;
+    Author: string;
+    CoverImageLink: string;
+}

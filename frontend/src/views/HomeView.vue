@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import { useRouter } from 'vue-router'
+import AddBookDialog from "@/components/AddBookDialog.vue";
 
 const router = useRouter()
 
@@ -49,14 +50,15 @@ getBooks()
 </script>
 
 <template>
-  <v-btn
-      class="btn-bottom-right"
-      icon="mdi-plus"
-      color="primary"
-      elevation="24"
-      size="50"
-      @click="routeToAddBook"
-  />
+  <AddBookDialog />
+<!--  <v-btn-->
+<!--      class="btn-bottom-right"-->
+<!--      icon="mdi-plus"-->
+<!--      color="primary"-->
+<!--      elevation="24"-->
+<!--      size="50"-->
+<!--      @click="routeToAddBook"-->
+<!--  />-->
   <v-expansion-panels :model-value="[0]">
     <v-expansion-panel>
       <v-expansion-panel-title>
