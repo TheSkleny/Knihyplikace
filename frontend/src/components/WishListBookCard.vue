@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { defineProps, computed } from 'vue'
 
@@ -32,9 +35,9 @@ async function moveToLibrary() {
 </script>
 
 <template>
-  <v-card class="book_card" :to="`/book-detail/${ props.book.Id }`">
+  <v-card class="book_card--wishlist" :to="`/book-detail/${ props.book.Id }`">
     <v-row>
-      <v-col style="max-width: 150px">
+      <v-col class="max-width-150px">
         <v-img class="book_card_img"
                :src="cover"
                cover
@@ -42,7 +45,7 @@ async function moveToLibrary() {
       </v-col>
       <v-col class="book_card_content">
         <v-row>
-          <h1 style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap">
+          <h1 class="h1-card">
             {{ props.book.Name }}
           </h1>
         </v-row>
@@ -68,6 +71,7 @@ async function moveToLibrary() {
             >
               Bought
             </v-btn>
+
           </v-col>
 
         </v-row>
@@ -75,34 +79,3 @@ async function moveToLibrary() {
     </v-row>
   </v-card>
 </template>
-
-<style scoped lang="scss">
-.book_card {
-  width: 90%;
-  max-height: 14rem;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 20px;
-  margin-bottom: 20px;
-  background: lightgray;
-}
-
-.book_card_img {
-  height: 140px;
-  width: 100px;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-
-}
-
-.book_card_content {
-  width: 50%;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-}
-
-
-</style>

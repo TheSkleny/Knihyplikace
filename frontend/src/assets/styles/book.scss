@@ -1,0 +1,42 @@
+.book_card {
+    max-height: 14rem;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: lightgray;
+    &--wishlist {
+      @extend .book_card;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;  
+    }
+  }
+  
+.book_card_img {
+    height: 140px;
+    width: 100px;
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto
+  
+}
+  
+.book_card_content {
+    width: 50%;
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto
+}
+
+// book-detail
+.details_textarea {
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+  
+}
+  
+.details_text_field {
+    margin-top: -20px
+}

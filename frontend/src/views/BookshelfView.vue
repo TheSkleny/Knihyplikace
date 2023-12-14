@@ -1,7 +1,12 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
+import {useRouter} from 'vue-router'
+import CreateListDialog from '@/components/CreateListDialog.vue';
 
 const result = ref([])
 
@@ -41,10 +46,19 @@ async function getBooksInLists() {
   return result.value;
 }
 
+
 getBooksInLists()
 </script>
 
 <template>
+  <CreateListDialog class="btn-bottom-right2"
+      icon="mdi-plus"
+      color="primary"
+      elevation="24"
+      size="50"
+      >
+  
+  </CreateListDialog>
   <v-expansion-panels>
     <v-expansion-panel v-for="list in result" :key="list.ListName">
       <v-expansion-panel-title>
@@ -52,7 +66,7 @@ getBooksInLists()
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="list.Book.length === 0">
-              <h2 style="margin-top: 10px">No books in this category</h2>
+              <h2 class="margin-top-10">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
@@ -65,4 +79,5 @@ getBooksInLists()
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
+  <div class="bottom-div"/>
 </template>

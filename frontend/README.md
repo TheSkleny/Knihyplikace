@@ -1,35 +1,26 @@
-# fe
+# Knihyplikace
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+## Instalace projektu
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Spuštění aplikace
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Použité knihovny
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+- [Vue 3](https://v3.vuejs.org/)
+- [Vite](https://vitejs.dev/)
+- [vuetify](https://www.npmjs.com/package/vuetify)
+- [SCSS](https://sass-lang.com/)
+- [Vue Router](https://router.vuejs.org/)
+- [Lodash](https://lodash.com/)
+- [@mdi/font](https://www.npmjs.com/package/@mdi/font)
+- [@supabase/supabase-js](https://www.npmjs.com/package/@supabase/supabase-js)
+- [material-design-icons-iconfont](https://www.npmjs.com/package/material-design-icons-iconfont)
+- [pinia](https://www.npmjs.com/package/pinia)

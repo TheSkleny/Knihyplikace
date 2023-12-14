@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
@@ -63,7 +66,7 @@ getBooks()
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="books.reading.length === 0">
-          <h2 style="margin-top: 10px">No books in this category</h2>
+          <h2 class="margin-top-10">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
@@ -81,7 +84,7 @@ getBooks()
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="books.unread.length === 0">
-          <h2 style="margin-top: 10px">No books in this category</h2>
+          <h2 class="margin-top-10">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
@@ -99,7 +102,7 @@ getBooks()
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="books.read.length === 0">
-          <h2 style="margin-top: 10px">No books in this category</h2>
+          <h2 class="margin-top-10">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
@@ -112,16 +115,6 @@ getBooks()
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
-  <div style="display: block; height: 100px;"/>
-
+  <div class="bottom-div"/>
 
 </template>
-
-<style scoped>
-  .btn-bottom-right {
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    z-index: 9999;
-  }
-</style>

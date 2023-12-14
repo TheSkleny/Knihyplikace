@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { ref } from 'vue';
 import { supabase } from '@/lib/supabaseClient';
@@ -13,6 +16,16 @@ async function getAchievements() {
     console.error('Error fetching achievements:', error);
   } 
   else {
+    data.forEach(achievement => {
+      achievement.progress = achievement.Current / achievement.Goal;
+    });
+
+    data.sort((a, b) => {
+      if (a.Current === a.Goal) return 1;
+      if (b.Current === b.Goal) return -1;
+      return b.progress - a.progress;
+    });
+
     achievements.value = data;
   }
 }
@@ -24,19 +37,6 @@ getAchievements();
   <div>
     <AchievementCard v-for="achievement in achievements" :key="achievement.Id" :achievement="achievement" />
   </div>
-  <div style="display: block; height: 100px;"/>
+  <div class="bottom-div"/>
 
 </template>
-
-
-<style scoped>
-.achievements-header {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
-
-.achievement-image {
-  width: 100px;
-  height: 100px;
-}
-</style>

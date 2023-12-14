@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue'
 import { supabase } from "@/lib/supabaseClient";

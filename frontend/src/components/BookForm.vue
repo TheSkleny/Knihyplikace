@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { ref, onMounted, defineProps, defineEmits, computed } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
@@ -153,12 +156,12 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
             />
           </v-col>
           <v-col>
-            <p style="text-align: right">{{ pagesRead }} / {{ pages }} stránek </p>
+            <p class="text-align-right">{{ pagesRead }} / {{ pages }} stránek </p>
             <v-progress-linear
                 :model-value="pagesPercent"
                 :height="10"
                 color="secondary"
-                style="border-radius: 5px"
+                class="border-radius-5"
             />
           </v-col>
         </v-row>
@@ -236,7 +239,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         </v-col>
       </v-row>
       <v-row>
-        <v-rating style="display: block; margin-left: auto; margin-right: auto"
+        <v-rating class="vrating-form"
                   :length="5"
                   :size="40"
                   active-color="primary"
@@ -293,54 +296,10 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         size="50"
     />
   </div>
+
   <div
 
       style="display: block; height: 80px;"
   />
 
 </template>
-
-
-<style scoped>
-.btn_menu {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.details_textarea {
-  width: 90%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px;
-
-}
-
-.details_text_field {
-  margin-top: -20px
-}
-
-h3 {
-  text-align: right;
-}
-
-.book_card_img {
-  height: 140px;
-  width: 100px;
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-
-}
-
-.btn-bottom-right {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  button {
-    margin-left: 10px;
-  }
-}
-</style>

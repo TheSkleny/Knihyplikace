@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import BookForm from '@/components/BookForm.vue'
 import {supabase} from "@/lib/supabaseClient";

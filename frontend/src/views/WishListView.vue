@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
@@ -22,5 +25,5 @@ getWishListBooks()
 
 <template>
   <WishListBookCard v-for="book in books" :key="book.Id" :book="book" />
-  <div style="display: block; height: 100px;"/>
+  <div class="bottom-div"/>
 </template>
