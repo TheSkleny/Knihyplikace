@@ -1,4 +1,4 @@
-<style lang="scss">
+<style scoped lang="scss">
  @import "@/assets/main.scss";
 </style>
 <script setup>
@@ -43,7 +43,7 @@ const navItems = [
 <template>
   <v-bottom-navigation mode="shift">
     <v-btn
-        class="max-width-20"
+        style="max-width: 20%;"
         :color="item.color"
         v-for="item in navItems"
         :key="item.name"
