@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+@import "@/assets/main.scss";
+</style>
 <script setup>
 
 import {ref} from 'vue'
@@ -49,7 +52,3 @@ GetGifts()
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
-
-<style scoped>
-
-</style>

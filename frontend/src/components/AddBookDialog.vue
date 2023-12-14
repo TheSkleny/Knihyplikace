@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+ @import "@/assets/main.scss";
+</style>
 <script setup>
 import { defineProps, ref } from 'vue'
 import {supabase} from "@/lib/supabaseClient";
@@ -154,12 +157,3 @@ const selectExistingBook = ref(null)
     </template>
   </v-dialog>
 </template>
-
-<style scoped>
-.btn-bottom-right {
-  position: fixed;
-  bottom: 70px;
-  right: 20px;
-  z-index: 999;
-}
-</style>

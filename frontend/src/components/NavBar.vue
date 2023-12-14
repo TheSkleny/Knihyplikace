@@ -1,3 +1,7 @@
+<style scoped lang="scss">
+@import '@/assets/main.scss';
+</style>
+
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -62,19 +66,3 @@ const navigateTo = (itemName) => {
     </div>
   </div>
 </template>
-
-<style scoped lang="scss">
-@import '@/assets/main.scss';
-.custom-navbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-around;
-  padding: 20px;
-  background-color: #fff; /* Background color for the navbar */
-  box-shadow: 0px -5px 15px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
-  z-index: 9999;
-}
-</style>
