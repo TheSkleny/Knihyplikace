@@ -27,7 +27,7 @@ const emit = defineEmits(['onReload'])
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
 
-async function removeBook() {
+async function removeFromWishlist() {
   const wishList = await supabase
     .from('BookList')
     .select('Id')
@@ -39,41 +39,20 @@ async function removeBook() {
     return
   }
 
-  const wishListId =  wishList.data.Id
-
   await supabase
     .from('BookInBookList')
     .delete()
     .eq('BookId', props.book.Id)
-    .eq('ListId', wishListId)
+    .eq('ListId', wishList.data.Id)
   emit('onReload')
 }
 
 async function moveToLibrary() {
-  const wishList = await supabase
-    .from('BookList')
-    .select('Id')
-    .eq('Name', 'V seznamu přání')
-    .single()
-
-  if (wishList.error) {
-    console.log('error', wishList.error)
-    return
-  }
-
-  const wishListId =  wishList.data.Id
-
-  await supabase
-    .from('BookInBookList')
-    .delete()
-    .eq('BookId', props.book.Id)
-    .eq('ListId', wishListId)
-
   await supabase
     .from('Book')
     .update({IsOwned: true})
     .eq('Id', props.book.Id)
-  emit('onReload')
+  removeFromWishlist()
 }
 </script>
 
@@ -100,7 +79,7 @@ async function moveToLibrary() {
         <v-row>
           <v-col>
             <v-btn
-                @click.prevent="removeBook"
+                @click.prevent="removeFromWishlist"
                 color="red"
                 size="40px"
                 icon="mdi-trash-can"
