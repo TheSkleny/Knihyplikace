@@ -9,6 +9,7 @@ import AddBookCoverDialog from "@/components/AddBookCoverDialog.vue";
 import cloneDeep from 'lodash/cloneDeep'
 import VueEasyLightbox from "vue-easy-lightbox";
 import 'vue-easy-lightbox-css'
+import { isRequired, isNumberOrNull } from "@/utils/inputRules";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
@@ -73,7 +74,18 @@ const pagesRead = computed(() => props.bookData.PagesRead ?? 0)
 const pages = computed(() => props.bookData.Pages ?? 0)
 const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
 
-function save() {
+const addBookForm = ref(null)
+
+const requiredRule = (value) => isRequired(value);
+
+const numberRule = (value) => isNumberOrNull(value);
+
+
+async function save() {
+  const { valid } = await addBookForm.value.validate()
+  if (!valid) {
+    return
+  }
   emit('onSave', newBookData.value)
   selectedFormType.value = formType.READ
   isReadonly.value = true
@@ -129,7 +141,7 @@ const lighboxToggle = () => {
       :scroll-disabled="true"
   />
   <v-container>
-    <v-form>
+    <v-form ref="addBookForm">
       <v-row>
         <v-col cols="4">
 
@@ -145,8 +157,18 @@ const lighboxToggle = () => {
         </v-col>
         <v-col>
           <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
-            <v-text-field variant="underlined" label="Name" v-model="newBookData.Name"/>
-            <v-text-field variant="underlined" label="Author" v-model="newBookData.Author"/>
+            <v-text-field
+                :rules="[requiredRule]"
+                variant="underlined"
+                label="Name"
+                v-model="newBookData.Name"
+            />
+            <v-text-field
+                :rules="[requiredRule]"
+                variant="underlined"
+                label="Author"
+                v-model="newBookData.Author"
+            />
           </div>
           <div v-if="selectedFormType === formType.READ">
             <h1>{{ newBookData.Name }}</h1>
@@ -168,6 +190,8 @@ const lighboxToggle = () => {
           <v-spacer/>
           <v-col cols="7">
             <v-text-field
+                type="number"
+                :rules="[numberRule]"
                 class="details_text_field"
                 variant="underlined"
                 v-model="newBookData.Pages"

@@ -5,6 +5,7 @@
 import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import WishListBookCard from "@/components/WishListBookCard.vue";
+import AddBookDialog from "@/components/AddBookDialog.vue";
 
 const books = ref([])
 
@@ -25,6 +26,10 @@ getWishListBooks()
 </script>
 
 <template>
+  <AddBookDialog
+      :isWish="true"
+      @on-reload="getWishListBooks"
+  />
   <WishListBookCard 
       v-for="book in books" 
       :key="book.Id" 

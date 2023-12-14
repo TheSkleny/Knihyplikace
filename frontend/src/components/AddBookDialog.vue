@@ -36,7 +36,8 @@ async function fetchExistingBooks() {
 
   if (error) {
     console.error('Error fetching existing books:', error)
-  } else {
+  }
+  else {
     existingBooks.value = data.map(book => ({
       title: book.Name,
       value: book.Id
@@ -109,6 +110,10 @@ async function createBook(isActive, formData) {
   formData.IsOwned = !!props.isOwned;
   if (formData.Pages === null) {
     formData.Pages = 0
+  }
+  if (formData.Author === null) {
+    // TODO
+    formData.Author = ''
   }
   const {data, error} = await supabase
       .from('Book')

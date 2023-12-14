@@ -52,7 +52,7 @@ async function moveToLibrary() {
     .from('Book')
     .update({IsOwned: true})
     .eq('Id', props.book.Id)
-  removeFromWishlist()
+  await removeFromWishlist()
 }
 </script>
 
