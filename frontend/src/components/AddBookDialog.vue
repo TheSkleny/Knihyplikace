@@ -32,22 +32,24 @@ const props = defineProps({
 
 const emit = defineEmits(['onReload'])
 
-const existingBooks = ref([])
+const existingBooks = ref([]);
 
 async function fetchExistingBooks() {
-  const {data, error} = await supabase
-      .from('Book')
-      .select('Name, Id')
-
+  const tableName = props.isOwned || props.isWish ? 'vUnassignedBooks' : 'Book';
+  const { data, error } = await supabase
+      .from(tableName)
+      .select('Name, Id');
   if (error) {
-    console.error('Error fetching existing books:', error)
-  } else {
-    existingBooks.value = data.map(book => ({
-      title: book.Name,
-      value: book.Id
-    }))
+    console.error('error', error);
+    return;
   }
+
+  existingBooks.value = data.map((book) => ({
+    title: book.Name,
+    value: book.Id,
+  }));
 }
+
 
 fetchExistingBooks()
 
