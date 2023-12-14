@@ -6,9 +6,11 @@ import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import {useRouter} from 'vue-router'
-import CreateListDialog from '@/components/CreateListDialog.vue';
+import CUDListDialog from '@/components/CUDListDialog.vue';
 
 const result = ref([])
+const chosenList = ref('')
+
 
 async function getLists() {
   const { data, error } = await supabase.from('BookList').select()
@@ -46,16 +48,23 @@ async function getBooksInLists() {
   return result.value;
 }
 
+function onListChange(newValue) {
+  if (!newValue) {
+    chosenList.value = '';
+  }
+}
+
 
 getBooksInLists()
 </script>
 
 <template>
-  <CreateListDialog 
+  <CUDListDialog 
       @on-reload="getLists"
+      :selectedList="chosenList"
   />
-  <v-expansion-panels>
-    <v-expansion-panel v-for="list in result" :key="list.ListName">
+  <v-expansion-panels v-model="chosenList" @update:model-value="onListChange">
+    <v-expansion-panel v-for="list in result" :key="list.ListName" :value="list.ListName">
       <v-expansion-panel-title>
         <h2>{{ list.ListName }}</h2>
       </v-expansion-panel-title>
