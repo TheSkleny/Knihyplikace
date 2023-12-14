@@ -37,7 +37,7 @@ const props = defineProps({
     default: false
   }
 })
-const emit = defineEmits(['onSave', 'onDelete', 'onReload'])
+const emit = defineEmits(['onSave', 'onDelete', 'onReload', 'onCancel'])
 
 const newBookData = ref(cloneDeep({ ...formDataBase, ...props.bookData }))
 
@@ -83,7 +83,7 @@ function edit() {
 
 function cancel() {
   if (props.isCreate) {
-    router.push({ name: 'home' })
+    emit('onCancel')
   }
   else {
     newBookData.value = cloneDeep(props.bookData)
@@ -130,7 +130,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
       <!-- switch between edit max pages and display progress and add read pages button -->
       <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
         <v-row>
-          <v-col cols="4">
+          <v-col cols="5">
             <h3>Max pages:</h3>
           </v-col>
           <v-spacer/>
@@ -170,7 +170,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="4">
+        <v-col cols="5">
           <h3>Genre:</h3>
         </v-col>
         <v-spacer/>
@@ -186,7 +186,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         <v-spacer/>
       </v-row>
       <v-row>
-        <v-col cols="4">
+        <v-col cols="5">
           <h3>Publisher:</h3>
         </v-col>
         <v-spacer/>
@@ -201,7 +201,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         <v-spacer/>
       </v-row>
       <v-row>
-        <v-col cols="4">
+        <v-col cols="5">
           <h3>Published:</h3>
         </v-col>
         <v-spacer/>
@@ -216,7 +216,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         <v-spacer/>
       </v-row>
       <v-row>
-        <v-col cols="4">
+        <v-col cols="5">
           <h3>Language:</h3>
         </v-col>
         <v-spacer/>
@@ -293,7 +293,10 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         size="50"
     />
   </div>
-  <div style="display: block; height: 80px;"/>
+  <div
+
+      style="display: block; height: 80px;"
+  />
 
 </template>
 
@@ -333,7 +336,7 @@ h3 {
 
 .btn-bottom-right {
   position: fixed;
-  bottom: 70px;
+  bottom: 20px;
   right: 20px;
 
   button {

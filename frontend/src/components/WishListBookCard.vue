@@ -1,15 +1,25 @@
 <script setup>
 import { defineProps, computed } from 'vue'
 
-const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
-const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
-
+/**
+ *
+ * @type {Prettify<Readonly<ExtractPropTypes<{showButton: {default: boolean, type: BooleanConstructor, required: boolean},
+ * book: {default: (function(): Book), type: ObjectConstructor, required: boolean}}>>>}
+ */
 const props = defineProps({
   book: {
     type: Object,
     required: true
+  },
+  showButton: {
+    type: Boolean,
+    required: false,
+    default: true
   }
 })
+
+const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
+const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
 
 async function removeBook() {
   // TODO: remove book from wishlist
@@ -43,10 +53,21 @@ async function moveToLibrary() {
         </v-row>
         <v-row>
           <v-col>
-            <v-btn @click.prevent="removeBook" color="red" size="40px" icon="mdi-trash-can"/>
+            <v-btn
+                @click.prevent="removeBook"
+                color="red"
+                size="40px"
+                icon="mdi-trash-can"
+            />
           </v-col>
           <v-col>
-            <v-btn style="margin-top: 5px" @click.prevent="moveToLibrary">Bought</v-btn>
+            <v-btn
+                v-if="props.showButton"
+                style="margin-top: 5px"
+                @click.prevent="moveToLibrary"
+            >
+              Bought
+            </v-btn>
           </v-col>
 
         </v-row>
