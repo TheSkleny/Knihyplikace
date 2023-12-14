@@ -4,9 +4,11 @@
 <script setup>
 import { ref, onMounted, defineProps, defineEmits, computed } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
-import { useRouter } from 'vue-router'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
+import AddBookCoverDialog from "@/components/AddBookCoverDialog.vue";
 import cloneDeep from 'lodash/cloneDeep'
+import CoolLightBox from 'vue-cool-lightbox'
+import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
@@ -49,7 +51,7 @@ const formType = {
   ADD: 2,
   READ: 3
 }
-const router = useRouter()
+
 const genre_list = ref([])
 
 async function getGenre() {
@@ -105,6 +107,15 @@ function getBook() {
 
 const selectedFormType = ref(props.isCreate ? formType.ADD : formType.READ)
 const isReadonly = ref(selectedFormType.value === formType.READ)
+
+const items = [
+  cover.value,
+]
+
+const index = ref(null)
+
+
+
 </script>
 
 <template>
@@ -112,7 +123,20 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
     <v-form>
       <v-row>
         <v-col cols="4">
-          <v-img :src="cover" class="book_card_img" cover/>
+<!--          <CoolLightBox-->
+<!--              :items="items"-->
+<!--              :index="index"-->
+<!--              @close="index = null">-->
+<!--          </CoolLightBox>-->
+
+          <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
+            <AddBookCoverDialog
+                @on-add-cover="newBookData.CoverImageLink = $event"
+            />
+          </div>
+          <div v-if="selectedFormType === formType.READ">
+            <v-img :src="cover" class="book_card_img" cover/>
+          </div>
         </v-col>
         <v-col>
           <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
@@ -239,12 +263,13 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
         </v-col>
       </v-row>
       <v-row>
-        <v-rating class="vrating-form"
-                  :length="5"
-                  :size="40"
-                  active-color="primary"
-                  :readonly="isReadonly"
-                  v-model="newBookData.Rating"
+        <v-rating
+            class="v-rating-form"
+            :length="5"
+            :size="40"
+            active-color="primary"
+            :readonly="isReadonly"
+            v-model="newBookData.Rating"
         />
       </v-row>
       <v-row>
@@ -298,7 +323,6 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
   </div>
 
   <div
-
       class="bottom-div"
   />
 

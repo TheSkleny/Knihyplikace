@@ -1,8 +1,8 @@
 <style scoped lang="scss">
- @import "@/assets/main.scss";
+@import "@/assets/main.scss";
 </style>
 <script setup>
-import { defineProps, ref } from 'vue'
+import {defineProps, ref, defineEmits} from 'vue'
 import {supabase} from "@/lib/supabaseClient";
 import BookForm from "@/components/BookForm.vue";
 
@@ -25,18 +25,18 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['onReload'])
 
 const existingBooks = ref([])
 
 async function fetchExistingBooks() {
-  const { data, error } = await supabase
-    .from('Book')
-    .select('Name, Id')
+  const {data, error} = await supabase
+      .from('Book')
+      .select('Name, Id')
 
   if (error) {
     console.error('Error fetching existing books:', error)
-  } 
-  else {
+  } else {
     existingBooks.value = data.map(book => ({
       title: book.Name,
       value: book.Id
@@ -61,58 +61,72 @@ function cancelDialog(isActive) {
   isActive.value = false
 }
 
-async function addBook(isActive, bookId) {
-  // TODO: add book to parent chosen list
+async function addBookToOwned(bookId) {
+  await supabase
+      .from('Book')
+      .update({IsOwned: true})
+      .eq('Id', bookId)
+}
 
-  // if homeview
-  // update book where bookId isOwned == true
-  // else if wishlist
-  // insert into wishlist
-  // else if gift
-  // insert into GiftList according to Person
-
-  if (props.isOwned) {
-    await supabase
-        .from('Book')
-        .update({IsOwned: true})
-        .eq('Id', bookId)
-  }
-  else if (props.isWish) {
-    const { data: bookListData, error: bookListError } = await supabase
+async function addBookToWishList(bookId) {
+  const {data: bookListData, error: bookListError} = await supabase
       .from('BookList')
       .select('Id')
       .eq('Name', 'V seznamu přání')
 
-    if (bookListError) {
-      console.log('error', bookListError)
-    } 
-    else {
-      const bookListId = bookListData[0].Id
-      await supabase
+  if (bookListError) {
+    console.log('error', bookListError)
+  }
+  else {
+    const wishListId = bookListData[0].Id
+    await supabase
         .from('BookInBookList')
-        .insert({ BookId: bookId, ListId: bookListId })
-    }
+        .insert({BookId: bookId, ListId: wishListId})
+  }
+}
+
+async function addBookToGiftList(bookId) {
+  await supabase
+      .from('GiftList')
+      .insert({BookId: bookId, Person: props.GiftPerson})
+}
+
+async function addBook(isActive, bookId) {
+  if (props.isOwned) {
+    await addBookToOwned(bookId)
+  }
+  else if (props.isWish) {
+    await addBookToWishList(bookId)
   }
   else if (props.GiftPerson) {
-    await supabase
-        .from('GiftList')
-        .insert({BookId: bookId, Person: props.GiftPerson})
+    await addBookToGiftList(bookId)
   }
-
+  emit('onReload')
   isActive.value = false
 }
 
 async function createBook(isActive, formData) {
-  // TODO: create book and add to parent chosen list
-
+  formData.IsOwned = !!props.isOwned;
+  if (formData.Pages === null) {
+    formData.Pages = 0
+  }
   const {data, error} = await supabase
       .from('Book')
-      .insert({...formData, IsOwned: false})
+      .insert({...formData, PagesRead: 0})
       .select()
-  if (error) console.log('error', error)
+  if (error) {
+    console.log('error', error)
+  }
   else {
     const bookId = data[0].Id
-    await addBook(isActive, bookId)
+    if (props.isWish) {
+      await addBookToWishList(bookId)
+    }
+    else if (props.GiftPerson) {
+      await addBookToGiftList(bookId)
+    }
+    emit('onReload')
+    isActive.value = false
   }
 }
 
@@ -147,7 +161,7 @@ const selectExistingBook = ref(null)
               v-if="showBookForm"
               :is-create="true"
               @on-cancel="cancelDialog(isActive)"
-              @on-save="createBook(isActive)"
+              @on-save="createBook(isActive, $event)"
           />
         </v-card-text>
         <v-card-actions v-if="!showBookForm">

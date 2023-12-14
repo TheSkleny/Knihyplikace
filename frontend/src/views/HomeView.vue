@@ -30,7 +30,12 @@ async function getBooks() {
   } else {
     data.forEach((book) => {
       if (book.PagesRead === book.Pages) {
-        books.value.read.push(book)
+        if (book.Pages === 0) {
+          books.value.unread.push(book)
+        }
+        else {
+          books.value.read.push(book)
+        }
       }
       else if (book.PagesRead === 0) {
         books.value.unread.push(book)
@@ -42,15 +47,14 @@ async function getBooks() {
   }
 }
 
-async function routeToAddBook() {
-  await router.push({ name: 'add-book' })
-}
-
 getBooks()
 </script>
 
 <template>
-  <AddBookDialog/>
+  <AddBookDialog
+      :is-owned="true"
+      @on-reload="getBooks"
+  />
 <!--  <v-btn-->
 <!--      class="btn-bottom-right"-->
 <!--      icon="mdi-plus"-->
