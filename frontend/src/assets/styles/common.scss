@@ -2,9 +2,23 @@
     position: fixed;
     bottom: 70px;
     right: 20px;
+    z-index: 999;
+    button {
+        margin-left: 10px;
+      }
+  }
+
+  .btn-bottom-right-dialog {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     z-index: 9999;
     button {
         margin-left: 10px;
+      }
+    &--close {
+        @extend .btn-bottom-right-dialog;
+        right: 80px;
       }
   }
 
@@ -63,4 +77,8 @@
 
 .max-width-20 {
     max-width: 20%;
+}
+
+.max-height-85 {
+    max-height: 85%;
 }

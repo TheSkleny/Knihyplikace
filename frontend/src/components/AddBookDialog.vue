@@ -121,7 +121,7 @@ const selectExistingBook = ref(null)
 </script>
 
 <template>
-  <v-dialog style="max-height: 85%">
+  <v-dialog class="max-height-85">
     <template v-slot:activator="{ props }">
       <v-btn
           class="btn-bottom-right"

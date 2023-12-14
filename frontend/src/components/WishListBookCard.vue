@@ -66,7 +66,7 @@ async function moveToLibrary() {
           <v-col>
             <v-btn
                 v-if="props.showButton"
-                style="margin-top: 5px"
+                class="margin-top-5"
                 @click.prevent="moveToLibrary"
             >
               Bought

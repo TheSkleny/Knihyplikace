@@ -299,7 +299,7 @@ const isReadonly = ref(selectedFormType.value === formType.READ)
 
   <div
 
-      style="display: block; height: 80px;"
+      class="bottom-div"
   />
 
 </template>

@@ -9,8 +9,6 @@ import {isRequired} from "@/utils/inputRules";
 
 const newListName = ref(null)
 
-const emit = defineEmits(['onReload'])
-
 const addListForm = ref(null)
 
 const requiredRule = (value) => isRequired(value);
@@ -46,35 +44,37 @@ async function updatePages(num, isActive) {
 </script>
 
 <template>
-  <v-dialog width="500">
+  <v-dialog class="max-height-85">
     <template v-slot:activator="{ props }">
       <v-btn
-          color="secondary"
+          class="btn-bottom-right"
+          icon="mdi-plus"
+          color="primary"
+          elevation="24"
+          size="50"
           v-bind="props"
-      >
-        Read
-      </v-btn>
+          @click.prevent="opedDialog"
+      />
     </template>
-    <template #default="{isActive}">
-      <v-card title="Create new list">
+    <template #default="{ isActive }">
+      <v-card title="Create list">
         <v-card-text>
-          <v-form ref="addListForm">
+          <v-form ref="numberForm">
             <v-text-field
-                label="List name"
-                type="text"
-                v-model="newListName"
-                :rules="[requiredRule, listUniqueNameRule]"
+              label="List name"
+              type="text"
+              v-model="newPagesRead"
+              :rules="[requiredRule, pagesLimitRule]"
             />
           </v-form>
-
         </v-card-text>
         <v-card-actions>
           <v-spacer/>
-
           <v-btn
-              text="Create list"
-              @click=""
-          ></v-btn>
+            text="Create list"
+            color="blue"
+            @click="finishReading(isActive)"
+          />
         </v-card-actions>
       </v-card>
     </template>
