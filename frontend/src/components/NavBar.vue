@@ -1,12 +1,10 @@
-<style scoped lang="scss">
-@import '@/assets/main.scss';
+<style lang="scss">
+ @import "@/assets/main.scss";
 </style>
-
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import {useRouter} from "vue-router";
 
-const router = useRouter();
+const router = useRouter()
 
 const navItems = [
   {
@@ -39,30 +37,20 @@ const navItems = [
     text: 'Achievements',
     color: 'green'
   },
-];
-
-const activeItem = ref('');
-
-const isActive = (itemName) => activeItem.value === itemName;
-
-const navigateTo = (itemName) => {
-  if (!isActive(itemName)) {
-    activeItem.value = itemName;
-    router.push({ name: itemName });
-  }
-};
+]
 </script>
 
 <template>
-  <div class="custom-navbar">
-    <div
-      v-for="item in navItems"
-      :key="item.name"
-      @click="navigateTo(item.name)"
-      :color="item.color"
-      :style="{ color: isActive(item.name) ? item.color : '#000' }"
+  <v-bottom-navigation mode="shift">
+    <v-btn
+        style="max-width: 20%"
+        :color="item.color"
+        v-for="item in navItems"
+        :key="item.name"
+        @click="router.push({ name: item.name })"
     >
       <v-icon>{{ item.icon }}</v-icon>
-    </div>
-  </div>
+      <span> {{ item.text }} </span>
+    </v-btn>
+  </v-bottom-navigation>
 </template>
