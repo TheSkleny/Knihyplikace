@@ -29,7 +29,7 @@ getWishListBooks()
       v-for="book in books" 
       :key="book.Id" 
       :book="book" 
-      @on-delete="getWishListBooks"
+      @on-reload="getWishListBooks"
   />
   <div class="bottom-div"/>
 </template>
