@@ -6,6 +6,7 @@ import AchievementsView from '../views/AchievementsView.vue'
 import AddBookView from '@/views/AddBookView.vue'
 import BookshelfView from '@/views/BookshelfView.vue'
 import GiftsView from '@/views/GiftsView.vue'
+import SettingsView from '@/views/SettingsView.vue'
 
 import changeTitleMiddleware from "@/middleware/changeTitle";
 
@@ -68,6 +69,14 @@ const router = createRouter({
             component: GiftsView,
             meta: {
                 title: "Dárky",
+            }
+        },
+        {
+            path: '/settings',
+            name: 'settings',
+            component: SettingsView,
+            meta: {
+                title: "Nastavení",
             }
         }
     ]

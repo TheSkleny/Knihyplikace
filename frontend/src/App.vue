@@ -21,6 +21,11 @@ async function onLogoClick() {
       })
   await router.push({name: 'home'})
 }
+
+async function routeToSettings() {
+  await router.push({name: 'settings'})
+}
+
 </script>
 
 <template>
@@ -33,7 +38,7 @@ async function onLogoClick() {
         <v-app-bar-title class="app_title">
           {{ title }}
         </v-app-bar-title>
-        <v-btn icon="mdi-cog"/>
+        <v-btn icon="mdi-cog" @click="routeToSettings"/>
       </v-app-bar>
     </v-container>
     <RouterView/>
