@@ -44,7 +44,7 @@ const navItems = [
   <v-bottom-navigation mode="shift">
     <v-btn
         style="max-width: 20%"
-        :color="item.color"
+        color="primary"
         v-for="item in navItems"
         :key="item.name"
         @click="router.push({ name: item.name })"

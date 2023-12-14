@@ -1,3 +1,5 @@
+@import '../modules/base';
+
 .achievement_card {
     width: 90%;
     display: block;
@@ -5,7 +7,7 @@
     margin-right: auto;
     padding: 20px;
     margin-bottom: 20px;
-    background: lightgray;
+    background: $secondary-light;
   }
   
   .achievement_card_img {
@@ -15,4 +17,8 @@
     margin-top: auto;
     margin-bottom: auto
   
+  }
+
+  .achievement_card_text {
+    color: $secondary-dark;
   }

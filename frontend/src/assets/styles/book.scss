@@ -1,8 +1,11 @@
+@import '../modules/base';
+
 .book_card {
     max-height: 14rem;
     padding: 20px;
-    margin-bottom: 20px;
-    background: lightgray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background: $secondary-light;
     &--wishlist {
       @extend .book_card;
       width: 90%;
@@ -40,3 +43,9 @@
 .details_text_field {
     margin-top: -20px
 }
+
+.bookshelf_no_books {
+    margin-top: 10px;
+    color: $secondary;
+}
+

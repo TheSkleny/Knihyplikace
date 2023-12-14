@@ -12,7 +12,6 @@ import 'vue-easy-lightbox-css'
 import { isRequired, isNumberOrNull } from "@/utils/inputRules";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
-const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
 
 const formDataBase = {
   Name: null,
@@ -24,7 +23,9 @@ const formDataBase = {
   Pages: null,
   PagesRead: null,
   Description: null,
-  CoverImageLink: null
+  CoverImageLink: null,
+  Rating: null,
+  IsOwned: null
 }
 
 /**
@@ -73,6 +74,7 @@ async function getGenre() {
 const pagesRead = computed(() => props.bookData.PagesRead ?? 0)
 const pages = computed(() => props.bookData.Pages ?? 0)
 const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
+const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
 
 const addBookForm = ref(null)
 
@@ -87,6 +89,12 @@ async function save() {
     return
   }
   emit('onSave', newBookData.value)
+  if (newBookData.value.CoverImageLink) {
+    cover.value = newBookData.value.CoverImageLink
+  }
+  else {
+    cover.value = DEFAULT_COVER
+  }
   selectedFormType.value = formType.READ
   isReadonly.value = true
 }
@@ -148,6 +156,7 @@ const lighboxToggle = () => {
 
           <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
             <AddBookCoverDialog
+                :coverImage="cover"
                 @on-add-cover="newBookData.CoverImageLink = $event"
             />
           </div>
@@ -182,7 +191,7 @@ const lighboxToggle = () => {
         </v-col>
       </v-row>
       <!-- switch between edit max pages and display progress and add read pages button -->
-      <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
+      <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT || !newBookData.IsOwned">
         <v-row>
           <v-col cols="5">
             <h3>Max pages:</h3>
@@ -192,6 +201,7 @@ const lighboxToggle = () => {
             <v-text-field
                 type="number"
                 :rules="[numberRule]"
+                :readonly="isReadonly"
                 class="details_text_field"
                 variant="underlined"
                 v-model="newBookData.Pages"
@@ -200,7 +210,7 @@ const lighboxToggle = () => {
           <v-spacer/>
         </v-row>
       </div>
-      <div v-if="selectedFormType === formType.READ">
+      <div v-if="selectedFormType === formType.READ && newBookData.IsOwned">
         <v-row>
           <v-col>
             <AddPagesDialog
@@ -213,7 +223,7 @@ const lighboxToggle = () => {
             <v-progress-linear
                 :model-value="pagesPercent"
                 :height="10"
-                color="secondary"
+                color="primary"
                 class="border-radius-5"
             />
           </v-col>
@@ -296,7 +306,7 @@ const lighboxToggle = () => {
             class="v-rating-form"
             :length="5"
             :size="40"
-            active-color="primary"
+            active-color="primary_light"
             :readonly="isReadonly"
             v-model="newBookData.Rating"
         />
@@ -317,18 +327,20 @@ const lighboxToggle = () => {
       </v-row>
     </v-form>
   </v-container>
+
   <div class="btn-bottom-right">
     <v-btn
-        v-if="selectedFormType === formType.EDIT"
+        v-if="selectedFormType === formType.EDIT && newBookData.IsOwned"
         @click="deleteBook"
         icon="mdi-trash-can-outline"
-        color="red"
+        color="error"
         elevation="24"
         size="50"
     />
     <v-btn
         v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
         @click="cancel"
+        color="white"
         icon="mdi-close"
         elevation="24"
         size="50"
@@ -337,7 +349,7 @@ const lighboxToggle = () => {
         v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
         @click="save"
         icon="mdi-check"
-        color="teal"
+        color="primary"
         elevation="24"
         size="50"
     />

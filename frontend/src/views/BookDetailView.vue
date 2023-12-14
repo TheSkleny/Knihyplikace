@@ -30,7 +30,8 @@ async function getBook() {
           Pages,
           PagesRead,
           Description,
-          CoverImageLink`
+          CoverImageLink,
+          IsOwned`
       )
       .eq('Id', route.params.id)
   if (error) {

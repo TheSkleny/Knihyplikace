@@ -6,9 +6,11 @@ import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import {useRouter} from 'vue-router'
-import CreateListDialog from '@/components/CreateListDialog.vue';
+import CUDListDialog from '@/components/CUDListDialog.vue';
 
 const result = ref([])
+const chosenList = ref('')
+
 
 async function getLists() {
   const { data, error } = await supabase.from('BookList').select()
@@ -46,22 +48,32 @@ async function getBooksInLists() {
   return result.value;
 }
 
+function onListChange(newValue) {
+  if (!newValue) {
+    chosenList.value = '';
+  }
+}
+
 
 getBooksInLists()
 </script>
 
 <template>
-  <CreateListDialog 
+  <CUDListDialog 
       @on-reload="getLists"
+      :selectedList="chosenList"
   />
-  <v-expansion-panels>
-    <v-expansion-panel v-for="list in result" :key="list.ListName">
+  <v-expansion-panels v-model="chosenList" @update:model-value="onListChange">
+    <v-expansion-panel v-for="list in result" :key="list.ListName" :value="list.ListName">
       <v-expansion-panel-title>
         <h2>{{ list.ListName }}</h2>
+        <v-spacer/>
+        <p class="book_counter">{{ list.Book.length }}</p>
+
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="list.Book.length === 0">
-              <h2 class="margin-top-10">No books in this category</h2>
+              <h2 class="bookshelf_no_books">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard

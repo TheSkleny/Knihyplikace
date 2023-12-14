@@ -7,7 +7,6 @@
 @import 'styles/navbar';
 
 
-$color-subtitle: gray;
 
 h1 {
   font-size: 26px;
@@ -15,9 +14,16 @@ h1 {
 
 h2 {
   font-size: 20px;
-  color: $color-subtitle;
+  color: $secondary_dark;
 }
 
 h3 {
   text-align: right;
+}
+
+.book_counter {
+  margin-right: 10px;
+  background-color: $primary;
+  border-radius: 10px;
+  padding: 5px;
 }

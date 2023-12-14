@@ -11,7 +11,6 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import colors from 'vuetify/lib/util/colors'
 import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
 
@@ -21,11 +20,17 @@ const vuetify = createVuetify({
   theme: {
     themes: {
       light: {
-        dark: false,
+        dark: true,
         colors: {
-          primary: '#000000', // Black
-          secondary: '#666666', // Gray
-          card_bg: '#aaaaaa'
+          primary: '#009688',
+          primary_dark: '#007575',
+          primary_light: '#00c5c5',
+          secondary: '#666666',
+          secondary_dark: '#4d4d4d',
+          secondary_light: '#808080',
+          black: '#000000',
+          white: '#ffffff',
+          error: '#d24c41',
         }
       }
     }
