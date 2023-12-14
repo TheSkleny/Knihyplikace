@@ -3,9 +3,10 @@
 </style>
 <script setup>
 
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 import {supabase} from "@/lib/supabaseClient";
 import WishListBookCard from "@/components/WishListBookCard.vue";
+import AddBookDialog from "@/components/AddBookDialog.vue";
 
 /**
  * @type {Ref<UnwrapRef<Gift[]>>}
@@ -32,10 +33,18 @@ async function GetGifts() {
 }
 
 
+const persons = computed(() => Object.keys(gifts.value));
+
+
 GetGifts()
 </script>
 
 <template>
+  <AddBookDialog
+      :isGift="true"
+      :gift-persons="persons"
+      @on-reload="GetGifts"
+  />
   <v-expansion-panels>
     <v-expansion-panel v-for="(gifts, person) in gifts" :key="person">
       <v-expansion-panel-title>

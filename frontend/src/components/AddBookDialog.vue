@@ -18,11 +18,16 @@ const props = defineProps({
     required: false,
     default: false
   },
-  GiftPerson: {
-    type: String,
+  isGift: {
+    type: Boolean,
     required: false,
-    default: null
+    default: false
   },
+  giftPersons: {
+    type: Array,
+    required: false,
+    default: () => []
+  }
 })
 
 const emit = defineEmits(['onReload'])
@@ -49,6 +54,8 @@ async function fetchExistingBooks() {
 fetchExistingBooks()
 
 const showBookForm = ref(false)
+const giftPerson = ref(null)
+const selectExistingBook = ref(null)
 
 function opedDialog() {
   showBookForm.value = false
@@ -78,8 +85,7 @@ async function addBookToWishList(bookId) {
 
   if (bookListError) {
     console.log('error', bookListError)
-  }
-  else {
+  } else {
     const wishListId = bookListData[0].Id
     await supabase
         .from('BookInBookList')
@@ -90,17 +96,15 @@ async function addBookToWishList(bookId) {
 async function addBookToGiftList(bookId) {
   await supabase
       .from('GiftList')
-      .insert({BookId: bookId, Person: props.GiftPerson})
+      .insert({BookId: bookId, Person: giftPerson.value})
 }
 
 async function addBook(isActive, bookId) {
   if (props.isOwned) {
     await addBookToOwned(bookId)
-  }
-  else if (props.isWish) {
+  } else if (props.isWish) {
     await addBookToWishList(bookId)
-  }
-  else if (props.GiftPerson) {
+  } else if (props.isGift) {
     await addBookToGiftList(bookId)
   }
   emit('onReload')
@@ -112,23 +116,17 @@ async function createBook(isActive, formData) {
   if (formData.Pages === null) {
     formData.Pages = 0
   }
-  if (formData.Author === null) {
-    // TODO
-    formData.Author = ''
-  }
   const {data, error} = await supabase
       .from('Book')
       .insert({...formData, PagesRead: 0})
       .select()
   if (error) {
     console.log('error', error)
-  }
-  else {
+  } else {
     const bookId = data[0].Id
     if (props.isWish) {
       await addBookToWishList(bookId)
-    }
-    else if (props.GiftPerson) {
+    } else if (props.isGift) {
       await addBookToGiftList(bookId)
     }
     emit('onReload')
@@ -136,7 +134,6 @@ async function createBook(isActive, formData) {
   }
 }
 
-const selectExistingBook = ref(null)
 
 </script>
 
@@ -156,13 +153,18 @@ const selectExistingBook = ref(null)
     <template #default="{ isActive }">
       <v-card :title="showBookForm ? 'Create new book' : 'Add book'">
         <v-card-text>
-          <v-form v-if="!showBookForm">
-            <v-select
-                label="Existing books"
-                :items="existingBooks"
-                v-model="selectExistingBook"
-            />
-          </v-form>
+          <v-combobox
+              v-if="props.isGift"
+              label="Person"
+              :items="props.giftPersons"
+              v-model="giftPerson"
+          />
+          <v-select
+              v-if="!showBookForm"
+              label="Existing books"
+              :items="existingBooks"
+              v-model="selectExistingBook"
+          />
           <BookForm
               v-if="showBookForm"
               :is-create="true"
