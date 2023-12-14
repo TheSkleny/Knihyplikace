@@ -45,6 +45,10 @@ async function removeFromWishlist() {
     .eq('BookId', props.book.Id)
     .eq('ListId', wishList.data.Id)
   emit('onReload')
+  await supabase
+    .rpc('increment_achievement', {
+        name_param: 'Existential Explorer'
+  })
 }
 
 async function moveToLibrary() {
