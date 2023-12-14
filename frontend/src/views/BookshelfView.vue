@@ -51,7 +51,9 @@ getBooksInLists()
 </script>
 
 <template>
-  <CreateListDialog />
+  <CreateListDialog 
+      @on-reload="getLists"
+  />
   <v-expansion-panels>
     <v-expansion-panel v-for="list in result" :key="list.ListName">
       <v-expansion-panel-title>

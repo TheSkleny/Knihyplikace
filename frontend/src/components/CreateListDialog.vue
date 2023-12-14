@@ -2,7 +2,7 @@
  @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref, defineProps, defineEmits} from 'vue'
+import {ref, defineEmits} from 'vue'
 import {supabase} from "@/lib/supabaseClient";
 import {isRequired} from "@/utils/inputRules";
 
@@ -15,28 +15,34 @@ const requiredRule = (value) => isRequired(value);
 
 const listUniqueNameRule = async (value) => {
   const {data, error} = await supabase
-      .from('List')
+      .from('BookList')
       .select()
       .eq('Name', value)
   if (error) console.log('error', error)
   else {
-    console.log(data)
     return data.length === 0 || 'List with this name already exists'
   }
 }
 
 
 
-async function updatePages(num, isActive) {
-  console.log(props.book.Id)
-  const {data, error} = await supabase
-      .from('Book')
-      .update({PagesRead: num, LastPageUpdate: 'now()'})
-      .eq('Id', props.book.Id)
-  if (error) console.log('error', error)
-  else console.log(data)
-  emit('onReload')
-  isActive.value = false
+const emit = defineEmits(['onReload'])
+
+async function insertList(isActive) {
+  console.log(newListName.value)
+  if (await addListForm.value.validate()) {
+    await supabase
+        .from('BookList')
+        .insert([
+          {Name: newListName.value}
+        ])
+    emit('onReload')
+    isActive.value = false
+  }
+}
+
+function opedDialog() {
+  newListName.value = null
 }
 
 
@@ -59,12 +65,12 @@ async function updatePages(num, isActive) {
     <template #default="{ isActive }">
       <v-card title="Create list">
         <v-card-text>
-          <v-form ref="numberForm">
+          <v-form ref="addListForm">
             <v-text-field
               label="List name"
               type="text"
-              v-model="newPagesRead"
-              :rules="[requiredRule, pagesLimitRule]"
+              v-model="newListName"
+              :rules="[requiredRule, listUniqueNameRule]"
             />
           </v-form>
         </v-card-text>
@@ -73,7 +79,7 @@ async function updatePages(num, isActive) {
           <v-btn
             text="Create list"
             color="blue"
-            @click="finishReading(isActive)"
+            @click="insertList(isActive)"
           />
         </v-card-actions>
       </v-card>
