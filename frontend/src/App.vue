@@ -18,7 +18,7 @@ const {title} = storeToRefs(store)
         <v-row>
           <v-col class="margin-left-10">
             <v-app-bar-nav-icon @click="$router.push({ name: 'home' })">
-              <v-icon size="40px">mdi-book-open-variant</v-icon>
+              <v-icon size="40px" color="primary">mdi-book-open-variant</v-icon>
             </v-app-bar-nav-icon>
           </v-col>
           <v-col class="margin-top-10">

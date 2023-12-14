@@ -21,7 +21,12 @@ const emit = defineEmits(['onReload'])
 
 const pagesRead = computed(() => props.book.PagesRead ?? 0)
 const pages = computed(() => props.book.Pages ?? 0)
-const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
+const pagesPercent = computed(() => {
+  if (pages.value === 0 && pagesRead.value === 0) {
+    return 100
+  }
+  return pagesRead.value / pages.value * 100
+})
 
 function getBook() {
   emit('onReload')
@@ -59,7 +64,7 @@ function getBook() {
             <v-progress-linear
                 :model-value="pagesPercent"
                 :height="10"
-                color="secondary"
+                color="primary"
                 class="border-radius-5"
             />
           </v-col>

@@ -58,10 +58,13 @@ getBooksInLists()
     <v-expansion-panel v-for="list in result" :key="list.ListName">
       <v-expansion-panel-title>
         <h2>{{ list.ListName }}</h2>
+        <v-spacer/>
+        <p class="book_counter">{{ list.Book.length }}</p>
+
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="list.Book.length === 0">
-              <h2 class="margin-top-10">No books in this category</h2>
+              <h2 class="bookshelf_no_books">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard

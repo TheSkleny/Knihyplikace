@@ -223,7 +223,7 @@ const lighboxToggle = () => {
             <v-progress-linear
                 :model-value="pagesPercent"
                 :height="10"
-                color="secondary"
+                color="primary"
                 class="border-radius-5"
             />
           </v-col>
@@ -306,7 +306,7 @@ const lighboxToggle = () => {
             class="v-rating-form"
             :length="5"
             :size="40"
-            active-color="primary"
+            active-color="primary_light"
             :readonly="isReadonly"
             v-model="newBookData.Rating"
         />
@@ -333,13 +333,14 @@ const lighboxToggle = () => {
         v-if="selectedFormType === formType.EDIT && newBookData.IsOwned"
         @click="deleteBook"
         icon="mdi-trash-can-outline"
-        color="red"
+        color="error"
         elevation="24"
         size="50"
     />
     <v-btn
         v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
         @click="cancel"
+        color="white"
         icon="mdi-close"
         elevation="24"
         size="50"
@@ -348,7 +349,7 @@ const lighboxToggle = () => {
         v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
         @click="save"
         icon="mdi-check"
-        color="teal"
+        color="primary"
         elevation="24"
         size="50"
     />

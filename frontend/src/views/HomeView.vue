@@ -56,6 +56,8 @@ getBooks()
     <v-expansion-panel v-for="(category, index) in ['Reading', 'Unread', 'Read']" :key="index">
       <v-expansion-panel-title>
         <h2>{{ category }}</h2>
+        <v-spacer/>
+        <p class="book_counter">{{ books[category.toLowerCase()].length}}</p>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="books[category.toLowerCase()].length === 0">
