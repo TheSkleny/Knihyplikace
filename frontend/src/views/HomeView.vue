@@ -53,53 +53,17 @@ getBooks()
       @on-reload="getBooks"
   />
   <v-expansion-panels :model-value="[0]">
-    <v-expansion-panel>
+    <v-expansion-panel v-for="(category, index) in ['Reading', 'Unread', 'Read']" :key="index">
       <v-expansion-panel-title>
-        <h2>Reading</h2>
+        <h2>{{ category }}</h2>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
-        <div v-if="books.reading.length === 0">
+        <div v-if="books[category.toLowerCase()].length === 0">
           <h2 class="margin-top-10">No books in this category</h2>
         </div>
         <div v-else>
           <BookCard
-            v-for="book in books.reading"
-            :key="book.Id"
-            :book="book"
-            @on-reload="getBooks"
-          />
-        </div>
-      </v-expansion-panel-text>
-    </v-expansion-panel>
-    <v-expansion-panel>
-      <v-expansion-panel-title>
-        <h2>Unread</h2>
-      </v-expansion-panel-title>
-      <v-expansion-panel-text>
-        <div v-if="books.unread.length === 0">
-          <h2 class="margin-top-10">No books in this category</h2>
-        </div>
-        <div v-else>
-          <BookCard
-            v-for="book in books.unread"
-            :key="book.Id"
-            :book="book"
-            @on-reload="getBooks"
-          />
-        </div>
-      </v-expansion-panel-text>
-    </v-expansion-panel>
-    <v-expansion-panel>
-      <v-expansion-panel-title>
-        <h2>Read</h2>
-      </v-expansion-panel-title>
-      <v-expansion-panel-text>
-        <div v-if="books.read.length === 0">
-          <h2 class="margin-top-10">No books in this category</h2>
-        </div>
-        <div v-else>
-          <BookCard
-            v-for="book in books.read"
+            v-for="book in books[category.toLowerCase()]"
             :key="book.Id"
             :book="book"
             @on-reload="getBooks"
