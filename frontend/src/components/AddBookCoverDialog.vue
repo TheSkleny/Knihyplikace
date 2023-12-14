@@ -1,10 +1,19 @@
 <script setup>
-import {ref, defineEmits} from 'vue'
-import { isRequired } from "@/utils/inputRules";
+import {ref, defineEmits, defineProps} from 'vue'
+import {isRequired} from "@/utils/inputRules";
+
+
+const props = defineProps({
+  CoverImage: {
+    type: String,
+    required: false,
+    default: null
+  }
+})
 
 const emit = defineEmits(['onAddCover'])
 
-const CoverImageLink = ref(null)
+const CoverImageLink = ref(props.CoverImage)
 
 const requiredRule = (value) => isRequired(value);
 
@@ -22,7 +31,7 @@ function addCover(isActive) {
 
 const addCoverImg = 'https://siddiquibookcompany.com/wp-content/themes/kidsy/images/placeholder.jpg'
 
-const CoverImage = ref(addCoverImg)
+const CoverImage = ref(props.CoverImage ?? addCoverImg)
 
 </script>
 
