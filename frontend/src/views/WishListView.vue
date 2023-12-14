@@ -9,6 +9,7 @@ import WishListBookCard from "@/components/WishListBookCard.vue";
 const books = ref([])
 
 async function getWishListBooks() {
+  books.value = []
   const { data, error } = await supabase
       .from('vWishListBooks')
       .select('Id, Name, Author, CoverImageLink')
@@ -24,6 +25,11 @@ getWishListBooks()
 </script>
 
 <template>
-  <WishListBookCard v-for="book in books" :key="book.Id" :book="book" />
+  <WishListBookCard 
+      v-for="book in books" 
+      :key="book.Id" 
+      :book="book" 
+      @on-delete="getWishListBooks"
+  />
   <div class="bottom-div"/>
 </template>

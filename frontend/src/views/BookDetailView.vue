@@ -2,9 +2,9 @@
  @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref} from 'vue'
-import {supabase} from '@/lib/supabaseClient'
-import {useRoute, useRouter} from 'vue-router'
+import { ref } from 'vue'
+import { supabase } from '@/lib/supabaseClient'
+import { useRoute, useRouter } from 'vue-router'
 import BookForm from "@/components/BookForm.vue";
 
 const route = useRoute()
@@ -50,25 +50,6 @@ async function onSave(newData) {
 }
 
 async function onDelete() {
-  const wishList = await supabase
-    .from('BookList')
-    .select('Id')
-    .eq('Name', 'V seznamu přání')
-    .single()
-
-  if (wishList.error) {
-    console.log('error', wishList.error)
-    return
-  }
-
-  const wishListId =  wishList.data.Id
-
-  await supabase
-    .from('BookInBookList')
-    .delete()
-    .eq('BookId', route.params.id)
-    .eq('ListId', wishListId)
-
   await supabase
     .from('Book')
     .update({ IsOwned: false })

@@ -2,7 +2,8 @@
  @import "@/assets/main.scss";
 </style>
 <script setup>
-import { defineProps, computed } from 'vue'
+import { defineProps, computed, defineEmits } from 'vue'
+import { supabase } from '@/lib/supabaseClient'
 
 /**
  *
@@ -21,11 +22,31 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['onDelete'])
+
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
 
 async function removeBook() {
-  // TODO: remove book from wishlist
+  const wishList = await supabase
+    .from('BookList')
+    .select('Id')
+    .eq('Name', 'V seznamu přání')
+    .single()
+
+  if (wishList.error) {
+    console.log('error', wishList.error)
+    return
+  }
+
+  const wishListId =  wishList.data.Id
+
+  await supabase
+    .from('BookInBookList')
+    .delete()
+    .eq('BookId', props.book.Id)
+    .eq('ListId', wishListId)
+  emit('onDelete')
 }
 
 async function moveToLibrary() {
@@ -71,9 +92,7 @@ async function moveToLibrary() {
             >
               Bought
             </v-btn>
-
           </v-col>
-
         </v-row>
       </v-col>
     </v-row>
