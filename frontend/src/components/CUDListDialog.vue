@@ -20,7 +20,6 @@ const addListForm = ref(null)
 const requiredRule = (value) => isRequired(value);
 
 const listUniqueNameRule = async (value) => {
-  console.log(value)
   const {data, error} = await supabase
       .from('BookList')
       .select()
@@ -38,8 +37,6 @@ async function insertList(isActive) {
   if (!valid) {
     return
   }
-  console.log('insert')
-  console.log(newListName.value)
   if (await addListForm.value.validate()) {
     await supabase
         .from('BookList')
@@ -56,8 +53,6 @@ async function updateList(isActive) {
   if (!valid) {
     return
   }
-  console.log('update')
-  console.log(newListName.value)
   if (await addListForm.value.validate()) {
     await supabase
         .from('BookList')
@@ -69,17 +64,29 @@ async function updateList(isActive) {
 }
 
 async function deleteList(isActive) {
-  // console.log('delete')
-  // console.log(newListName.value)
-  // await supabase
-  //     .from('BookList')
-  //     .delete()
-  //     .eq('Name', props.selectedList)
-  // emit('onReload')
-  // isActive.value = false
-  // TODO - delete list and remove all books from it
-  // TODO - show confirmation dialog
-  console.log('TODO delete')
+  // Delete records from BookInBookList table
+  const { data: bookListData, error: bookListError } = await supabase
+    .from('BookList')
+    .select('Id')
+    .eq('Name', props.selectedList)
+  if (bookListError) {
+    console.log('error', bookListError)
+    return
+  }
+  const listIds = bookListData.map(item => item.Id)
+  await supabase
+    .from('BookInBookList')
+    .delete()
+    .in('ListId', listIds)
+
+  // Delete list from BookList table
+  await supabase
+    .from('BookList')
+    .delete()
+    .eq('Name', props.selectedList)
+
+  emit('onReload')
+  isActive.value = false
 }
 
 function opedDialog() {

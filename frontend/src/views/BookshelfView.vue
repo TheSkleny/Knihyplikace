@@ -54,13 +54,17 @@ function onListChange(newValue) {
   }
 }
 
+function onReload() {
+  getLists();
+  getBooksInLists();
+}
 
 getBooksInLists()
 </script>
 
 <template>
   <CUDListDialog 
-      @on-reload="getLists"
+      @on-reload="onReload"
       :selectedList="chosenList"
   />
   <v-expansion-panels v-model="chosenList" @update:model-value="onListChange">
