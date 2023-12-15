@@ -59,11 +59,6 @@ function onReload() {
   getBooksInLists();
 }
 
-async function addBookToList(listName) {
-      // Add your logic here to add a book to the selected list
-      console.log(`Adding book to list: ${listName}`);
-    }
-
 getBooksInLists()
 </script>
 
