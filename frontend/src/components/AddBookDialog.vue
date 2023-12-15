@@ -46,10 +46,37 @@ const existingBooks = ref([]);
 
 
 async function fetchExistingBooks() {
-  const tableName = props.isOwned || props.isWish ? 'vUnassignedBooks' : 'Book';
-  const {data, error} = await supabase
-      .from(tableName)
-      .select('Name, Id');
+  let tableName = 'Book';
+  if (props.isOwned || props.isWish) {
+    tableName = 'vUnassignedBooks';
+  } 
+  else if (props.isBookshelf) {
+    const bookList = await supabase
+      .from('BookList')
+      .select('Id')
+      .eq('Name', props.selectedList);
+      
+    const { data, error } = await supabase
+      .from('vCustomListBooks')
+      .select('Name, Id')
+      .neq('ListId', bookList.data[0].Id);
+
+    if (error) {
+      console.log('error', error);
+      return;
+    }
+
+    existingBooks.value = data.map((book) => ({
+      title: book.Name,
+      value: book.Id,
+    }));
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from(tableName)
+    .select('Name, Id');
+
   if (error) {
     console.error('error', error);
     return;
