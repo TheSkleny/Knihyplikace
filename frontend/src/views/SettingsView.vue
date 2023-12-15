@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import {supabase} from "@/lib/supabaseClient";
 import {useRouter} from "vue-router";
+import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 
 
 const router = useRouter()
@@ -45,7 +46,6 @@ async function deleteBook(id) {
   // TODO: mby cascade delete?
   await getBooks()
 }
-
 
 getBooks()
 getGenres()
@@ -94,13 +94,18 @@ getGenres()
                     style="margin-right: 15px"
                     @click.prevent="routeToDetail(book.Id)"
                 />
-                <v-btn
-                    icon="mdi-delete"
-                    color="error"
-                    size="30"
-                    variant="text"
-                    @click.prevent="deleteBook(book.Id)"
-                />
+                <DeleteConfirmDialog :title="book.Name" @on-delete="deleteBook(book.Id)">
+                  <template v-slot:trigger="{ openDialog }">
+                    <v-btn
+                        icon="mdi-delete"
+                        color="error"
+                        size="30"
+                        variant="text"
+                        @click.prevent="openDialog"
+                    />
+                  </template>
+                </DeleteConfirmDialog>
+
               </v-row>
             </td>
           </tr>
