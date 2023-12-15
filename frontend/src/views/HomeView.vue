@@ -13,6 +13,12 @@ const books = ref({
   read: []
 })
 
+const categoryMapper = {
+  'Reading': 'Rozečtené',
+  'Unread': 'Nepřečtené',
+  'Read': 'Přečtené'
+}
+
 async function getBooks() {
   books.value.reading = []
   books.value.unread = []
@@ -56,7 +62,7 @@ getBooks()
   <v-expansion-panels :model-value="[0]">
     <v-expansion-panel v-for="(category, index) in ['Reading', 'Unread', 'Read']" :key="index">
       <v-expansion-panel-title>
-        <h2>{{ category }}</h2>
+        <h2>{{ categoryMapper[category] }}</h2>
         <v-spacer/>
         <p class="book_counter">{{ books[category.toLowerCase()].length}}</p>
       </v-expansion-panel-title>
