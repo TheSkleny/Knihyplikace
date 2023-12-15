@@ -155,7 +155,7 @@ async function createBook(isActive, formData) {
       />
     </template>
     <template #default="{ isActive }">
-      <v-card :title="showBookForm ? 'Create new book' : 'Add book'">
+      <v-card :title="showBookForm ? 'Vytvořit novou knihu' : 'Přidat knihu'">
         <v-card-text>
           <v-combobox
               v-if="props.isGift"
@@ -165,7 +165,7 @@ async function createBook(isActive, formData) {
           />
           <v-select
               v-if="!showBookForm"
-              label="Existing books"
+              label="Existující knihy"
               :items="existingBooks"
               v-model="selectExistingBook"
           />
@@ -178,12 +178,12 @@ async function createBook(isActive, formData) {
         </v-card-text>
         <v-card-actions v-if="!showBookForm">
           <v-btn
-              text="Create new book"
+              text="Vytvořit novou knihu"
               @click="changeDialog"
           />
           <v-spacer/>
           <v-btn
-              text="Add book"
+              text="Přidat knihu"
               color="primary"
               @click="addBook(isActive, selectExistingBook)"
           />
