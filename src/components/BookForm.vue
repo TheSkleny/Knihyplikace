@@ -75,7 +75,7 @@ async function getGenre() {
 const pagesRead = computed(() => props.bookData.PagesRead ?? 0)
 const pages = computed(() => props.bookData.Pages ?? 0)
 const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
-const cover = computed(() => props.bookData.CoverImageLink ?? DEFAULT_COVER)
+const cover = ref(props.bookData.CoverImageLink ?? DEFAULT_COVER)
 
 const addBookForm = ref(null)
 
@@ -89,12 +89,15 @@ async function save() {
   if (!valid) {
     return
   }
+  console.log('newBookData.value', newBookData.value)
   emit('onSave', newBookData.value)
   if (newBookData.value.CoverImageLink) {
     cover.value = newBookData.value.CoverImageLink
   } else {
     cover.value = DEFAULT_COVER
   }
+  selectedFormType.value = formType.READ
+  isReadonly.value = true
 }
 
 onMounted(async () => {
@@ -132,8 +135,13 @@ const lightboxImage = [
 ]
 const isLightboxActive = ref(false)
 const lightboxIndex = ref(0)
-const lighboxToggle = () => {
+const lightboxToggle = () => {
   isLightboxActive.value = !isLightboxActive.value
+}
+
+function onAddCover(coverImageLink) {
+  console.log(coverImageLink)
+  newBookData.value.CoverImageLink = coverImageLink
 }
 
 </script>
@@ -143,24 +151,25 @@ const lighboxToggle = () => {
       :visible="isLightboxActive"
       :imgs="lightboxImage"
       :index="lightboxIndex"
-      @hide="lighboxToggle"
+      @hide="lightboxToggle"
       :scroll-disabled="true"
   />
   <v-container>
     <v-form ref="addBookForm">
       <v-row>
-        <v-col cols="4">
-
-
-          <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
-            <AddBookCoverDialog
-                :coverImage="cover"
-                @on-add-cover="newBookData.CoverImageLink = $event"
-            />
-          </div>
-          <div v-if="selectedFormType === formType.READ">
-            <v-img :src="cover" class="book_card_img" cover @click="lighboxToggle"/>
-          </div>
+        <v-col cols="5">
+          <AddBookCoverDialog
+              :coverImage="cover"
+              @on-add-cover="onAddCover"
+          >
+            <template v-slot:trigger="{ openDialog }">
+              <v-img
+                  :src="cover"
+                  class="book_card_img"
+                  cover
+                  @click="selectedFormType === formType.READ ? lightboxToggle() : openDialog()"/>
+            </template>
+          </AddBookCoverDialog>
         </v-col>
         <v-col>
           <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT">
@@ -353,12 +362,12 @@ const lighboxToggle = () => {
           size="50"
       />
       <v-btn class="btn-bottom-right-dialog--close"
-          v-if="selectedFormType === formType.ADD"
-          @click="cancel"
-          color="white"
-          icon="mdi-close"
-          elevation="24"
-          size="50"
+             v-if="selectedFormType === formType.ADD"
+             @click="cancel"
+             color="white"
+             icon="mdi-close"
+             elevation="24"
+             size="50"
       />
       <v-btn
           v-if="selectedFormType === formType.EDIT"
@@ -369,20 +378,20 @@ const lighboxToggle = () => {
           size="50"
       />
       <v-btn class="btn-bottom-right-dialog"
-          v-if="selectedFormType === formType.ADD"
-          @click="save"
-          icon="mdi-check"
-          color="primary"
-          elevation="24"
-          size="50"
+             v-if="selectedFormType === formType.ADD"
+             @click="save"
+             icon="mdi-check"
+             color="primary"
+             elevation="24"
+             size="50"
       />
       <v-btn class="btn-read"
-          v-if="selectedFormType === formType.READ"
-          @click="edit"
-          icon="mdi-pencil"
-          color="primary"
-          elevation="24"
-          size="50"
+             v-if="selectedFormType === formType.READ"
+             @click="edit"
+             icon="mdi-pencil"
+             color="primary"
+             elevation="24"
+             size="50"
       />
     </v-row>
   </div>

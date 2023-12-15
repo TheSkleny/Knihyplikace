@@ -15,6 +15,7 @@ const gifts = ref([])
 
 async function GetGifts() {
   gifts.value = []
+  closePanels.value = null
   const {data, error} = await supabase
       .from('vGiftBooks')
       .select()
@@ -32,7 +33,7 @@ async function GetGifts() {
     }, {});
   }
 }
-
+const closePanels = ref(null)
 const persons = computed(() => Object.keys(gifts.value));
 
 GetGifts()
@@ -44,7 +45,7 @@ GetGifts()
       :gift-persons="persons"
       @on-reload="GetGifts"
   />
-  <v-expansion-panels>
+  <v-expansion-panels v-model="closePanels">
     <v-expansion-panel v-for="(gifts, person) in gifts" :key="person">
       <v-expansion-panel-title>
         <h2>{{ person }}</h2>
