@@ -169,13 +169,13 @@ const lighboxToggle = () => {
             <v-text-field
                 :rules="[requiredRule]"
                 variant="underlined"
-                label="Name"
+                label="Název"
                 v-model="newBookData.Name"
             />
             <v-text-field
                 :rules="[requiredRule]"
                 variant="underlined"
-                label="Author"
+                label="Autor"
                 v-model="newBookData.Author"
             />
           </div>
@@ -187,14 +187,14 @@ const lighboxToggle = () => {
       </v-row>
       <v-row>
         <v-col>
-          <h2>Pages:</h2>
+          <h2>Stránky:</h2>
         </v-col>
       </v-row>
       <!-- switch between edit max pages and display progress and add read pages button -->
       <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT || !newBookData.IsOwned">
         <v-row>
           <v-col cols="5">
-            <h3>Max pages:</h3>
+            <h3>Max stránek:</h3>
           </v-col>
           <v-spacer/>
           <v-col cols="7">
@@ -232,12 +232,12 @@ const lighboxToggle = () => {
       </div>
       <v-row>
         <v-col>
-          <h2>Details:</h2>
+          <h2>Detail:</h2>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="5">
-          <h3>Genre:</h3>
+          <h3>Žánr:</h3>
         </v-col>
         <v-spacer/>
         <v-col cols="7">
@@ -253,7 +253,7 @@ const lighboxToggle = () => {
       </v-row>
       <v-row>
         <v-col cols="5">
-          <h3>Publisher:</h3>
+          <h3>Vydavatel:</h3>
         </v-col>
         <v-spacer/>
         <v-col cols="7">
@@ -268,7 +268,7 @@ const lighboxToggle = () => {
       </v-row>
       <v-row>
         <v-col cols="5">
-          <h3>Published:</h3>
+          <h3>Rok vydání:</h3>
         </v-col>
         <v-spacer/>
         <v-col cols="7">
@@ -283,7 +283,7 @@ const lighboxToggle = () => {
       </v-row>
       <v-row>
         <v-col cols="5">
-          <h3>Language:</h3>
+          <h3>Jazyk:</h3>
         </v-col>
         <v-spacer/>
         <v-col cols="7">
@@ -298,7 +298,7 @@ const lighboxToggle = () => {
       </v-row>
       <v-row>
         <v-col>
-          <h2>Rating:</h2>
+          <h2>Hodnocení:</h2>
         </v-col>
       </v-row>
       <v-row>
@@ -313,7 +313,7 @@ const lighboxToggle = () => {
       </v-row>
       <v-row>
         <v-col>
-          <h2>Description:</h2>
+          <h2>Popis:</h2>
         </v-col>
       </v-row>
       <v-row>
@@ -333,6 +333,7 @@ const lighboxToggle = () => {
       <DeleteConfirmDialog
           v-if="selectedFormType === formType.EDIT && newBookData.IsOwned"
           :title="newBookData.Name"
+          delete-from="Tvých knih"
           @on-delete="deleteBook">
         <template v-slot:trigger="{ openDialog }">
           <v-btn
