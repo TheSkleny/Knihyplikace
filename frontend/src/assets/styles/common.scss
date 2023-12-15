@@ -8,6 +8,16 @@
       }
   }
 
+  .btn-bottom-right-edit {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    z-index: 999;
+    button {
+        margin-left: 10px;
+      }
+  }
+
   .btn-bottom-right-dialog {
     position: fixed;
     bottom: 20px;
@@ -22,6 +32,24 @@
       }
   }
 
+.btn-add-book-bookshelf {
+    position: fixed;
+    bottom: 200px;
+    right: 20px;
+    z-index: 999;
+    
+  }
+
+.btn-read {
+    position: fixed;
+    bottom: 82px;
+    right: 22px;
+    z-index: 999;
+    button {
+        margin-left: 10px;
+      }
+  }
+
 .bottom-div {
     display: block;
     height: 100px;
@@ -29,6 +57,10 @@
 
 .margin-top-20 {
     margin-top: 20px;
+}
+
+.margin-20 {
+    margin: 20px;
 }
 
 .margin-top-10 {

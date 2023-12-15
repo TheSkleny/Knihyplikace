@@ -7,6 +7,7 @@ import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import {useRouter} from 'vue-router'
 import CUDListDialog from '@/components/CUDListDialog.vue';
+import AddBookDialog from "@/components/AddBookDialog.vue";
 
 const result = ref([])
 const chosenList = ref('')
@@ -59,14 +60,19 @@ function onReload() {
   getBooksInLists();
 }
 
+async function addBookToList(listName) {
+      // Add your logic here to add a book to the selected list
+      console.log(`Adding book to list: ${listName}`);
+    }
+
 getBooksInLists()
 </script>
 
 <template>
-  <CUDListDialog 
+  <!-- <CUDListDialog 
       @on-reload="onReload"
       :selectedList="chosenList"
-  />
+  /> -->
   <v-expansion-panels v-model="chosenList" @update:model-value="onListChange">
     <v-expansion-panel v-for="list in result" :key="list.ListName" :value="list.ListName">
       <v-expansion-panel-title>
@@ -87,6 +93,14 @@ getBooksInLists()
               @on-reload="getBooksInLists"
           />
         </div>
+        <v-row>
+          <v-spacer/>
+            <AddBookDialog
+                :is-bookshelf="true"
+                @on-reload="onReload"
+            />
+          <v-spacer/>
+        </v-row>
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>

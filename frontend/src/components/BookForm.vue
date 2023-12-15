@@ -328,7 +328,7 @@ const lighboxToggle = () => {
     </v-form>
   </v-container>
 
-  <div class="btn-bottom-right">
+  <div class="btn-bottom-right-edit">
     <v-row>
       <DeleteConfirmDialog
           v-if="selectedFormType === formType.EDIT && newBookData.IsOwned"
@@ -347,7 +347,15 @@ const lighboxToggle = () => {
       </DeleteConfirmDialog>
 
       <v-btn
-          v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
+          v-if="selectedFormType === formType.EDIT"
+          @click="cancel"
+          color="white"
+          icon="mdi-close"
+          elevation="24"
+          size="50"
+      />
+      <v-btn class="btn-bottom-right-dialog--close"
+          v-if="selectedFormType === formType.ADD"
           @click="cancel"
           color="white"
           icon="mdi-close"
@@ -355,14 +363,22 @@ const lighboxToggle = () => {
           size="50"
       />
       <v-btn
-          v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
+          v-if="selectedFormType === formType.EDIT"
           @click="save"
           icon="mdi-check"
           color="primary"
           elevation="24"
           size="50"
       />
-      <v-btn
+      <v-btn class="btn-bottom-right-dialog"
+          v-if="selectedFormType === formType.ADD"
+          @click="save"
+          icon="mdi-check"
+          color="primary"
+          elevation="24"
+          size="50"
+      />
+      <v-btn class="btn-read"
           v-if="selectedFormType === formType.READ"
           @click="edit"
           icon="mdi-pencil"

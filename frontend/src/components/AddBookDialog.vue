@@ -27,6 +27,11 @@ const props = defineProps({
     type: Array,
     required: false,
     default: () => []
+  },
+  isBookshelf: {
+    type: Boolean,
+    required: false,
+    default: false
   }
 })
 
@@ -145,7 +150,7 @@ async function createBook(isActive, formData) {
   <v-dialog class="max-height-85">
     <template v-slot:activator="{ props }">
       <v-btn
-          class="btn-bottom-right"
+          :class="props.isBookshelf ? 'btn-add-book-bookshelf' : 'btn-bottom-right'"
           icon="mdi-plus"
           color="primary"
           elevation="24"
@@ -178,10 +183,11 @@ async function createBook(isActive, formData) {
         </v-card-text>
         <v-card-actions v-if="!showBookForm">
           <v-btn
-              text="Vytvořit novou knihu"
-              @click="changeDialog"
-          />
-          <v-spacer/>
+                  v-if="!props.isBookshelf"
+                  text="Vytvořit novou knihu"
+                  @click="changeDialog"
+                />
+                <v-spacer/>
           <v-btn
               text="Přidat knihu"
               color="primary"
