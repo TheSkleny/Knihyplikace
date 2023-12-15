@@ -60,7 +60,7 @@ const router = createRouter({
             name: 'bookshelf',
             component: BookshelfView,
             meta: {
-                title: "Knihovnička",
+                title: "Knihovny",
             }
         },
         {

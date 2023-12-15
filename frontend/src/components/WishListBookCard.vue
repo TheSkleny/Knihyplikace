@@ -95,7 +95,7 @@ async function moveToLibrary() {
                 class="margin-top-5"
                 @click.prevent="moveToLibrary"
             >
-              Bought
+              Koupeno
             </v-btn>
           </v-col>
         </v-row>

@@ -10,31 +10,31 @@ const navItems = [
   {
     name: 'wish-list',
     icon: 'mdi-book-heart',
-    text: 'Wishlist',
+    text: 'Seznam přání',
     color: 'pink',
   },
   {
     name: 'bookshelf',
     icon: 'mdi-bookshelf',
-    text: 'Bookshelfs',
+    text: 'Knihovny',
     color: 'blue'
   },
   {
     name: 'home',
     icon: 'mdi-home',
-    text: 'Home',
+    text: 'Domů',
     color: 'brown'
   },
   {
     name: 'gifts',
     icon: 'mdi-gift',
-    text: 'Gifts',
+    text: 'Dárky',
     color: 'red'
   },
   {
     name: 'achievements',
     icon: 'mdi-trophy',
-    text: 'Achievements',
+    text: 'Ocenění',
     color: 'green'
   },
 ]
