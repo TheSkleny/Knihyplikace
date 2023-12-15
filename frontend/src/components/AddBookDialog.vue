@@ -52,17 +52,16 @@ async function fetchExistingBooks() {
   } 
   else if (props.isBookshelf) {
     const bookList = await supabase
-      .from('BookList')
-      .select('Id')
-      .eq('Name', props.selectedList);
+        .from('BookList')
+        .select('Name')
+        .eq('Name', props.selectedList);
       
-    const { data, error } = await supabase
-      .from('vCustomListBooks')
-      .select('Name, Id')
-      .neq('ListId', bookList.data[0].Id);
-
+    let { data, error } = await supabase
+        .rpc('its_over', {
+          list_name: bookList.data[0].Name
+        })
     if (error) {
-      console.log('error', error);
+      console.error('error', error);
       return;
     }
 
