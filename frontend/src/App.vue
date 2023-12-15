@@ -1,5 +1,5 @@
 <style scoped lang="scss">
- @import "@/assets/main.scss";
+@import "@/assets/main.scss";
 </style>
 <script setup>
 import {RouterView} from 'vue-router'
@@ -16,24 +16,29 @@ const {title} = storeToRefs(store)
 
 async function onLogoClick() {
   await supabase
-    .rpc('increment_achievement', {
+      .rpc('increment_achievement', {
         name_param: 'For the statement'
-  })
+      })
   await router.push({name: 'home'})
 }
+
+async function routeToSettings() {
+  await router.push({name: 'settings'})
+}
+
 </script>
 
 <template>
   <v-app>
     <v-container class="margin-bottom-50">
       <v-app-bar>
-            <v-app-bar-nav-icon @click="onLogoClick">
-              <v-icon size="40px" color="primary">mdi-book-open-variant</v-icon>
-            </v-app-bar-nav-icon>
-            <v-app-bar-title style="font-weight: bold; font-size: 26px; text-align: center">
-              {{ title }}
-            </v-app-bar-title>
-            <v-btn icon="mdi-cog"/>
+        <v-app-bar-nav-icon @click="onLogoClick">
+          <v-icon size="40px" color="primary">mdi-book-open-variant</v-icon>
+        </v-app-bar-nav-icon>
+        <v-app-bar-title class="app_title">
+          {{ title }}
+        </v-app-bar-title>
+        <v-btn icon="mdi-cog" @click="routeToSettings"/>
       </v-app-bar>
     </v-container>
     <RouterView/>

@@ -49,6 +49,8 @@ GetGifts()
     <v-expansion-panel v-for="(gifts, person) in gifts" :key="person">
       <v-expansion-panel-title>
         <h2>{{ person }}</h2>
+        <v-spacer/>
+        <p class="book_counter">{{ gifts.length }}</p>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <WishListBookCard
