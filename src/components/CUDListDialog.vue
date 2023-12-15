@@ -2,7 +2,7 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref, defineEmits, defineProps, watch, toRef, toValue} from 'vue'
+import {ref, defineEmits, defineProps} from 'vue'
 import {supabase} from "@/lib/supabaseClient";
 import {isRequired} from "@/utils/inputRules";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";

@@ -1,6 +1,7 @@
 <script setup>
-import {ref, defineEmits, defineProps} from 'vue'
+import {ref, defineEmits, defineProps, watch} from 'vue'
 import {isRequired} from "@/utils/inputRules";
+
 
 
 const props = defineProps({
@@ -25,6 +26,7 @@ const openDialog = () => {
 };
 
 const closeDialog = () => {
+
   dialog.value = false;
 };
 
@@ -41,13 +43,16 @@ async function addCover() {
 function removeCover() {
   coverImageLink.value = null
   emit('onAddCover', coverImageLink.value)
-  CoverImage.value = addCoverImg
   closeDialog()
 }
 
-const addCoverImg = 'https://siddiquibookcompany.com/wp-content/themes/kidsy/images/placeholder.jpg'
 
-const CoverImage = ref(props.coverImage ?? addCoverImg)
+const CoverImage = ref(props.coverImage)
+
+watch(() => props.coverImage, (newValue) => {
+  CoverImage.value = newValue
+  coverImageLink.value = newValue
+})
 
 </script>
 
@@ -55,13 +60,13 @@ const CoverImage = ref(props.coverImage ?? addCoverImg)
   <slot name="trigger" :openDialog="openDialog"/>
   <v-dialog v-model="dialog" width="350">
     <!--    <template v-slot:activator="{ props }">-->
-    <!--      <v-icon-->
-    <!--          color="secondary"-->
-    <!--          size="75"-->
-    <!--          v-bind="props"-->
-    <!--          style="position: absolute; top: 135px; left: 30px; z-index: 999; opacity: 85%">-->
-    <!--        mdi-pencil-circle-->
-    <!--      </v-icon>-->
+<!--          <v-icon-->
+<!--              color="secondary"-->
+<!--              size="75"-->
+<!--              v-bind="props"-->
+<!--              style="position: absolute; top: 135px; left: 30px; z-index: 999; opacity: 85%">-->
+<!--            mdi-pencil-circle-->
+<!--          </v-icon>-->
     <!--      <v-img-->
     <!--          class="book_card_img"-->
     <!--          :src="CoverImage"-->

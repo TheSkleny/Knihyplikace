@@ -1,78 +1,83 @@
 .btn-bottom-right {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    z-index: 999;
-    button {
-        margin-left: 10px;
-      }
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 999;
+
+  button {
+    margin-left: 10px;
+  }
+}
+
+.btn-bottom-right-edit {
+  position: fixed;
+  bottom: 95px;
+  right: 35px;
+  z-index: 999;
+
+  button {
+    margin-left: 10px;
+  }
+}
+
+.btn-bottom-right-dialog {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+
+  button {
+    margin-left: 10px;
   }
 
-  .btn-bottom-right-edit {
-    position: fixed;
-    bottom: 95px;
-    right: 35px;
-    z-index: 999;
-    button {
-        margin-left: 10px;
-      }
+  &--close {
+    @extend .btn-bottom-right-dialog;
+    right: 80px;
   }
-
-  .btn-bottom-right-dialog {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    button {
-        margin-left: 10px;
-      }
-    &--close {
-        @extend .btn-bottom-right-dialog;
-        right: 80px;
-      }
-  }
+}
 
 .btn-read {
-    position: fixed;
-    bottom: 82px;
-    right: 22px;
-    z-index: 999;
-    button {
-        margin-left: 10px;
-      }
+  position: fixed;
+  bottom: 82px;
+  right: 22px;
+  z-index: 999;
+
+  button {
+    margin-left: 10px;
   }
+}
 
 .bottom-div {
-    display: block;
-    height: 100px;
+  display: block;
+  height: 100px;
 }
 
 .margin-top-20 {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .margin-20 {
-    margin: 20px;
+  margin: 20px;
 }
 
 .margin-top-10 {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .margin-top-5 {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .margin-top-40 {
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .margin-left-10 {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .margin-bottom-50 {
-    margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 .margin-bottom-10 {
@@ -80,33 +85,41 @@
 }
 
 .border-radius-5 {
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .max-width-150px {
-    max-width: 150px;
+  max-width: 150px;
 }
 
 .text-align-right {
-    text-align: right;
+  text-align: right;
 }
 
 .h1-card {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap
 }
 
 .v-rating-form {
-    display: block;
-    margin-left: auto;
-    margin-right: auto
+  display: block;
+  margin-left: auto;
+  margin-right: auto
 }
 
 .max-width-20 {
-    max-width: 20%;
+  max-width: 20%;
 }
 
 .max-height-85 {
-    max-height: 85%;
+  max-height: 85%;
+}
+
+
+.absolute_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

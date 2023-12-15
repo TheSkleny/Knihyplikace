@@ -75,7 +75,8 @@ async function getGenre() {
 const pagesRead = computed(() => props.bookData.PagesRead ?? 0)
 const pages = computed(() => props.bookData.Pages ?? 0)
 const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
-const cover = ref(props.bookData.CoverImageLink ?? DEFAULT_COVER)
+const cover = ref(props.bookData.CoverImageLink)
+const coverComputed = computed(() => cover.value  ?? DEFAULT_COVER)
 
 const addBookForm = ref(null)
 
@@ -96,6 +97,8 @@ async function save() {
   } else {
     cover.value = DEFAULT_COVER
   }
+  lightboxImage.value.pop()
+  lightboxImage.value.push(coverComputed.value)
   selectedFormType.value = formType.READ
   isReadonly.value = true
 }
@@ -116,6 +119,7 @@ function cancel() {
     newBookData.value = cloneDeep(props.bookData)
     selectedFormType.value = formType.READ
     isReadonly.value = true
+    cover.value = props.bookData.CoverImageLink
   }
 }
 
@@ -130,9 +134,9 @@ function getBook() {
 const selectedFormType = ref(props.isCreate ? formType.ADD : formType.READ)
 const isReadonly = ref(selectedFormType.value === formType.READ)
 
-const lightboxImage = [
-  cover.value
-]
+const lightboxImage = ref([
+  coverComputed.value
+])
 const isLightboxActive = ref(false)
 const lightboxIndex = ref(0)
 const lightboxToggle = () => {
@@ -142,6 +146,7 @@ const lightboxToggle = () => {
 function onAddCover(coverImageLink) {
   console.log(coverImageLink)
   newBookData.value.CoverImageLink = coverImageLink
+  cover.value = coverImageLink
 }
 
 </script>
@@ -162,12 +167,23 @@ function onAddCover(coverImageLink) {
               :coverImage="cover"
               @on-add-cover="onAddCover"
           >
-            <template v-slot:trigger="{ openDialog }">
+            <template #trigger="{ openDialog }">
+
               <v-img
-                  :src="cover"
+                  :src="coverComputed"
                   class="book_card_img"
                   cover
-                  @click="selectedFormType === formType.READ ? lightboxToggle() : openDialog()"/>
+                  @click="selectedFormType === formType.READ ? lightboxToggle() : openDialog()">
+                <v-icon
+                    class="absolute_center"
+                    v-if="selectedFormType !== formType.READ"
+                    color="secondary"
+                    size="75"
+                    v-bind="props"
+                    style="z-index: 999; opacity: 85%">
+                  mdi-pencil-circle
+                </v-icon>
+              </v-img>
             </template>
           </AddBookCoverDialog>
         </v-col>
