@@ -2,6 +2,7 @@
  @import "@/assets/main.scss";
 </style>
 <script setup>
+import {ref, computed} from 'vue'
 import {useRouter} from "vue-router";
 
 const router = useRouter()
@@ -38,11 +39,27 @@ const navItems = [
     color: 'green'
   },
 ]
+
+const activeItem = computed(() => {
+  switch (router.currentRoute.value.name) {
+    case 'wish-list':
+      return 0
+    case 'bookshelf':
+      return 1
+    case 'home':
+      return 2
+    case 'gifts':
+      return 3
+    case 'achievements':
+      return 4
+  }
+})
 </script>
 
 <template>
-  <v-bottom-navigation mode="shift">
+  <v-bottom-navigation mode="shift" v-model="activeItem">
     <v-btn
+
         style="max-width: 20%"
         color="primary"
         v-for="item in navItems"
