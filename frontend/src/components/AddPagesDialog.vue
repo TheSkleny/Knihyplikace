@@ -33,7 +33,7 @@ async function updatePages(num, isActive) {
     .eq('Id', props.book.Id);
   emit('onReload');
   isActive.value = false;
-  if (num != 0 && num != props.book.Pages) {
+  if (num !== 0 && num !== props.book.Pages) {
     await supabase
         .rpc('increment_achievement', {
             name_param: 'The Procrastinator'

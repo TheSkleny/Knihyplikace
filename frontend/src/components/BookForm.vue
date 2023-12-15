@@ -95,8 +95,6 @@ async function save() {
   } else {
     cover.value = DEFAULT_COVER
   }
-  selectedFormType.value = formType.READ
-  isReadonly.value = true
 }
 
 onMounted(async () => {
