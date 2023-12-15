@@ -6,10 +6,11 @@ import {ref, onMounted, defineProps, defineEmits, computed} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
 import AddBookCoverDialog from "@/components/AddBookCoverDialog.vue";
+import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import cloneDeep from 'lodash/cloneDeep'
 import VueEasyLightbox from "vue-easy-lightbox";
 import 'vue-easy-lightbox-css'
-import { isRequired, isNumberOrNull } from "@/utils/inputRules";
+import {isRequired, isNumberOrNull} from "@/utils/inputRules";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 
@@ -84,15 +85,14 @@ const numberRule = (value) => isNumberOrNull(value);
 
 
 async function save() {
-  const { valid } = await addBookForm.value.validate()
+  const {valid} = await addBookForm.value.validate()
   if (!valid) {
     return
   }
   emit('onSave', newBookData.value)
   if (newBookData.value.CoverImageLink) {
     cover.value = newBookData.value.CoverImageLink
-  }
-  else {
+  } else {
     cover.value = DEFAULT_COVER
   }
   selectedFormType.value = formType.READ
@@ -130,7 +130,7 @@ const selectedFormType = ref(props.isCreate ? formType.ADD : formType.READ)
 const isReadonly = ref(selectedFormType.value === formType.READ)
 
 const lightboxImage = [
-    cover.value
+  cover.value
 ]
 const isLightboxActive = ref(false)
 const lightboxIndex = ref(0)
@@ -161,7 +161,7 @@ const lighboxToggle = () => {
             />
           </div>
           <div v-if="selectedFormType === formType.READ">
-            <v-img :src="cover" class="book_card_img" cover @click="lighboxToggle" />
+            <v-img :src="cover" class="book_card_img" cover @click="lighboxToggle"/>
           </div>
         </v-col>
         <v-col>
@@ -329,38 +329,47 @@ const lighboxToggle = () => {
   </v-container>
 
   <div class="btn-bottom-right">
-    <v-btn
-        v-if="selectedFormType === formType.EDIT && newBookData.IsOwned"
-        @click="deleteBook"
-        icon="mdi-trash-can-outline"
-        color="error"
-        elevation="24"
-        size="50"
-    />
-    <v-btn
-        v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
-        @click="cancel"
-        color="white"
-        icon="mdi-close"
-        elevation="24"
-        size="50"
-    />
-    <v-btn
-        v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
-        @click="save"
-        icon="mdi-check"
-        color="primary"
-        elevation="24"
-        size="50"
-    />
-    <v-btn
-        v-if="selectedFormType === formType.READ"
-        @click="edit"
-        icon="mdi-pencil"
-        color="primary"
-        elevation="24"
-        size="50"
-    />
+    <v-row>
+      <DeleteConfirmDialog
+          v-if="selectedFormType === formType.EDIT && newBookData.IsOwned"
+          :title="newBookData.Name"
+          @on-delete="deleteBook">
+        <template v-slot:trigger="{ openDialog }">
+          <v-btn
+              @click="openDialog"
+              icon="mdi-trash-can-outline"
+              color="error"
+              elevation="24"
+              size="50"
+          />
+        </template>
+      </DeleteConfirmDialog>
+
+      <v-btn
+          v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
+          @click="cancel"
+          color="white"
+          icon="mdi-close"
+          elevation="24"
+          size="50"
+      />
+      <v-btn
+          v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT"
+          @click="save"
+          icon="mdi-check"
+          color="primary"
+          elevation="24"
+          size="50"
+      />
+      <v-btn
+          v-if="selectedFormType === formType.READ"
+          @click="edit"
+          icon="mdi-pencil"
+          color="primary"
+          elevation="24"
+          size="50"
+      />
+    </v-row>
   </div>
 
   <div
