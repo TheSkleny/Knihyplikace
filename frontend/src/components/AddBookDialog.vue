@@ -141,6 +141,18 @@ async function addBookToGiftList(bookId) {
       })
 }
 
+async function addBookToBooklist(bookId) {
+  const bookList = await supabase
+      .from('BookList')
+      .select('Id')
+      .eq('Name', props.selectedList)
+
+  await supabase
+      .from('BookInBookList')
+      .insert({BookId: bookId, ListId: bookList.data[0].Id})
+  emit('onReload')
+}
+
 async function addBook(isActive, bookId) {
   const {valid} = await addBookForm.value.validate()
   if (!valid) {
@@ -152,7 +164,11 @@ async function addBook(isActive, bookId) {
     await addBookToWishList(bookId)
   } else if (props.isGift) {
     await addBookToGiftList(bookId)
+  } else if (props.isBookshelf) {
+    await addBookToBooklist(bookId)
   }
+  fetchExistingBooks()
+  selectExistingBook.value = null
   emit('onReload')
   isActive.value = false
 }
