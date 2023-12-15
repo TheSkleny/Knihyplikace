@@ -50,7 +50,7 @@ getBooks()
 
 <template>
   <AddBookDialog
-      :is-owned="true"
+      :isOwned="true"
       @on-reload="getBooks"
   />
   <v-expansion-panels :model-value="[0]">

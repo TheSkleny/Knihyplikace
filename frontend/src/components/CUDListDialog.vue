@@ -90,7 +90,7 @@ async function deleteList(isActive) {
 }
 
 function opedDialog() {
-  newListName.value = null
+  newListName.value = props.selectedList
 }
 
 

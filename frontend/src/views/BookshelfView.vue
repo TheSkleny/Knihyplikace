@@ -69,10 +69,10 @@ getBooksInLists()
 </script>
 
 <template>
-  <!-- <CUDListDialog 
+  <CUDListDialog 
       @on-reload="onReload"
       :selectedList="chosenList"
-  /> -->
+  />
   <v-expansion-panels v-model="chosenList" @update:model-value="onListChange">
     <v-expansion-panel v-for="list in result" :key="list.ListName" :value="list.ListName">
       <v-expansion-panel-title>
@@ -96,7 +96,8 @@ getBooksInLists()
         <v-row>
           <v-spacer/>
             <AddBookDialog
-                :is-bookshelf="true"
+                :isBookshelf="true"
+                :selectedList="chosenList"
                 @on-reload="onReload"
             />
           <v-spacer/>

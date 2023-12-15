@@ -32,12 +32,17 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  selectedList: {
+    type: String,
+    required: false
   }
 })
 
 const emit = defineEmits(['onReload'])
 
 const existingBooks = ref([]);
+
 
 async function fetchExistingBooks() {
   const tableName = props.isOwned || props.isWish ? 'vUnassignedBooks' : 'Book';
@@ -150,9 +155,9 @@ async function createBook(isActive, formData) {
   <v-dialog class="max-height-85">
     <template v-slot:activator="{ props }">
       <v-btn
-          :class="props.isBookshelf ? 'btn-add-book-bookshelf' : 'btn-bottom-right'"
+          :class="isBookshelf ? 'margin-20' : 'btn-bottom-right'"
           icon="mdi-plus"
-          color="primary"
+          :color="isBookshelf ? 'primary_dark' : 'primary'"
           elevation="24"
           size="50"
           v-bind="props"
