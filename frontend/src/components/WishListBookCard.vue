@@ -57,6 +57,14 @@ async function removeFromWishlist() {
   })
 }
 
+async function removeFromGifts() {
+  await supabase
+    .from('GiftList')
+    .delete()
+    .eq('BookId', props.book.Id)
+  emit('onReload')
+}
+
 async function moveToLibrary() {
   await supabase
     .from('Book')
@@ -101,7 +109,7 @@ async function moveToLibrary() {
             <DeleteConfirmDialog
                 :title="props.book.Name"
                 :delete-from="props.showButton ? 'e Seznamu přání' : (' Dárků pro ' + props.person)"
-                @on-delete="removeFromWishlist"
+                @on-delete="props.showButton ? removeFromWishlist() : removeFromGifts()"
             >
               <template v-slot:trigger="{ openDialog }">
                 <v-btn

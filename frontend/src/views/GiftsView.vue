@@ -14,6 +14,7 @@ import AddBookDialog from "@/components/AddBookDialog.vue";
 const gifts = ref([])
 
 async function GetGifts() {
+  gifts.value = []
   const {data, error} = await supabase
       .from('vGiftBooks')
       .select()
@@ -32,9 +33,7 @@ async function GetGifts() {
   }
 }
 
-
 const persons = computed(() => Object.keys(gifts.value));
-
 
 GetGifts()
 </script>
@@ -59,6 +58,7 @@ GetGifts()
             :book="gift"
             :show-button="false"
             :person="person"
+            @on-reload="GetGifts"
         />
       </v-expansion-panel-text>
     </v-expansion-panel>
