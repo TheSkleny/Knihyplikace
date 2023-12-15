@@ -159,7 +159,7 @@ async function createBook(isActive, formData) {
         <v-card-text>
           <v-combobox
               v-if="props.isGift"
-              label="Person"
+              label="Osoba"
               :items="props.giftPersons"
               v-model="giftPerson"
           />

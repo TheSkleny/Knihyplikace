@@ -73,15 +73,14 @@ async function addPages(num, isActive) {
         v-bind="props"
         @click.prevent="onShowDialog"
       >
-        Read
+        Číst
       </v-btn>
     </template>
     <template #default="{ isActive }">
-      <v-card title="Add read pages">
+      <v-card title="Přidat přečtené stránky">
         <v-card-text>
           <v-form ref="numberForm">
             <v-text-field
-              label="Pages read"
               type="number"
               v-model="newPagesRead"
               :rules="[requiredRule, pagesLimitRule]"
@@ -91,11 +90,11 @@ async function addPages(num, isActive) {
         <v-card-actions>
           <v-spacer/>
           <v-btn
-            text="Add pages"
+            text="Přidat stránky"
             @click="addPages(newPagesRead, isActive)"
           />
           <v-btn
-            text="Finished reading"
+            text="Dočteno"
             color="primary"
             @click="finishReading(isActive)"
           />

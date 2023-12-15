@@ -55,7 +55,7 @@ getGenres()
   <v-expansion-panels>
     <v-expansion-panel>
       <v-expansion-panel-title>
-        <h2>Books</h2>
+        <h2>Knihy v databázi</h2>
         <v-spacer/>
         <p class="book_counter">{{ books.length }}</p>
       </v-expansion-panel-title>
@@ -64,13 +64,13 @@ getGenres()
           <thead>
           <tr>
             <th>
-              Name
+              Název
             </th>
             <th>
-              Author
+              Autor
             </th>
             <th>
-              Actions
+              Akce
             </th>
           </tr>
           </thead>
@@ -115,7 +115,7 @@ getGenres()
     </v-expansion-panel>
     <v-expansion-panel>
       <v-expansion-panel-title>
-        <h2>Genres</h2>
+        <h2>Žánry</h2>
         <v-spacer/>
         <p class="book_counter">{{ genres.length }}</p>
       </v-expansion-panel-title>
