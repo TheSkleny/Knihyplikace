@@ -57,7 +57,7 @@ const activeItem = computed(() => {
   <v-bottom-navigation mode="shift" v-model="activeItem">
     <v-btn
 
-        style="max-width: 20%"
+        style="width: 20%"
         color="primary"
         v-for="item in navItems"
         :key="item.name"

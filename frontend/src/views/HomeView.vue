@@ -62,7 +62,7 @@ getBooks()
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="books[category.toLowerCase()].length === 0">
-          <h2 class="margin-top-10">V této kategorii nejsou žádné knihy</h2>
+          <h2 class="bookshelf_no_books">V této kategorii nejsou žádné knihy</h2>
         </div>
         <div v-else>
           <BookCard
