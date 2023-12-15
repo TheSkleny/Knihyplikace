@@ -180,7 +180,7 @@ async function createBook(isActive, formData) {
           <v-spacer/>
           <v-btn
               text="Add book"
-              color="blue"
+              color="primary"
               @click="addBook(isActive, selectExistingBook)"
           />
 

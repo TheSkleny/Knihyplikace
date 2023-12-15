@@ -79,7 +79,7 @@ async function addPages(num, isActive) {
           />
           <v-btn
             text="Finished reading"
-            color="blue"
+            color="primary"
             @click="finishReading(isActive)"
           />
         </v-card-actions>
