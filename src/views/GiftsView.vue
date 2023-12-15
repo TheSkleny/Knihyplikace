@@ -3,8 +3,8 @@
 </style>
 <script setup>
 
-import {ref, computed} from 'vue'
-import {supabase} from "@/lib/supabaseClient";
+import { ref, computed } from 'vue'
+import { supabase } from "@/lib/supabaseClient";
 import WishListBookCard from "@/components/WishListBookCard.vue";
 import AddBookDialog from "@/components/AddBookDialog.vue";
 

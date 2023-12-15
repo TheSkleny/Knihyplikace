@@ -2,15 +2,14 @@
  @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref} from 'vue'
-import {supabase} from '@/lib/supabaseClient'
+import { ref } from 'vue'
+import { supabase } from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import CUDListDialog from '@/components/CUDListDialog.vue';
 import AddBookDialog from "@/components/AddBookDialog.vue";
 
 const result = ref([])
 const chosenList = ref('')
-
 
 async function getLists() {
   const { data, error } = await supabase.from('BookList').select()

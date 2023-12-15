@@ -25,7 +25,6 @@ async function getAchievements() {
       if (b.Current === b.Goal) return -1;
       return b.progress - a.progress;
     });
-
     achievements.value = data;
   }
 }
@@ -38,5 +37,4 @@ getAchievements();
     <AchievementCard v-for="achievement in achievements" :key="achievement.Id" :achievement="achievement" />
   </div>
   <div class="bottom-div"/>
-
 </template>

@@ -1,9 +1,11 @@
+<style scoped lang="scss">
+@import "@/assets/main.scss";
+</style>
 <script setup>
-import {ref} from "vue";
-import {supabase} from "@/lib/supabaseClient";
-import {useRouter} from "vue-router";
+import { ref } from "vue";
+import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "vue-router";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
-
 
 const router = useRouter()
 
@@ -123,11 +125,5 @@ getGenres()
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
-  <div class="bottom-div">
-
-  </div>
+  <div class="bottom-div"/>
 </template>
-
-<style scoped lang="scss">
-@import "@/assets/main.scss";
-</style>

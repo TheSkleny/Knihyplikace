@@ -1,5 +1,5 @@
 <style scoped lang="scss">
- @import "@/assets/main.scss";
+@import "@/assets/main.scss";
 </style>
 <script setup>
 import { defineProps } from 'vue'
@@ -36,7 +36,7 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
         <v-row class="margin-top-40">
           <v-col>
           <p class="text-align-right">
-            {{ progress === 100 ? 'Completed' : progress.toPrecision(2) + '%'}}
+            {{ progress === 100 ? 'Dokončeno' : progress.toPrecision(2) + '%'}}
           </p>
           <v-progress-linear
               :model-value="progress"

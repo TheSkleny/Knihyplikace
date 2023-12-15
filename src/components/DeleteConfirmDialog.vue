@@ -1,3 +1,6 @@
+<style scoped lang="scss">
+@import "@/assets/main.scss";
+</style>
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
 
@@ -13,7 +16,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['onDelete']);
-
 const dialog = ref(false);
 
 const openDialog = () => {
@@ -47,7 +49,3 @@ const deleteItem = () => {
     </v-dialog>
   </div>
 </template>
-
-<style scoped lang="scss">
-
-</style>

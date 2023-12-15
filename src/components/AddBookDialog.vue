@@ -7,7 +7,6 @@ import {supabase} from "@/lib/supabaseClient";
 import BookForm from "@/components/BookForm.vue";
 import {isRequired} from "@/utils/inputRules";
 
-
 const props = defineProps({
   isOwned: {
     type: Boolean,
@@ -41,9 +40,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['onReload'])
-
 const existingBooks = ref([]);
-
 
 async function fetchExistingBooks() {
   let tableName = 'Book';
@@ -64,7 +61,6 @@ async function fetchExistingBooks() {
       console.error('error', error);
       return;
     }
-
     existingBooks.value = data.map((book) => ({
       title: book.Name,
       value: book.Id,
@@ -86,7 +82,6 @@ async function fetchExistingBooks() {
     value: book.Id,
   }));
 }
-
 
 fetchExistingBooks()
 
@@ -201,8 +196,6 @@ async function createBook(isActive, formData) {
 }
 
 const requiredRule = (value) => isRequired(value);
-
-
 </script>
 
 <template>
@@ -256,7 +249,6 @@ const requiredRule = (value) => isRequired(value);
               color="primary"
               @click="addBook(isActive, selectExistingBook)"
           />
-
         </v-card-actions>
       </v-card>
     </template>

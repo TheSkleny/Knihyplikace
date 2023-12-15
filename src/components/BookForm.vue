@@ -2,15 +2,15 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref, onMounted, defineProps, defineEmits, computed} from 'vue'
-import {supabase} from '@/lib/supabaseClient'
+import { ref, onMounted, defineProps, defineEmits, computed } from 'vue'
+import { supabase } from '@/lib/supabaseClient'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
 import AddBookCoverDialog from "@/components/AddBookCoverDialog.vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import cloneDeep from 'lodash/cloneDeep'
 import VueEasyLightbox from "vue-easy-lightbox";
 import 'vue-easy-lightbox-css'
-import {isRequired, isNumberOrNull} from "@/utils/inputRules";
+import { isRequired, isNumberOrNull } from "@/utils/inputRules";
 
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 
@@ -79,18 +79,14 @@ const cover = ref(props.bookData.CoverImageLink)
 const coverComputed = computed(() => cover.value  ?? DEFAULT_COVER)
 
 const addBookForm = ref(null)
-
 const requiredRule = (value) => isRequired(value);
-
 const numberRule = (value) => isNumberOrNull(value);
-
 
 async function save() {
   const {valid} = await addBookForm.value.validate()
   if (!valid) {
     return
   }
-  console.log('newBookData.value', newBookData.value)
   emit('onSave', newBookData.value)
   if (newBookData.value.CoverImageLink) {
     cover.value = newBookData.value.CoverImageLink
@@ -144,11 +140,9 @@ const lightboxToggle = () => {
 }
 
 function onAddCover(coverImageLink) {
-  console.log(coverImageLink)
   newBookData.value.CoverImageLink = coverImageLink
   cover.value = coverImageLink
 }
-
 </script>
 
 <template>
@@ -168,7 +162,6 @@ function onAddCover(coverImageLink) {
               @on-add-cover="onAddCover"
           >
             <template #trigger="{ openDialog }">
-
               <v-img
                   :src="coverComputed"
                   class="book_card_img"
@@ -213,7 +206,6 @@ function onAddCover(coverImageLink) {
           <h2>Stránky:</h2>
         </v-col>
       </v-row>
-      <!-- switch between edit max pages and display progress and add read pages button -->
       <div v-if="selectedFormType === formType.ADD || selectedFormType === formType.EDIT || !newBookData.IsOwned">
         <v-row>
           <v-col cols="5">
@@ -251,7 +243,6 @@ function onAddCover(coverImageLink) {
             />
           </v-col>
         </v-row>
-
       </div>
       <v-row>
         <v-col>
@@ -350,7 +341,6 @@ function onAddCover(coverImageLink) {
       </v-row>
     </v-form>
   </v-container>
-
   <div class="btn-bottom-right-edit">
     <v-row>
       <DeleteConfirmDialog
@@ -368,7 +358,6 @@ function onAddCover(coverImageLink) {
           />
         </template>
       </DeleteConfirmDialog>
-
       <v-btn
           v-if="selectedFormType === formType.EDIT"
           @click="cancel"
@@ -411,9 +400,5 @@ function onAddCover(coverImageLink) {
       />
     </v-row>
   </div>
-
-  <div
-      class="bottom-div"
-  />
-
+  <div class="bottom-div"/>
 </template>

@@ -1,8 +1,9 @@
+<style scoped lang="scss">
+@import "@/assets/main.scss";
+</style>
 <script setup>
 import {ref, defineEmits, defineProps, watch} from 'vue'
 import {isRequired} from "@/utils/inputRules";
-
-
 
 const props = defineProps({
   coverImage: {
@@ -17,7 +18,6 @@ const emit = defineEmits(['onAddCover', 'onRemoveCover'])
 const coverForm = ref(null)
 const dialog = ref(false);
 const coverImageLink = ref(props.coverImage)
-console.log(props.coverImage)
 
 const requiredRule = (value) => isRequired(value);
 
@@ -109,7 +109,3 @@ watch(() => props.coverImage, (newValue) => {
     </v-card>
   </v-dialog>
 </template>
-
-<style scoped lang="scss">
-@import "@/assets/main.scss";
-</style>

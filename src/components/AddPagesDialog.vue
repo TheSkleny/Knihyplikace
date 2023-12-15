@@ -40,7 +40,6 @@ async function updatePages(num, isActive) {
         });
   }
   if (num === props.book.Pages) {
-    console.log('calling RPC');
     await supabase
         .rpc('increment_achievement', {
             name_param: 'Ten out of ten'

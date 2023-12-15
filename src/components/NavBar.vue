@@ -6,7 +6,6 @@ import {computed} from 'vue'
 import {useRouter} from "vue-router";
 
 const router = useRouter()
-
 const navItems = [
   {
     name: 'wish-list',
@@ -56,7 +55,6 @@ const activeItem = computed(() => {
 <template>
   <v-bottom-navigation mode="shift" v-model="activeItem">
     <v-btn
-
         style="width: 20%"
         color="primary"
         v-for="item in navItems"

@@ -2,15 +2,14 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {RouterView} from 'vue-router'
+import { RouterView } from 'vue-router'
 import NavBar from "@/components/NavBar.vue";
-import {usePageTitleStore} from "@/stores/pageTitle";
-import {storeToRefs} from "pinia";
-import {supabase} from "@/lib/supabaseClient";
-import {useRouter} from "vue-router";
+import { usePageTitleStore } from "@/stores/pageTitle";
+import { storeToRefs } from "pinia";
+import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "vue-router";
 
 const router = useRouter()
-
 const store = usePageTitleStore()
 const {title} = storeToRefs(store)
 
@@ -25,7 +24,6 @@ async function onLogoClick() {
 async function routeToSettings() {
   await router.push({name: 'settings'})
 }
-
 </script>
 
 <template>

@@ -2,9 +2,9 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref, defineEmits, defineProps} from 'vue'
-import {supabase} from "@/lib/supabaseClient";
-import {isRequired} from "@/utils/inputRules";
+import { ref, defineEmits, defineProps } from 'vue'
+import { supabase } from "@/lib/supabaseClient";
+import { isRequired } from "@/utils/inputRules";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 
 const props = defineProps({
@@ -64,7 +64,6 @@ async function updateList() {
 }
 
 async function deleteList() {
-  // Delete records from BookInBookList table
   const {data: bookListData, error: bookListError} = await supabase
       .from('BookList')
       .select('Id')
@@ -78,8 +77,6 @@ async function deleteList() {
       .from('BookInBookList')
       .delete()
       .in('ListId', listIds)
-
-  // Delete list from BookList table
   await supabase
       .from('BookList')
       .delete()
@@ -96,8 +93,6 @@ const openDialog = () => {
 const closeDialog = () => {
   dialog.value = false;
 };
-
-
 </script>
 
 <template>
@@ -131,7 +126,6 @@ const closeDialog = () => {
               />
             </template>
           </DeleteConfirmDialog>
-
           <v-spacer/>
           <v-btn v-if="selectedList !== ''"
                  text="Přejmenovat"
