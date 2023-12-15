@@ -4,6 +4,7 @@
 <script setup>
 import { defineProps, computed, defineEmits } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
+import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 
 /**
  *
@@ -19,6 +20,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: true
+  },
+  person: {
+    type: String,
+    required: false,
+    default: ''
   }
 })
 
@@ -61,7 +67,7 @@ async function moveToLibrary() {
 </script>
 
 <template>
-  <v-card class="book_card--wishlist" :to="`/book-detail/${ props.book.Id }`">
+  <v-card :class="props.showButton ? 'book_card--wishlist' : 'book_card'" :to="`/book-detail/${ props.book.Id }`">
     <v-row>
       <v-col class="max-width-150px">
         <v-img class="book_card_img"
@@ -83,20 +89,31 @@ async function moveToLibrary() {
         <v-row>
           <v-col>
             <v-btn
-                @click.prevent="removeFromWishlist"
-                color="red"
-                size="40px"
-                icon="mdi-trash-can"
-            />
-          </v-col>
-          <v-col>
-            <v-btn
                 v-if="props.showButton"
                 class="margin-top-5"
                 @click.prevent="moveToLibrary"
             >
               Koupeno
             </v-btn>
+          </v-col>
+          <v-spacer/>
+          <v-col>
+            <DeleteConfirmDialog
+                :title="props.book.Name"
+                :delete-from="props.showButton ? 'e Seznamu přání' : (' Dárků pro ' + props.person)"
+                @on-delete="removeFromWishlist"
+            >
+              <template v-slot:trigger="{ openDialog }">
+                <v-btn
+                    style="margin-top: 10px"
+                    icon="mdi-delete"
+                    color="error"
+                    size="30"
+                    variant="text"
+                    @click.prevent="openDialog"
+                />
+              </template>
+            </DeleteConfirmDialog>
           </v-col>
         </v-row>
       </v-col>

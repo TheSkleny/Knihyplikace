@@ -58,6 +58,7 @@ GetGifts()
             :key="gift.GiftId"
             :book="gift"
             :show-button="false"
+            :person="person"
         />
       </v-expansion-panel-text>
     </v-expansion-panel>

@@ -333,7 +333,7 @@ const lighboxToggle = () => {
       <DeleteConfirmDialog
           v-if="selectedFormType === formType.EDIT && newBookData.IsOwned"
           :title="newBookData.Name"
-          delete-from="Tvých knih"
+          delete-from=" Tvých knih"
           @on-delete="deleteBook">
         <template v-slot:trigger="{ openDialog }">
           <v-btn

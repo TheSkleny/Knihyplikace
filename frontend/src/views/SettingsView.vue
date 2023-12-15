@@ -94,7 +94,7 @@ getGenres()
                     style="margin-right: 15px"
                     @click.prevent="routeToDetail(book.Id)"
                 />
-                <DeleteConfirmDialog :title="book.Name" delete-from="Databáze knih" @on-delete="deleteBook(book.Id)">
+                <DeleteConfirmDialog :title="book.Name" delete-from=" Databáze knih" @on-delete="deleteBook(book.Id)">
                   <template v-slot:trigger="{ openDialog }">
                     <v-btn
                         icon="mdi-delete"
@@ -105,7 +105,6 @@ getGenres()
                     />
                   </template>
                 </DeleteConfirmDialog>
-
               </v-row>
             </td>
           </tr>
