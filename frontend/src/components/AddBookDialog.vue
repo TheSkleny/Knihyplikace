@@ -5,6 +5,7 @@
 import {defineProps, ref, defineEmits} from 'vue'
 import {supabase} from "@/lib/supabaseClient";
 import BookForm from "@/components/BookForm.vue";
+import {isRequired} from "@/utils/inputRules";
 
 
 const props = defineProps({
@@ -46,7 +47,7 @@ const existingBooks = ref([]);
 
 async function fetchExistingBooks() {
   const tableName = props.isOwned || props.isWish ? 'vUnassignedBooks' : 'Book';
-  const { data, error } = await supabase
+  const {data, error} = await supabase
       .from(tableName)
       .select('Name, Id');
   if (error) {
@@ -66,6 +67,7 @@ fetchExistingBooks()
 const showBookForm = ref(false)
 const giftPerson = ref(null)
 const selectExistingBook = ref(null)
+const addBookForm = ref(null)
 
 function opedDialog() {
   showBookForm.value = false
@@ -114,6 +116,10 @@ async function addBookToGiftList(bookId) {
 }
 
 async function addBook(isActive, bookId) {
+  const {valid} = await addBookForm.value.validate()
+  if (!valid) {
+    return
+  }
   if (props.isOwned) {
     await addBookToOwned(bookId)
   } else if (props.isWish) {
@@ -126,6 +132,10 @@ async function addBook(isActive, bookId) {
 }
 
 async function createBook(isActive, formData) {
+  const {valid} = await addBookForm.value.validate()
+  if (!valid) {
+    return
+  }
   formData.IsOwned = !!props.isOwned;
   if (formData.Pages === null) {
     formData.Pages = 0
@@ -148,6 +158,8 @@ async function createBook(isActive, formData) {
   }
 }
 
+const requiredRule = (value) => isRequired(value);
+
 
 </script>
 
@@ -167,24 +179,28 @@ async function createBook(isActive, formData) {
     <template #default="{ isActive }">
       <v-card :title="showBookForm ? 'Vytvořit novou knihu' : 'Přidat knihu'">
         <v-card-text>
-          <v-combobox
-              v-if="props.isGift"
-              label="Osoba"
-              :items="props.giftPersons"
-              v-model="giftPerson"
-          />
-          <v-select
-              v-if="!showBookForm"
-              label="Existující knihy"
-              :items="existingBooks"
-              v-model="selectExistingBook"
-          />
-          <BookForm
-              v-if="showBookForm"
-              :is-create="true"
-              @on-cancel="cancelDialog(isActive)"
-              @on-save="createBook(isActive, $event)"
-          />
+          <v-form ref="addBookForm">
+            <v-combobox
+                v-if="props.isGift"
+                label="Osoba"
+                :items="props.giftPersons"
+                :rules="[requiredRule]"
+                v-model="giftPerson"
+            />
+            <v-select
+                v-if="!showBookForm"
+                label="Existující knihy"
+                :items="existingBooks"
+                :rules="[requiredRule]"
+                v-model="selectExistingBook"
+            />
+            <BookForm
+                v-if="showBookForm"
+                :is-create="true"
+                @on-cancel="cancelDialog(isActive)"
+                @on-save="createBook(isActive, $event)"
+            />
+          </v-form>
         </v-card-text>
         <v-card-actions v-if="!showBookForm">
           <v-btn

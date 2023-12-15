@@ -20,7 +20,7 @@ const isNumberOrNull = (value) => {
  */
 const isRequired = (value) => {
   if (!value) {
-    return 'This field is required'
+    return 'Toto pole je povinné'
   }
   return true
 }
