@@ -30,9 +30,26 @@ async function updatePages(num, isActive) {
   await supabase
     .from('Book')
     .update({ PagesRead: num, LastPageUpdate: 'now()' })
-    .eq('Id', props.book.Id)
-  emit('onReload')
-  isActive.value = false
+    .eq('Id', props.book.Id);
+  emit('onReload');
+  isActive.value = false;
+  if (num != 0 && num != props.book.Pages) {
+    await supabase
+        .rpc('increment_achievement', {
+            name_param: 'The Procrastinator'
+        });
+  }
+  if (num === props.book.Pages) {
+    console.log('calling RPC');
+    await supabase
+        .rpc('increment_achievement', {
+            name_param: 'Ten out of ten'
+        });
+    await supabase
+        .rpc('increment_achievement', {
+            name_param: 'So it begins'
+        });
+  }
 }
 
 async function finishReading(isActive) {

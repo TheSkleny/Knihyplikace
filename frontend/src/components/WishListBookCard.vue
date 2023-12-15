@@ -47,7 +47,7 @@ async function removeFromWishlist() {
   emit('onReload')
   await supabase
     .rpc('increment_achievement', {
-        name_param: 'Existential Explorer'
+        name_param: 'Where dreams come true'
   })
 }
 

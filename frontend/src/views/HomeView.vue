@@ -24,7 +24,8 @@ async function getBooks() {
     .order('LastPageUpdate', { ascending: false })
   if (error) {
     console.log('error', error)
-  } else {
+  } 
+  else {
     data.forEach((book) => {
       if (book.PagesRead === book.Pages) {
         if (book.Pages === 0) {

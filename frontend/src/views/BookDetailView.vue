@@ -43,10 +43,28 @@ async function getBook() {
 }
 
 async function onSave(newData) {
+  const isRatingChanged = newData.Rating !== bookData.value.Rating
+  const isCoverImageLinkChanged = newData.CoverImageLink !== bookData.value.CoverImageLink
+
   await supabase
-      .from('Book')
-      .update(newData)
-      .eq('Id', route.params.id)
+    .from('Book')
+    .update(newData)
+    .eq('Id', route.params.id)
+
+  if (isRatingChanged) {
+    await supabase
+      .rpc('increment_achievement', {
+        name_param: 'Anton Ego'
+      })
+  }
+
+  if (isCoverImageLinkChanged) {
+    await supabase
+      .rpc('increment_achievement', {
+        name_param: 'Cover Connoisseur'
+      })
+  }
+
   await getBook()
 }
 

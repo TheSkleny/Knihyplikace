@@ -97,6 +97,10 @@ async function addBookToGiftList(bookId) {
   await supabase
       .from('GiftList')
       .insert({BookId: bookId, Person: giftPerson.value})
+  await supabase
+      .rpc('increment_achievement', {
+        name_param: 'Uhh.. thanks?'
+      })
 }
 
 async function addBook(isActive, bookId) {
