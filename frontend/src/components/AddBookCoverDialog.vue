@@ -4,73 +4,104 @@ import {isRequired} from "@/utils/inputRules";
 
 
 const props = defineProps({
-  CoverImage: {
+  coverImage: {
     type: String,
     required: false,
     default: null
   }
 })
 
-const emit = defineEmits(['onAddCover'])
+const emit = defineEmits(['onAddCover', 'onRemoveCover'])
 
-const CoverImageLink = ref(props.CoverImage)
+const coverForm = ref(null)
+const dialog = ref(false);
+const coverImageLink = ref(props.coverImage)
+console.log(props.coverImage)
 
 const requiredRule = (value) => isRequired(value);
 
-function cancelDialog(isActive) {
-  emit('onAddCover', null)
-  CoverImage.value = addCoverImg
-  isActive.value = false
+const openDialog = () => {
+  dialog.value = true;
+};
+
+const closeDialog = () => {
+  dialog.value = false;
+};
+
+async function addCover() {
+  const {valid} = await coverForm.value.validate()
+  if (!valid) {
+    return
+  }
+  emit('onAddCover', coverImageLink.value)
+  CoverImage.value = coverImageLink.value
+  closeDialog()
 }
 
-function addCover(isActive) {
-  emit('onAddCover', CoverImageLink.value)
-  CoverImage.value = CoverImageLink.value
-  isActive.value = false
+function removeCover() {
+  coverImageLink.value = null
+  emit('onAddCover', coverImageLink.value)
+  CoverImage.value = addCoverImg
+  closeDialog()
 }
 
 const addCoverImg = 'https://siddiquibookcompany.com/wp-content/themes/kidsy/images/placeholder.jpg'
 
-const CoverImage = ref(props.CoverImage ?? addCoverImg)
+const CoverImage = ref(props.coverImage ?? addCoverImg)
 
 </script>
 
 <template>
-  <v-dialog width="350">
-    <template v-slot:activator="{ props }">
-      <v-img
-          class="book_card_img"
-          :src="CoverImage"
-          cover
-          v-bind="props"
-      />
-    </template>
-    <template #default="{ isActive }">
-      <v-card title="Add book cover">
-        <v-card-text>
-          <v-form ref="numberForm">
-            <v-text-field
-                label="Book cover link"
-                clearable
-                v-model="CoverImageLink"
-                :rules="[requiredRule]"
-            />
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer/>
-          <v-btn
-              text="Cancel"
-              @click="cancelDialog(isActive)"
+  <slot name="trigger" :openDialog="openDialog"/>
+  <v-dialog v-model="dialog" width="350">
+    <!--    <template v-slot:activator="{ props }">-->
+    <!--      <v-icon-->
+    <!--          color="secondary"-->
+    <!--          size="75"-->
+    <!--          v-bind="props"-->
+    <!--          style="position: absolute; top: 135px; left: 30px; z-index: 999; opacity: 85%">-->
+    <!--        mdi-pencil-circle-->
+    <!--      </v-icon>-->
+    <!--      <v-img-->
+    <!--          class="book_card_img"-->
+    <!--          :src="CoverImage"-->
+    <!--          cover-->
+    <!--          v-bind="props"-->
+    <!--          style="position: relative"-->
+    <!--      >-->
+
+    <!--      </v-img>-->
+
+    <!--    </template>-->
+    <v-card title="Změnit obrázek">
+      <v-card-text>
+        <v-form ref="coverForm">
+          <v-text-field
+              label="Odkaz na obrázek"
+              clearable
+              v-model="coverImageLink"
+              :rules="[requiredRule]"
           />
-          <v-btn
-              text="Add cover"
-              color="blue"
-              @click="addCover(isActive)"
-          />
-        </v-card-actions>
-      </v-card>
-    </template>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn
+            text="Odebrat"
+            color="error"
+            @click="removeCover"
+        />
+        <v-spacer/>
+        <v-btn
+            text="Zrušit"
+            @click="closeDialog"
+        />
+        <v-btn
+            text="Změnit"
+            color="primary"
+            @click="addCover"
+        />
+      </v-card-actions>
+    </v-card>
   </v-dialog>
 </template>
 

@@ -62,6 +62,7 @@ async function removeFromGifts() {
     .from('GiftList')
     .delete()
     .eq('BookId', props.book.Id)
+    .eq('Person', props.person)
   emit('onReload')
 }
 

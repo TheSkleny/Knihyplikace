@@ -3,7 +3,6 @@ import HomeView from '../views/HomeView.vue'
 import WishListView from '../views/WishListView.vue'
 import BookDetailView from '../views/BookDetailView.vue'
 import AchievementsView from '../views/AchievementsView.vue'
-import AddBookView from '@/views/AddBookView.vue'
 import BookshelfView from '@/views/BookshelfView.vue'
 import GiftsView from '@/views/GiftsView.vue'
 import SettingsView from '@/views/SettingsView.vue'
@@ -48,19 +47,11 @@ const router = createRouter({
             }
         },
         {
-            path: '/add-book',
-            name: 'add-book',
-            component: AddBookView,
-            meta: {
-                title: "Přidat knihu",
-            }
-        },
-        {
             path: '/bookshelf',
             name: 'bookshelf',
             component: BookshelfView,
             meta: {
-                title: "Knihovny",
+                title: "Moje seznamy",
             }
         },
         {

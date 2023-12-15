@@ -11,7 +11,7 @@ const navItems = [
   {
     name: 'wish-list',
     icon: 'mdi-book-heart',
-    text: 'Seznam přání',
+    text: 'Přání',
   },
   {
     name: 'bookshelf',
