@@ -5,7 +5,6 @@
 import {ref} from 'vue'
 import {supabase} from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
-import {useRouter} from 'vue-router'
 import CUDListDialog from '@/components/CUDListDialog.vue';
 import AddBookDialog from "@/components/AddBookDialog.vue";
 
@@ -69,21 +68,53 @@ getBooksInLists()
 </script>
 
 <template>
-  <CUDListDialog 
+  <CUDListDialog
       @on-reload="onReload"
-      :selectedList="chosenList"
-  />
+  >
+    <template v-slot:trigger="{ openDialog }">
+      <v-btn
+          icon="mdi-plus"
+          color="primary"
+          class="btn-bottom-right"
+          @click.prevent="openDialog"
+      />
+    </template>
+  </CUDListDialog>
   <v-expansion-panels v-model="chosenList" @update:model-value="onListChange">
     <v-expansion-panel v-for="list in result" :key="list.ListName" :value="list.ListName">
       <v-expansion-panel-title>
         <h2>{{ list.ListName }}</h2>
+        <p class="book_counter--bookshelf">{{ list.Book.length }}</p>
         <v-spacer/>
-        <p class="book_counter">{{ list.Book.length }}</p>
-
+<!--        <DeleteConfirmDialog :title="book.Name" delete-from=" Databáze knih" @on-delete="deleteBook(book.Id)">-->
+<!--          <template v-slot:trigger="{ openDialog }">-->
+<!--            <v-btn-->
+<!--                icon="mdi-delete"-->
+<!--                color="error"-->
+<!--                size="30"-->
+<!--                variant="text"-->
+<!--                @click.prevent="openDialog"-->
+<!--            />-->
+<!--          </template>-->
+<!--        </DeleteConfirmDialog>-->
+<!--        -->
+        <CUDListDialog
+            @on-reload="onReload"
+            :selectedList="list.ListName"
+        >
+          <template v-slot:trigger="{ openDialog }">
+            <v-btn
+                icon="mdi-pencil"
+                variant="text" size="40"
+                style="margin-right: 20px"
+                @click.prevent="openDialog"
+            />
+          </template>
+        </CUDListDialog>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="list.Book.length === 0">
-              <h2 class="bookshelf_no_books">No books in this category</h2>
+              <h2 class="bookshelf_no_books">V této kategorii nejsou žádné knihy</h2>
         </div>
         <div v-else>
           <BookCard

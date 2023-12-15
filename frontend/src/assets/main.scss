@@ -26,6 +26,10 @@ h3 {
   background-color: $primary;
   border-radius: 10px;
   padding: 5px;
+  &--bookshelf {
+    @extend .book_counter;
+    margin-left: 15px;
+  }
 }
 
 .app_title {

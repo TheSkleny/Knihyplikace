@@ -36,8 +36,8 @@ const deleteItem = () => {
     <slot name="trigger" :openDialog="openDialog" />
     <v-dialog v-model="dialog" max-width="500px">
       <v-card>
-        <v-card-title class="headline">Odebrat knihu {{ props.title }}?</v-card-title>
-        <v-card-text>Opravdu odebrat knihu '{{ props.title }}' z{{ props.deleteFrom }}?</v-card-text>
+        <v-card-title class="headline">Odebrat {{props.deleteFrom === 'e Svých seznamů' ? 'seznam' : 'knihu'}} {{ props.title }}?</v-card-title>
+        <v-card-text>Opravdu odebrat {{props.deleteFrom === 'e Svých seznamů' ? 'seznam' : 'knihu'}} '{{ props.title }}' z{{ props.deleteFrom }}?</v-card-text>
         <v-card-actions>
           <v-spacer/>
           <v-btn text @click="closeDialog">Zrušit</v-btn>
