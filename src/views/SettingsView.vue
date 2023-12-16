@@ -42,10 +42,18 @@ async function routeToDetail(id) {
 
 async function deleteBook(id) {
   await supabase
-      .from('Book')
-      .delete()
-      .eq('Id', id)
-  // TODO: mby cascade delete?
+    .from('BookInBookList')
+    .delete()
+    .eq('BookId', id)
+  await supabase
+    .from('GiftList')
+    .delete()
+    .eq('BookId', id)
+  await supabase
+    .from('Book')
+    .delete()
+    .eq('Id', id)
+
   await getBooks()
 }
 
