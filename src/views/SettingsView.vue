@@ -57,6 +57,15 @@ async function deleteBook(id) {
   await getBooks()
 }
 
+async function deleteGenre(id) {
+  await supabase
+    .from('BookGenre')
+    .delete()
+    .eq('Id', id)
+
+  await getGenres()
+}
+
 getBooks()
 getGenres()
 </script>
@@ -129,7 +138,49 @@ getGenres()
         <p class="book_counter">{{ genres.length }}</p>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
-        <p>{{genres}}</p>
+        <v-table>
+          <thead>
+          <tr>
+            <th>
+              Název
+            </th>
+            <th>
+              Akce
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+              v-for="genre in genres"
+              :key="genre.Id"
+          >
+            <td>
+              {{ genre.Name }}
+            </td>
+            <td>
+              <v-row>
+                <v-btn
+                    icon="mdi-pencil"
+                    size="30"
+                    variant="text"
+                    style="margin-right: 15px"
+                />
+                <DeleteConfirmDialog :title="genre.Name" delete-from=" Databáze žánrů" @on-delete="deleteGenre(genre.Id)">
+                  <template v-slot:trigger="{ openDialog }">
+                    <v-btn
+                        icon="mdi-delete"
+                        color="error"
+                        size="30"
+                        variant="text"
+                        @click.prevent="openDialog"
+                    />
+                  </template>
+                </DeleteConfirmDialog>
+              </v-row>
+            </td>
+          </tr>
+          </tbody>
+        </v-table>
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
