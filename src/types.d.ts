@@ -18,6 +18,11 @@ type Book = {
     LastPageUpdate: string;
 }
 
+type Genre = {
+    Id: string;
+    Name: string;
+}
+
 type Achievement = {
     Id: string;
     Name: string;

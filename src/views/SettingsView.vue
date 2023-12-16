@@ -6,6 +6,7 @@ import { ref } from "vue";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "vue-router";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
+import GenreDialog from "@/components/GenreDialog.vue";
 
 const router = useRouter()
 
@@ -88,7 +89,7 @@ getGenres()
             <th>
               Autor
             </th>
-            <th>
+            <th style="width: 90px">
               Akce
             </th>
           </tr>
@@ -159,12 +160,17 @@ getGenres()
             </td>
             <td>
               <v-row>
-                <v-btn
-                    icon="mdi-pencil"
-                    size="30"
-                    variant="text"
-                    style="margin-right: 15px"
-                />
+                <GenreDialog :genre="genre" @on-reload="getGenres">
+                  <template v-slot:trigger="{ openDialog }">
+                    <v-btn
+                        icon="mdi-pencil"
+                        size="30"
+                        variant="text"
+                        style="margin-right: 15px"
+                        @click.prevent="openDialog"
+                    />
+                  </template>
+                </GenreDialog>
                 <DeleteConfirmDialog :title="genre.Name" delete-from=" Databáze žánrů" @on-delete="deleteGenre(genre.Id)">
                   <template v-slot:trigger="{ openDialog }">
                     <v-btn
@@ -181,6 +187,17 @@ getGenres()
           </tr>
           </tbody>
         </v-table>
+            <GenreDialog @on-reload="getGenres">
+            <template v-slot:trigger="{ openDialog }">
+              <v-btn
+                  style="display: block; margin-left: auto; margin-right: auto; margin-top: 10px;"
+                  color="primary"
+                  icon="mdi-plus"
+                  size="40"
+                  @click.prevent="openDialog"
+              />
+            </template>
+          </GenreDialog>
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>

@@ -2,7 +2,7 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import {ref, defineProps, defineEmits} from 'vue';
 
 const props = defineProps({
   title: {
@@ -31,15 +31,26 @@ const deleteItem = () => {
   closeDialog();
 };
 
+const deletedItem = ref('');
+
+if (props.deleteFrom === 'e Svých seznamů') {
+  deletedItem.value = 'seznam';
+} else if (props.deleteFrom === ' Databáze žánrů') {
+  deletedItem.value = 'žánr';
+} else {
+  deletedItem.value = 'knihu';
+}
+
+
 </script>
 
 <template>
   <div>
-    <slot name="trigger" :openDialog="openDialog" />
+    <slot name="trigger" :openDialog="openDialog"/>
     <v-dialog v-model="dialog" max-width="500px">
       <v-card>
-        <v-card-title class="headline">Odebrat {{props.deleteFrom === 'e Svých seznamů' ? 'seznam' : 'knihu'}} {{ props.title }}?</v-card-title>
-        <v-card-text>Opravdu odebrat {{props.deleteFrom === 'e Svých seznamů' ? 'seznam' : 'knihu'}} '{{ props.title }}' z{{ props.deleteFrom }}?</v-card-text>
+        <v-card-title class="headline">Odebrat {{ deletedItem }} {{ props.title }}?</v-card-title>
+        <v-card-text>Opravdu odebrat {{ deletedItem }} '{{ props.title }}' z{{ props.deleteFrom }}?</v-card-text>
         <v-card-actions>
           <v-spacer/>
           <v-btn text @click="closeDialog">Zrušit</v-btn>

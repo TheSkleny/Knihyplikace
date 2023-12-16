@@ -26,7 +26,6 @@ const openDialog = () => {
 };
 
 const closeDialog = () => {
-
   dialog.value = false;
 };
 
@@ -59,25 +58,6 @@ watch(() => props.coverImage, (newValue) => {
 <template>
   <slot name="trigger" :openDialog="openDialog"/>
   <v-dialog v-model="dialog" width="350">
-    <!--    <template v-slot:activator="{ props }">-->
-<!--          <v-icon-->
-<!--              color="secondary"-->
-<!--              size="75"-->
-<!--              v-bind="props"-->
-<!--              style="position: absolute; top: 135px; left: 30px; z-index: 999; opacity: 85%">-->
-<!--            mdi-pencil-circle-->
-<!--          </v-icon>-->
-    <!--      <v-img-->
-    <!--          class="book_card_img"-->
-    <!--          :src="CoverImage"-->
-    <!--          cover-->
-    <!--          v-bind="props"-->
-    <!--          style="position: relative"-->
-    <!--      >-->
-
-    <!--      </v-img>-->
-
-    <!--    </template>-->
     <v-card title="Změnit obrázek">
       <v-card-text>
         <v-form ref="coverForm">
