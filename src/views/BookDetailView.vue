@@ -70,6 +70,10 @@ async function onSave(newData) {
 
 async function onDelete() {
   await supabase
+    .from('BookInBookList')
+    .delete()
+    .eq('BookId', route.params.id)
+  await supabase
     .from('Book')
     .update({ IsOwned: false })
     .eq('Id', route.params.id)
@@ -77,6 +81,7 @@ async function onDelete() {
       router.push({ name: 'home' })
     })
 }
+
 getBook()
 </script>
 
