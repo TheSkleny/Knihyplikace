@@ -1,3 +1,6 @@
+<!-- Filename: HomeView.vue -->
+<!-- Author:   Adam Světlík -->
+<!-- Login:    xsvetl07     -->
 <style scoped lang="scss">
  @import "@/assets/main.scss";
 </style>

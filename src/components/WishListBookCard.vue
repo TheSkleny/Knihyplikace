@@ -1,3 +1,6 @@
+<!-- Filename: WishListBookCard.vue -->
+<!-- Author:   David Sklenář        -->
+<!-- Login:    xsklen14             -->
 <style scoped lang="scss">
  @import "@/assets/main.scss";
 </style>
