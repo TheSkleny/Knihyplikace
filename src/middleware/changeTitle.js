@@ -2,7 +2,7 @@ import {usePageTitleStore} from "@/stores/pageTitle";
 
 /**
  *
- * @param title {string | null }
+ * @param t {string | null }
  */
 export default function changeTitleMiddleware(t) {
     const ps = usePageTitleStore()

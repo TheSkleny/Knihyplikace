@@ -13,5 +13,8 @@ export default defineConfig({
       'vue-easy-lightbox': 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min.js',
       'vue-easy-lightbox-css': 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css'
     }
+  },
+  build: {
+    outDir: '_site'
   }
 })
