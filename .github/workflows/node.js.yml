@@ -25,14 +25,14 @@ jobs:
     - run: npm run build
 
   upload:
-  
-  - name: Fix permissions
-    run: |
-      chmod -c -R +rX "dist/" | while read line; do
-        echo "::warning title=Invalid file permissions automatically fixed::$line"
-      done
-  - name: Upload Pages artifact
-    uses: actions/upload-pages-artifact@v2
+    needs: build
+    - name: Fix permissions
+      run: |
+        chmod -c -R +rX "dist/" | while read line; do
+          echo "::warning title=Invalid file permissions automatically fixed::$line"
+        done
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v2
 
   # Deploy job
   deploy:
