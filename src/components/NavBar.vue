@@ -56,7 +56,7 @@ const activeItem = computed(() => {
 </script>
 
 <template>
-  <v-bottom-navigation mode="shift" v-model="activeItem">
+  <v-bottom-navigation mode="shift" :model-value="activeItem">
     <v-btn
         style="width: 20%"
         color="primary"

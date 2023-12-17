@@ -21,6 +21,7 @@ const emit = defineEmits(['onReload']);
 
 const genre = ref(props.genre?.Name);
 const dialog = ref(false);
+const genreForm = ref(null);
 
 /**
  * Shows the dialog
@@ -43,10 +44,29 @@ const closeDialog = () => {
  */
 const requiredRule = (value) => isRequired(value);
 
+const genreUniqueNameRule = async (value) => {
+  const {data, error} = await supabase
+      .from('BookGenre')
+      .select()
+      .eq('Name', value)
+  if (error) console.log('error', error)
+  else {
+    if (value === props.genre?.Name) {
+      return true
+    } else {
+      return data.length === 0 || 'Žánr s tímto jménem již existuje'
+    }
+  }
+}
+
 /**
  * Create new genre
  */
 async function addGenre() {
+  const {valid} = await genreForm.value.validate()
+  if (!valid) {
+    return
+  }
   await supabase
       .from('BookGenre')
       .insert([{Name: genre.value}])
@@ -59,6 +79,14 @@ async function addGenre() {
  * Update genre
  */
 async function updateGenre() {
+  const {valid} = await genreForm.value.validate()
+  if (!valid) {
+    return
+  }
+  if (genre.value === props.genre.Name) {
+    closeDialog()
+    return
+  }
   await supabase
       .from('BookGenre')
       .update({Name: genre.value})
@@ -78,7 +106,7 @@ async function updateGenre() {
               label="Název žánru"
               clearable
               v-model="genre"
-              :rules="[requiredRule]"
+              :rules="[requiredRule, genreUniqueNameRule]"
           />
         </v-form>
       </v-card-text>
