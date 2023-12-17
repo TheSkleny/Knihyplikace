@@ -24,6 +24,8 @@ jobs:
     - run: npm ci
     - run: npm run build
 
+  upload:
+  
   - name: Fix permissions
     run: |
       chmod -c -R +rX "dist/" | while read line; do
