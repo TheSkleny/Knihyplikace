@@ -7,18 +7,27 @@ import { supabase } from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import AddBookDialog from "@/components/AddBookDialog.vue";
 
+/**
+ * @type {Ref<UnwrapRef<BookList[]>>}
+ */
 const books = ref({
   reading: [],
   unread: [],
   read: []
 })
 
+/**
+ * Library category mapper
+ */
 const categoryMapper = {
   'Reading': 'Rozečtené',
   'Unread': 'Nepřečtené',
   'Read': 'Přečtené'
 }
 
+/**
+ * Fetches all books in the library
+ */
 async function getBooks() {
   books.value.reading = []
   books.value.unread = []
@@ -50,7 +59,6 @@ async function getBooks() {
     })
   }
 }
-
 getBooks()
 </script>
 
@@ -82,5 +90,4 @@ getBooks()
     </v-expansion-panel>
   </v-expansion-panels>
   <div class="bottom-div"/>
-
 </template>

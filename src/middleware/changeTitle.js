@@ -1,6 +1,5 @@
 import {usePageTitleStore} from "@/stores/pageTitle";
 
-
 /**
  *
  * @param title {string | null }

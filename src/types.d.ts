@@ -1,5 +1,6 @@
-
-
+/**
+ * Type definitions for the whole project
+ */
 
 type Book = {
     Id: string;

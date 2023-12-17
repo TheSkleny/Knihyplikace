@@ -7,8 +7,14 @@ import { supabase } from '@/lib/supabaseClient'
 import WishListBookCard from "@/components/WishListBookCard.vue";
 import AddBookDialog from "@/components/AddBookDialog.vue";
 
+/**
+ * @type {Ref<UnwrapRef<Book[]>>}
+ */
 const books = ref([])
 
+/**
+ * Fetches all wish list books
+ */
 async function getWishListBooks() {
   books.value = []
   const { data, error } = await supabase
@@ -21,7 +27,6 @@ async function getWishListBooks() {
     books.value = data
   }
 }
-
 getWishListBooks()
 </script>
 

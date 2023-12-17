@@ -14,6 +14,9 @@ const router = useRouter()
  */
 const bookData = ref(null)
 
+/**
+ * Fetches book information based on the route parameter
+ */
 async function getBook() {
   const { data, error } = await supabase
       .from('Book')
@@ -42,6 +45,10 @@ async function getBook() {
   }
 }
 
+/**
+ * Saves the updated book data to the database
+ * @param {Book} newData - The updated book data
+ */
 async function onSave(newData) {
   const isRatingChanged = newData.Rating !== bookData.value.Rating
   const isCoverImageLinkChanged = newData.CoverImageLink !== bookData.value.CoverImageLink
@@ -51,23 +58,28 @@ async function onSave(newData) {
     .update(newData)
     .eq('Id', route.params.id)
 
+  // Achievement: Anton Ego
   if (isRatingChanged) {
     await supabase
       .rpc('increment_achievement', {
         name_param: 'Anton Ego'
       })
   }
-
+  // Achievement: Cover Connoisseur
   if (isCoverImageLinkChanged) {
     await supabase
       .rpc('increment_achievement', {
         name_param: 'Cover Connoisseur'
       })
   }
-
+  // Reload the book data
   await getBook()
 }
 
+/**
+ * Deletes the book from the user's library and custom book lists
+ * and navigates back to the home page
+ */
 async function onDelete() {
   await supabase
     .from('BookInBookList')
@@ -81,7 +93,6 @@ async function onDelete() {
       router.push({ name: 'home' })
     })
 }
-
 getBook()
 </script>
 

@@ -2,7 +2,6 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-
 import { ref, computed } from 'vue'
 import { supabase } from "@/lib/supabaseClient";
 import WishListBookCard from "@/components/WishListBookCard.vue";
@@ -13,6 +12,10 @@ import AddBookDialog from "@/components/AddBookDialog.vue";
  */
 const gifts = ref([])
 
+/**
+ * Fetches gifts for each person
+ * @returns {dict} acc - Dictionary of gifts for each person
+ */
 async function GetGifts() {
   gifts.value = []
   closePanels.value = null
@@ -35,7 +38,6 @@ async function GetGifts() {
 }
 const closePanels = ref(null)
 const persons = computed(() => Object.keys(gifts.value));
-
 GetGifts()
 </script>
 

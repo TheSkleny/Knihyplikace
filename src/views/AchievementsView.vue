@@ -6,8 +6,14 @@ import { ref } from 'vue';
 import { supabase } from '@/lib/supabaseClient';
 import AchievementCard from "@/components/AchievementCard.vue";
 
+/**
+ * @type {Ref<UnwrapRef<Achievement[]>>}
+ */
 const achievements = ref([]);
 
+/**
+ * Fetches all achievements from the database
+ */
 async function getAchievements() {
   const { data, error } = await supabase
     .from('Achievement')
@@ -16,10 +22,13 @@ async function getAchievements() {
     console.error('Error fetching achievements:', error);
   } 
   else {
+    // Calculate the progress for each achievement
     data.forEach(achievement => {
       achievement.progress = achievement.Current / achievement.Goal;
     });
 
+    // Sort the achievements based on progress in descending order
+    // Completed achievements will be at the bottom
     data.sort((a, b) => {
       if (a.Current === a.Goal) return 1;
       if (b.Current === b.Goal) return -1;
@@ -28,7 +37,6 @@ async function getAchievements() {
     achievements.value = data;
   }
 }
-
 getAchievements();
 </script>
 

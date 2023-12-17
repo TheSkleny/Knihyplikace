@@ -9,10 +9,18 @@ import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 import GenreDialog from "@/components/GenreDialog.vue";
 
 const router = useRouter()
-
+/**
+ * @type {Ref<UnwrapRef<Book[]>>}
+ */
 const books = ref([])
+/**
+ * @type {Ref<UnwrapRef<Genre[]>>}
+ */
 const genres = ref([])
 
+/**
+ * Fetches all books in the database
+ */
 async function getBooks() {
   books.value = []
   const {data, error} = await supabase
@@ -20,11 +28,15 @@ async function getBooks() {
       .select()
   if (error) {
     console.log('error', error)
-  } else {
+  }
+  else {
     books.value = data
   }
 }
 
+/**
+ * Fetches all genres in the database
+ */
 async function getGenres() {
   genres.value = []
   const {data, error} = await supabase
@@ -32,16 +44,26 @@ async function getGenres() {
       .select()
   if (error) {
     console.log('error', error)
-  } else {
+  }
+  else {
     genres.value = data
   }
 }
 
+/**
+ * Routes to the book detail page
+ * @param {number} id - The book id
+ */
 async function routeToDetail(id) {
   await router.push({name: 'book-detail', params: {id}})
 }
 
+/**
+ * Deletes the book from the database
+ * @param {number} id - The book id
+ */
 async function deleteBook(id) {
+  // Delete all references to the book
   await supabase
     .from('BookInBookList')
     .delete()
@@ -54,19 +76,22 @@ async function deleteBook(id) {
     .from('Book')
     .delete()
     .eq('Id', id)
-
+  // Reload the books
   await getBooks()
 }
 
+/**
+ * Deletes the genre from the database
+ * @param {number} id - The genre id
+ */
 async function deleteGenre(id) {
   await supabase
     .from('BookGenre')
     .delete()
     .eq('Id', id)
-
+  // Reload the genres
   await getGenres()
 }
-
 getBooks()
 getGenres()
 </script>

@@ -13,16 +13,23 @@ const router = useRouter()
 const store = usePageTitleStore()
 const {title} = storeToRefs(store)
 
+/**
+ * Routes to the home page on logo click
+ */
 async function onLogoClick() {
+  // Achievement: For the statement
   await supabase
       .rpc('increment_achievement', {
         name_param: 'For the statement'
       })
-  await router.push({name: 'home'})
+  await router.push({ name: 'home' })
 }
 
+/**
+ * Routes to the settings page
+ */
 async function routeToSettings() {
-  await router.push({name: 'settings'})
+  await router.push({ name: 'settings' })
 }
 </script>
 

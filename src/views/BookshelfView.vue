@@ -9,16 +9,24 @@ import CUDListDialog from '@/components/CUDListDialog.vue';
 import AddBookDialog from "@/components/AddBookDialog.vue";
 import EditListDialog from "@/components/EditListDialog.vue";
 
+/**
+ * @type {Ref<UnwrapRef<BookList[]>>}
+ */
 const lists = ref([])
 
+/**
+ * Fetches all book lists
+ */
 async function getLists() {
   const { data, error } = await supabase
       .from('BookList')
       .select()
-  if (error) console.log('error', error)
+      .neq('Name', 'V seznamu přání')
+  if (error) {
+    console.log('error', error)
+  }
   else {
     lists.value = data
-      .filter(list => list.Name !== 'V seznamu přání')
       .map(list => ({
         Id: list.Id,
         ListName: list.Name,
@@ -27,6 +35,10 @@ async function getLists() {
   }
 }
 
+/**
+ * Fetches all books in the lists
+ * @returns {BookList[]} - The lists with books
+ */
 async function getBooksInLists() {
   const { data, error } = await supabase
       .from('BookInBookList')
@@ -39,7 +51,9 @@ async function getBooksInLists() {
 
   if (error) console.log('error', error)
   else {
+    // Get all custom book lists
     await getLists()
+    // Add the books to the lists
     data.forEach(bookInList => {
       const list = lists.value.find(list => list.ListName === bookInList.BookList.Name);
       if (list) {
@@ -50,12 +64,13 @@ async function getBooksInLists() {
   return lists.value;
 }
 
-
+/**
+ * Reloads the books and book lists
+ */
 function onReload() {
   getLists();
   getBooksInLists();
 }
-
 getBooksInLists()
 </script>
 
