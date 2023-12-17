@@ -4,23 +4,23 @@
 <script setup>
 import { defineProps } from 'vue'
 
+/**
+ * @type {Prettify<Readonly<ExtractPropTypes<{achievement: {default: (function(): Achievement), type: ObjectConstructor,
+ *        required: boolean}}>>>}
+ */
+ const props = defineProps({
+  achievement: {
+    type: Object,
+    required: true
+  }
+})
+
 // Placeholder cover image if the achievement doesn't have one
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const image = props.achievement.ImageUri ?? DEFAULT_COVER
 
 // Progress of the achievement
 const progress = props.achievement.Current / props.achievement.Goal * 100
-
-/**
- * @type {Prettify<Readonly<ExtractPropTypes<{achievement: {default: (function(): Achievement), type: ObjectConstructor,
- *        required: boolean}}>>>}
- */
-const props = defineProps({
-  achievement: {
-    type: Object,
-    required: true
-  }
-})
 </script>
 
 <template>
