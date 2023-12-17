@@ -46,4 +46,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v3
         with:
-          folder: ./dist
+          folder: dist
