@@ -1,3 +1,6 @@
+<!-- Filename: NavBar.vue    -->
+<!-- Author:   Lukáš Zavadil -->
+<!-- Login:    xzavad20      -->
 <style lang="scss">
 @import "@/assets/main.scss";
 </style>

@@ -1,3 +1,6 @@
+<!-- Filename: AchievementCard.vue -->
+<!-- Author:   Lukáš Zavadil       -->
+<!-- Login:    xzavad20            -->
 <style scoped lang="scss">
 @import "@/assets/main.scss";
 </style>
