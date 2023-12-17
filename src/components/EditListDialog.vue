@@ -8,12 +8,11 @@ import { isRequired } from "@/utils/inputRules";
 import { supabase } from "@/lib/supabaseClient";
 
 /**
- *
  * @type {Prettify<Readonly<ExtractPropTypes<{list: {default: (function(): BookList), type: ObjectConstructor, required: boolean}}>>>}
  */
 const props = defineProps({
   list: {
-    type: String,
+    type: Object,
     required: true
   }
 })
