@@ -335,6 +335,7 @@ function onAddCover(coverImageLink) {
         <v-spacer/>
         <v-col cols="7">
           <v-text-field
+              type="number"
               class="details_text_field"
               variant="underlined"
               :readonly="isReadonly"
