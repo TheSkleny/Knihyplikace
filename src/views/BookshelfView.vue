@@ -37,7 +37,6 @@ async function getLists() {
 
 /**
  * Fetches all books in the lists
- * @returns {BookList[]} - The lists with books
  */
 async function getBooksInLists() {
   const { data, error } = await supabase
@@ -61,7 +60,6 @@ async function getBooksInLists() {
       }
     });
   }
-  return lists.value;
 }
 
 /**

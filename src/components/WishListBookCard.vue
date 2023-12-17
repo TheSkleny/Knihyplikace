@@ -30,9 +30,13 @@ const props = defineProps({
 
 const emit = defineEmits(['onReload'])
 
+// Placeholder cover image if the book doesn't have one
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
 
+/**
+ * Remove the book from the wishlist
+ */
 async function removeFromWishlist() {
   const wishList = await supabase
     .from('BookList')
@@ -44,19 +48,22 @@ async function removeFromWishlist() {
     console.log('error', wishList.error)
     return
   }
-
   await supabase
     .from('BookInBookList')
     .delete()
     .eq('BookId', props.book.Id)
     .eq('ListId', wishList.data.Id)
   emit('onReload')
+  // Achievement: Where dreams come true
   await supabase
     .rpc('increment_achievement', {
         name_param: 'Where dreams come true'
   })
 }
 
+/**
+ * Remove the book from the gifts list
+ */
 async function removeFromGifts() {
   await supabase
     .from('GiftList')
@@ -66,6 +73,9 @@ async function removeFromGifts() {
   emit('onReload')
 }
 
+/**
+ * Move the book from the wishlist to the library
+ */
 async function moveToLibrary() {
   await supabase
     .from('Book')

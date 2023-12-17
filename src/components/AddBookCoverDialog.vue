@@ -2,8 +2,8 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref, defineEmits, defineProps, watch} from 'vue'
-import {isRequired} from "@/utils/inputRules";
+import { ref, defineEmits, defineProps, watch } from 'vue'
+import { isRequired } from "@/utils/inputRules";
 
 const props = defineProps({
   coverImage: {
@@ -19,16 +19,30 @@ const coverForm = ref(null)
 const dialog = ref(false);
 const coverImageLink = ref(props.coverImage)
 
+/**
+ * Required rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is required
+ */
 const requiredRule = (value) => isRequired(value);
 
+/**
+ * Open the dialog
+ */
 const openDialog = () => {
   dialog.value = true;
 };
 
+/**
+ * Close the dialog
+ */
 const closeDialog = () => {
   dialog.value = false;
 };
 
+/**
+ * Add the book cover
+ */
 async function addCover() {
   const {valid} = await coverForm.value.validate()
   if (!valid) {
@@ -39,20 +53,22 @@ async function addCover() {
   closeDialog()
 }
 
+/**
+ * Remove the book cover
+ */ 
 function removeCover() {
   coverImageLink.value = null
   emit('onAddCover', coverImageLink.value)
   closeDialog()
 }
 
-
 const CoverImage = ref(props.coverImage)
 
+// Watch for changes in the cover image
 watch(() => props.coverImage, (newValue) => {
   CoverImage.value = newValue
   coverImageLink.value = newValue
 })
-
 </script>
 
 <template>

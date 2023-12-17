@@ -5,8 +5,14 @@
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 
+/**
+ * @type {Ref<UnwrapRef<Genre>>}
+ */
 const name = ref('')
 
+/**
+ * Adds a new genre to the database
+ */
 async function addGenre() {
   await supabase
       .from('BookGenre')

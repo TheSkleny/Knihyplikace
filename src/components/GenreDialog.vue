@@ -1,7 +1,10 @@
+<style scoped lang="scss">
+@import "@/assets/main.scss";
+</style>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
-import {isRequired} from "@/utils/inputRules";
-import {supabase} from "@/lib/supabaseClient";
+import { ref, defineProps, defineEmits } from "vue";
+import { isRequired } from "@/utils/inputRules";
+import { supabase } from "@/lib/supabaseClient";
 
 /**
  * @type {Prettify<Readonly<ExtractPropTypes<{genre: {default: (function(): Genre), type: ObjectConstructor, required: boolean}}>>>}
@@ -19,16 +22,30 @@ const emit = defineEmits(['onReload']);
 const genre = ref(props.genre?.Name);
 const dialog = ref(false);
 
+/**
+ * Shows the dialog
+ */
 const openDialog = () => {
   dialog.value = true;
 };
 
+/**
+ * Closes the dialog
+ */
 const closeDialog = () => {
   dialog.value = false;
 };
 
+/**
+ * Required rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is required
+ */
 const requiredRule = (value) => isRequired(value);
 
+/**
+ * Create new genre
+ */
 async function addGenre() {
   await supabase
       .from('BookGenre')
@@ -38,6 +55,9 @@ async function addGenre() {
   closeDialog()
 }
 
+/**
+ * Update genre
+ */
 async function updateGenre() {
   await supabase
       .from('BookGenre')
@@ -46,8 +66,6 @@ async function updateGenre() {
   emit('onReload')
   closeDialog()
 }
-
-
 </script>
 
 <template>

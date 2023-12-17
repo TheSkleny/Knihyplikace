@@ -12,6 +12,7 @@ import VueEasyLightbox from "vue-easy-lightbox";
 import 'vue-easy-lightbox-css'
 import { isRequired, isNumberOrNull } from "@/utils/inputRules";
 
+// Placeholder cover image if the book doesn't have one
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 
 const formDataBase = {
@@ -47,10 +48,13 @@ const props = defineProps({
     default: false
   }
 })
+
 const emit = defineEmits(['onSave', 'onDelete', 'onReload', 'onCancel'])
 
+// Clone the book data so it can be edited without changing the original data
 const newBookData = ref(cloneDeep({...formDataBase, ...props.bookData}))
 
+// Form types
 const formType = {
   EDIT: 1,
   ADD: 2,
@@ -59,10 +63,18 @@ const formType = {
 
 const genre_list = ref([])
 
+/** 
+ * Fetches all genres
+ */
 async function getGenre() {
-  const {data, error} = await supabase.from('BookGenre').select('Name, Id')
-  if (error) console.log('error', error)
+  const {data, error} = await supabase
+      .from('BookGenre')
+      .select('Name, Id')
+  if (error) {
+    console.log('error', error)
+  }
   else {
+    // Map the data to the format required by v-select
     genre_list.value = data.map((genre) => {
       return {
         title: genre.Name,
@@ -72,6 +84,7 @@ async function getGenre() {
   }
 }
 
+// Get the number of pages read, the total number of pages and the percentage of pages read
 const pagesRead = computed(() => props.bookData.PagesRead ?? 0)
 const pages = computed(() => props.bookData.Pages ?? 0)
 const pagesPercent = computed(() => (pagesRead.value / pages.value * 100) ?? 0)
@@ -79,9 +92,23 @@ const cover = ref(props.bookData.CoverImageLink)
 const coverComputed = computed(() => cover.value  ?? DEFAULT_COVER)
 
 const addBookForm = ref(null)
+
+/**
+ * Required rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is required
+ */
 const requiredRule = (value) => isRequired(value);
+/**
+ * Number rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is a number
+ */
 const numberRule = (value) => isNumberOrNull(value);
 
+/**
+ * Saves the book
+ */
 async function save() {
   const {valid} = await addBookForm.value.validate()
   if (!valid) {
@@ -90,7 +117,8 @@ async function save() {
   emit('onSave', newBookData.value)
   if (newBookData.value.CoverImageLink) {
     cover.value = newBookData.value.CoverImageLink
-  } else {
+  } 
+  else {
     cover.value = DEFAULT_COVER
   }
   lightboxImage.value.pop()
@@ -99,19 +127,24 @@ async function save() {
   isReadonly.value = true
 }
 
-onMounted(async () => {
-  await getGenre()
-})
+getGenre()
 
+/**
+ * Edit mode
+ */
 function edit() {
   selectedFormType.value = formType.EDIT
   isReadonly.value = false
 }
 
+/**
+ * Exit edit mode
+ */
 function cancel() {
   if (props.isCreate) {
     emit('onCancel')
-  } else {
+  } 
+  else {
     newBookData.value = cloneDeep(props.bookData)
     selectedFormType.value = formType.READ
     isReadonly.value = true
@@ -119,10 +152,16 @@ function cancel() {
   }
 }
 
+/**
+ * Delete the book
+ */
 function deleteBook() {
   emit('onDelete')
 }
 
+/**
+ * Reload the book data
+ */
 function getBook() {
   emit('onReload')
 }
@@ -135,10 +174,16 @@ const lightboxImage = ref([
 ])
 const isLightboxActive = ref(false)
 const lightboxIndex = ref(0)
+
+// Toggle the book cover zoom
 const lightboxToggle = () => {
   isLightboxActive.value = !isLightboxActive.value
 }
 
+/**
+ * Book cover add handler
+ * @param {string} coverImageLink - The book cover image link
+ */
 function onAddCover(coverImageLink) {
   newBookData.value.CoverImageLink = coverImageLink
   cover.value = coverImageLink
@@ -234,7 +279,7 @@ function onAddCover(coverImageLink) {
             />
           </v-col>
           <v-col>
-            <p class="text-align-right">{{ pagesRead }} / {{ pages }} stránek </p>
+            <p class="text-align-right">{{ pagesRead }}/{{ pages }} stránek </p>
             <v-progress-linear
                 :model-value="pagesPercent"
                 :height="10"

@@ -4,7 +4,12 @@
 <script setup>
 import { defineProps } from 'vue'
 
+// Placeholder cover image if the achievement doesn't have one
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
+const image = props.achievement.ImageUri ?? DEFAULT_COVER
+
+// Progress of the achievement
+const progress = props.achievement.Current / props.achievement.Goal * 100
 
 /**
  * @type {Prettify<Readonly<ExtractPropTypes<{achievement: {default: (function(): Achievement), type: ObjectConstructor,
@@ -16,8 +21,6 @@ const props = defineProps({
     required: true
   }
 })
-const image = props.achievement.ImageUri ?? DEFAULT_COVER
-const progress = props.achievement.Current / props.achievement.Goal * 100
 </script>
 
 <template>
@@ -31,7 +34,7 @@ const progress = props.achievement.Current / props.achievement.Goal * 100
           <h1>{{ props.achievement.Name }}</h1>
         </v-row>
         <v-row class="margin-top-20 margin-bottom-10">
-          <p class="achievement_card_text">{{props.achievement.Description}}</p>
+          <p class="achievement_card_text">{{ props.achievement.Description }}</p>
         </v-row>
         <v-row class="margin-top-40">
           <v-col>

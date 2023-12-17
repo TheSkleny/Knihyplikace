@@ -19,13 +19,32 @@ const emit = defineEmits(['onReload'])
 
 const newPagesRead = ref(0)
 const numberForm = ref(null)
+
+/**
+ * Required rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is required
+ */
 const requiredRule = (value) => isRequired(value);
+/**
+ * Pages limit rule
+ * @param {number} value - The value
+ * @returns {boolean} - True if the value is less than or equal to the total pages
+ */
 const pagesLimitRule = (value) => value <= props.book.Pages || 'Pages read cannot be more than total pages';
 
+/**
+ * Shows the page update dialog
+ */
 function onShowDialog() {
   newPagesRead.value = props.book.PagesRead ?? 0
 }
 
+/**
+ * Updates the pages read
+ * @param {number} num - The number of pages read
+ * @param {Ref<boolean>} isActive - Whether the dialog is active
+ */
 async function updatePages(num, isActive) {
   await supabase
     .from('Book')
@@ -34,27 +53,39 @@ async function updatePages(num, isActive) {
   emit('onReload');
   isActive.value = false;
   if (num !== 0 && num !== props.book.Pages) {
+    // Achievement: The Procrastinator
     await supabase
         .rpc('increment_achievement', {
             name_param: 'The Procrastinator'
         });
   }
   if (num === props.book.Pages) {
-    await supabase
-        .rpc('increment_achievement', {
-            name_param: 'Ten out of ten'
-        });
+    // Achievement: So it begins
     await supabase
         .rpc('increment_achievement', {
             name_param: 'So it begins'
         });
+    // Achievement: Ten out of ten
+    await supabase
+        .rpc('increment_achievement', {
+            name_param: 'Ten out of ten'
+        });
   }
 }
 
+/**
+ * Sets the book as read
+ * @param {Ref<boolean>} isActive - Whether the dialog is active
+ */
 async function finishReading(isActive) {
   await updatePages(props.book.Pages, isActive)
 }
 
+/**
+ * Adds the pages read
+ * @param {number} num - The number of pages read
+ * @param {Ref<boolean>} isActive - Whether the dialog is active
+ */
 async function addPages(num, isActive) {
   const { valid } = await numberForm.value.validate()
   if (!valid) {

@@ -5,6 +5,7 @@
 import { computed, defineProps, defineEmits } from 'vue'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
 
+// Placeholder cover image if the book doesn't have one
 const DEFAULT_COVER = 'https://cdn.vuetifyjs.com/images/parallax/material.jpg'
 const cover = computed(() => props.book.CoverImageLink ?? DEFAULT_COVER)
 
@@ -19,15 +20,22 @@ const props = defineProps({
 })
 const emit = defineEmits(['onReload'])
 
+// Get the pages read and total pages
 const pagesRead = computed(() => props.book.PagesRead ?? 0)
 const pages = computed(() => props.book.Pages ?? 0)
+
+// Get the percentage of pages read
 const pagesPercent = computed(() => {
+  // If the book has no pages mark it as unread
   if (pages.value === 0 && pagesRead.value === 0) {
-    return 100
+    return 0
   }
   return pagesRead.value / pages.value * 100
 })
 
+/**
+ * Reloads the book data
+ */
 function getBook() {
   emit('onReload')
 }

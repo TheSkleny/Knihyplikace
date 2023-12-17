@@ -2,9 +2,9 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref, defineEmits, defineProps} from 'vue'
-import {supabase} from "@/lib/supabaseClient";
-import {isRequired} from "@/utils/inputRules";
+import { ref, defineEmits, defineProps } from 'vue'
+import { supabase } from "@/lib/supabaseClient";
+import { isRequired } from "@/utils/inputRules";
 
 const props = defineProps({
   list: {
@@ -18,8 +18,17 @@ const newListName = ref(props.list)
 const addListForm = ref(null)
 const dialog = ref(false);
 
+/**
+ * Required rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is required
+ */
 const requiredRule = (value) => isRequired(value);
-
+/**
+ * List unique name rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is unique
+ */
 const listUniqueNameRule = async (value) => {
   const {data, error} = await supabase
       .from('BookList')
@@ -33,6 +42,9 @@ const listUniqueNameRule = async (value) => {
 
 const emit = defineEmits(['onReload'])
 
+/**
+ * Create new custom list
+ */
 async function insertList() {
   const {valid} = await addListForm.value.validate()
   if (!valid) {
@@ -49,11 +61,17 @@ async function insertList() {
   }
 }
 
+/**
+ * Open the dialog
+ */
 const openDialog = () => {
   newListName.value = null
   dialog.value = true
 };
 
+/**
+ * Close the dialog
+ */
 const closeDialog = () => {
   dialog.value = false
 };

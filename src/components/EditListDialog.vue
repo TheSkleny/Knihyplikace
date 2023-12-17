@@ -1,8 +1,11 @@
+<style scoped lang="scss">
+@import "@/assets/main.scss";
+</style>
 <script setup>
-import {ref, defineProps, defineEmits} from "vue";
+import { ref, defineProps, defineEmits } from "vue";
 import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
-import {isRequired} from "@/utils/inputRules";
-import {supabase} from "@/lib/supabaseClient";
+import { isRequired } from "@/utils/inputRules";
+import { supabase } from "@/lib/supabaseClient";
 
 /**
  *
@@ -17,14 +20,22 @@ const props = defineProps({
 
 const emit = defineEmits(['onReload'])
 
-
 const dialog = ref(false);
 const listNameForm = ref(null)
-
 const newListName = ref(props.list.ListName)
 
+/**
+ * Required rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is required
+ */
 const requiredRule = (value) => isRequired(value);
 
+/**
+ * List unique name rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is unique
+ */
 const listUniqueNameRule = async (value) => {
   const {data, error} = await supabase
       .from('BookList')
@@ -40,6 +51,9 @@ const listUniqueNameRule = async (value) => {
   }
 }
 
+/**
+ * Save the book list name
+ */
 async function saveListName() {
   const {valid} = await listNameForm.value.validate()
   if (!valid) {
@@ -55,7 +69,10 @@ async function saveListName() {
   emit('onReload')
 }
 
-
+/**
+ * Remove the book from the book list
+ * @param {Book} book - The book data
+ */
 async function removeBookFromList(book) {
   await supabase
       .from('BookInBookList')
@@ -65,6 +82,9 @@ async function removeBookFromList(book) {
   emit('onReload')
 }
 
+/**
+ * Delete the book list
+ */
 async function deleteList() {
   const {data: bookListData, error: bookListError} = await supabase
       .from('BookList')
@@ -83,17 +103,21 @@ async function deleteList() {
       .from('BookList')
       .delete()
       .eq('Id', props.list.Id)
-
   emit('onReload')
   closeDialog()
 }
 
-
+/**
+ * Open the dialog
+ */
 const openDialog = () => {
   newListName.value = props.list.ListName
   dialog.value = true;
 };
 
+/**
+ * Close the dialog
+ */
 const closeDialog = () => {
   dialog.value = false;
 };
@@ -205,7 +229,3 @@ const closeDialog = () => {
     </v-card>
   </v-dialog>
 </template>
-
-<style scoped lang="scss">
-
-</style>

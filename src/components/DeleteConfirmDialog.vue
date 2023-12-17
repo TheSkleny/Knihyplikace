@@ -2,7 +2,7 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref, defineProps, defineEmits} from 'vue';
+import { ref, defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   title: {
@@ -18,14 +18,23 @@ const props = defineProps({
 const emit = defineEmits(['onDelete']);
 const dialog = ref(false);
 
+/**
+ * Open the dialog
+ */
 const openDialog = () => {
   dialog.value = true;
 };
 
+/**
+ * Close the dialog
+ */
 const closeDialog = () => {
   dialog.value = false;
 };
 
+/**
+ * Delete the item
+ */
 const deleteItem = () => {
   emit('onDelete');
   closeDialog();
@@ -33,6 +42,7 @@ const deleteItem = () => {
 
 const deletedItem = ref('');
 
+// Build the dialog text based on the location of the delete button
 if (props.deleteFrom === 'e Svých seznamů') {
   deletedItem.value = 'seznam';
 }
@@ -45,8 +55,6 @@ else if (props.deleteFrom === ' vlastních seznamů') {
 else {
   deletedItem.value = 'knihu';
 }
-
-
 </script>
 
 <template>

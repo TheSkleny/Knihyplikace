@@ -2,11 +2,12 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {computed} from 'vue'
-import {ref} from 'vue'
-import {useRouter} from "vue-router";
+import { computed } from 'vue'
+import { useRouter } from "vue-router";
 
 const router = useRouter()
+
+// Navigation items
 const navItems = [
   {
     name: 'wish-list',
@@ -35,6 +36,7 @@ const navItems = [
   },
 ]
 
+// Compute the current active item
 const activeItem = computed(() => {
   switch (router.currentRoute.value.name) {
     case 'wish-list':
