@@ -162,7 +162,7 @@ async function addBook(isActive, bookId) {
   } else if (props.isBookshelf) {
     await addBookToBooklist(bookId)
   }
-  fetchExistingBooks()
+  await fetchExistingBooks()
   selectExistingBook.value = null
   emit('onReload')
   isActive.value = false
