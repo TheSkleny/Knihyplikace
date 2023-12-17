@@ -35,14 +35,9 @@ const deletedItem = ref('');
 
 if (props.deleteFrom === 'e Svých seznamů') {
   deletedItem.value = 'seznam';
-}
-else if (props.deleteFrom === ' Databáze žánrů') {
+} else if (props.deleteFrom === ' Databáze žánrů') {
   deletedItem.value = 'žánr';
-}
-else if (props.deleteFrom === ' vlastních seznamů') {
-  deletedItem.value = 'seznam';
-}
-else {
+} else {
   deletedItem.value = 'knihu';
 }
 

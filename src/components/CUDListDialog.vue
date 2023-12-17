@@ -2,19 +2,20 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {ref, defineEmits, defineProps} from 'vue'
-import {supabase} from "@/lib/supabaseClient";
-import {isRequired} from "@/utils/inputRules";
+import { ref, defineEmits, defineProps } from 'vue'
+import { supabase } from "@/lib/supabaseClient";
+import { isRequired } from "@/utils/inputRules";
+import DeleteConfirmDialog from "@/components/DeleteConfirmDialog.vue";
 
 const props = defineProps({
-  list: {
+  selectedList: {
     type: String,
     required: false,
     default: ''
   }
 })
 
-const newListName = ref(props.list)
+const newListName = ref(props.selectedList)
 const addListForm = ref(null)
 const dialog = ref(false);
 
@@ -27,7 +28,7 @@ const listUniqueNameRule = async (value) => {
       .eq('Name', value)
   if (error) console.log('error', error)
   else {
-    return data.length === 0 || 'Seznam s tímto jménem již existuje'
+    return data.length === 0 || 'List with this name already exists'
   }
 }
 
@@ -45,17 +46,52 @@ async function insertList() {
           {Name: newListName.value}
         ])
     emit('onReload')
-    closeDialog()
+    closeDialog()  }
+}
+
+async function updateList() {
+  const {valid} = await addListForm.value.validate()
+  if (!valid) {
+    return
   }
+  if (await addListForm.value.validate()) {
+    await supabase
+        .from('BookList')
+        .update({Name: newListName.value})
+        .eq('Name', props.selectedList)
+    emit('onReload')
+    closeDialog()  }
+}
+
+async function deleteList() {
+  const {data: bookListData, error: bookListError} = await supabase
+      .from('BookList')
+      .select('Id')
+      .eq('Name', props.selectedList)
+  if (bookListError) {
+    console.log('error', bookListError)
+    return
+  }
+  const listIds = bookListData.map(item => item.Id)
+  await supabase
+      .from('BookInBookList')
+      .delete()
+      .in('ListId', listIds)
+  await supabase
+      .from('BookList')
+      .delete()
+      .eq('Name', props.selectedList)
+
+  emit('onReload')
+  closeDialog()
 }
 
 const openDialog = () => {
-  newListName.value = null
-  dialog.value = true
+  dialog.value = true;
 };
 
 const closeDialog = () => {
-  dialog.value = false
+  dialog.value = false;
 };
 </script>
 
@@ -68,12 +104,12 @@ const closeDialog = () => {
         max-width="500px"
     >
       <v-card
-          title="Vytvořit seznam"
+          :title="selectedList === '' ? 'Create list' : 'Update List: ' + selectedList"
       >
         <v-card-text>
           <v-form ref="addListForm">
             <v-text-field
-                label="Název seznamu"
+                label="List name"
                 type="text"
                 v-model="newListName"
                 :rules="[requiredRule, listUniqueNameRule]"
@@ -81,11 +117,25 @@ const closeDialog = () => {
           </v-form>
         </v-card-text>
         <v-card-actions>
+          <DeleteConfirmDialog :title="props.selectedList" delete-from="e Svých seznamů" @on-delete="deleteList">
+            <template v-slot:trigger="{ openDialog }">
+              <v-btn v-if="selectedList !== ''"
+                     text="Smazat seznam"
+                     color="error"
+                     @click.prevent="openDialog"
+              />
+            </template>
+          </DeleteConfirmDialog>
           <v-spacer/>
-          <v-btn
-              text="Vytvořit"
-              color="primary"
-              @click="insertList"
+          <v-btn v-if="selectedList !== ''"
+                 text="Přejmenovat"
+                 color="primary"
+                 @click="updateList"
+          />
+          <v-btn v-if="selectedList === ''"
+                 text="Vytvořit"
+                 color="primary"
+                 @click="insertList"
           />
         </v-card-actions>
       </v-card>
