@@ -5,7 +5,7 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import { ref, onMounted, defineProps, defineEmits, computed } from 'vue'
+import { ref, defineProps, defineEmits, computed } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import AddPagesDialog from "@/components/AddPagesDialog.vue";
 import AddBookCoverDialog from "@/components/AddBookCoverDialog.vue";
@@ -54,7 +54,7 @@ const props = defineProps({
 
 const emit = defineEmits(['onSave', 'onDelete', 'onReload', 'onCancel'])
 
-// Clone the book data so it can be edited without changing the original data
+// Clone the book data, so it can be edited without changing the original data
 const newBookData = ref(cloneDeep({...formDataBase, ...props.bookData}))
 
 // Form types
