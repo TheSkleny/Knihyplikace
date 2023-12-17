@@ -1,5 +1,7 @@
 # Knihyplikace
 
+Odkaz na aplikaci: https://theskleny.github.io/Knihyplikace/
+
 ## Prerekvizity
 
 Před spuštěním této aplikace je nutné mít nainstalované následující prerekvizity:
