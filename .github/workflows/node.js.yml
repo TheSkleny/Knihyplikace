@@ -28,25 +28,29 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
+      # BEGIN: Add artifact upload step
+      # Upload the build artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifact
+          path: ./path/to/artifact # Replace with the actual path to your build artifact
+      # END: Add artifact upload step
 
-  # Deploy job
   deploy:
-    # Add a dependency to the build job
     needs: build
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    # Deploy to the github-pages environment
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
-    # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3 # or specific "vX.X.X" version tag for this action
+        uses: actions/deploy-pages@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          folder: ./path/to/artifact # Replace with the actual path to your build artifact
