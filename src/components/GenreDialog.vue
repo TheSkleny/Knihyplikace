@@ -44,6 +44,11 @@ const closeDialog = () => {
  */
 const requiredRule = (value) => isRequired(value);
 
+/**
+ * Genre unique name rule
+ * @param {string} value - The value
+ * @returns {boolean} - True if the value is unique
+ */
 const genreUniqueNameRule = async (value) => {
   const {data, error} = await supabase
       .from('BookGenre')
