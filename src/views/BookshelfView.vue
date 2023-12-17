@@ -5,7 +5,7 @@
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
-import CUDListDialog from '@/components/CUDListDialog.vue';
+import CreateListDialog from "@/components/CreateListDialog.vue";
 import AddBookDialog from "@/components/AddBookDialog.vue";
 import EditListDialog from "@/components/EditListDialog.vue";
 
@@ -73,7 +73,7 @@ getBooksInLists()
 </script>
 
 <template>
-  <CUDListDialog
+  <CreateListDialog
       @on-reload="onReload"
   >
     <template v-slot:trigger="{ openDialog }">
@@ -84,7 +84,7 @@ getBooksInLists()
           @click.prevent="openDialog"
       />
     </template>
-  </CUDListDialog>
+  </CreateListDialog>
   <v-expansion-panels>
     <v-expansion-panel v-for="list in lists" :key="list.ListName" :value="list.ListName">
       <v-expansion-panel-title>
