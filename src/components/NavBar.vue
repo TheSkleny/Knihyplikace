@@ -2,7 +2,7 @@
 @import "@/assets/main.scss";
 </style>
 <script setup>
-import {computed} from 'vue'
+import {ref, computed} from 'vue'
 import {useRouter} from "vue-router";
 
 const router = useRouter()
@@ -34,22 +34,30 @@ const navItems = [
   },
 ]
 
-const activeItem = computed(() => {
-  switch (router.currentRoute.value.name) {
+const activeItem = ref(null)
+
+async function routeTo(routeName) {
+  await router.push({name: routeName})
+  switch (routeName) {
     case 'wish-list':
-      return 0
+      activeItem.value = 0
+      break
     case 'bookshelf':
-      return 1
+      activeItem.value = 1
+      break
     case 'home':
-      return 2
+      activeItem.value = 2
+      break
     case 'gifts':
-      return 3
+      activeItem.value = 3
+      break
     case 'achievements':
-      return 4
+      activeItem.value = 4
+      break
     default:
-      return null
+      activeItem.value = null
   }
-})
+}
 </script>
 
 <template>
@@ -59,7 +67,7 @@ const activeItem = computed(() => {
         color="primary"
         v-for="item in navItems"
         :key="item.name"
-        @click="router.push({ name: item.name })"
+        @click="routeTo(item.name)"
     >
       <v-icon>{{ item.icon }}</v-icon>
       <span> {{ item.text }} </span>
