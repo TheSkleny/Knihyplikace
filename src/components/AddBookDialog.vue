@@ -205,7 +205,6 @@ const requiredRule = (value) => isRequired(value);
           :class="isBookshelf ? 'margin-20' : 'btn-bottom-right'"
           icon="mdi-plus"
           :color="isBookshelf ? 'primary_dark' : 'primary'"
-          elevation="24"
           size="50"
           v-bind="props"
           @click.prevent="opedDialog"

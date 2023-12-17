@@ -18,6 +18,19 @@ type Book = {
     LastPageUpdate: string;
 }
 
+type BookList = {
+    Id: string;
+    Name: string;
+    Books: Book[];
+}
+
+type BookInBookList = {
+    Id: string;
+    BookId: string;
+    ListId: string;
+
+}
+
 type Genre = {
     Id: string;
     Name: string;

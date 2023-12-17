@@ -7,17 +7,20 @@ import { supabase } from '@/lib/supabaseClient'
 import BookCard from "@/components/BookCard.vue";
 import CUDListDialog from '@/components/CUDListDialog.vue';
 import AddBookDialog from "@/components/AddBookDialog.vue";
+import EditListDialog from "@/components/EditListDialog.vue";
 
-const result = ref([])
-const chosenList = ref('')
+const lists = ref([])
 
 async function getLists() {
-  const { data, error } = await supabase.from('BookList').select()
+  const { data, error } = await supabase
+      .from('BookList')
+      .select()
   if (error) console.log('error', error)
   else {
-    result.value = data
+    lists.value = data
       .filter(list => list.Name !== 'V seznamu přání')
       .map(list => ({
+        Id: list.Id,
         ListName: list.Name,
         Book: []
       }));
@@ -38,20 +41,15 @@ async function getBooksInLists() {
   else {
     await getLists()
     data.forEach(bookInList => {
-      const list = result.value.find(list => list.ListName === bookInList.BookList.Name);
+      const list = lists.value.find(list => list.ListName === bookInList.BookList.Name);
       if (list) {
         list.Book.push(bookInList.Book);
       }
     });
   }
-  return result.value;
+  return lists.value;
 }
 
-function onListChange(newValue) {
-  if (!newValue) {
-    chosenList.value = '';
-  }
-}
 
 function onReload() {
   getLists();
@@ -74,37 +72,12 @@ getBooksInLists()
       />
     </template>
   </CUDListDialog>
-  <v-expansion-panels v-model="chosenList" @update:model-value="onListChange">
-    <v-expansion-panel v-for="list in result" :key="list.ListName" :value="list.ListName">
+  <v-expansion-panels>
+    <v-expansion-panel v-for="list in lists" :key="list.ListName" :value="list.ListName">
       <v-expansion-panel-title>
         <h2>{{ list.ListName }}</h2>
         <p class="book_counter--bookshelf">{{ list.Book.length }}</p>
         <v-spacer/>
-<!--        <DeleteConfirmDialog :title="book.Name" delete-from=" Databáze knih" @on-delete="deleteBook(book.Id)">-->
-<!--          <template v-slot:trigger="{ openDialog }">-->
-<!--            <v-btn-->
-<!--                icon="mdi-delete"-->
-<!--                color="error"-->
-<!--                size="30"-->
-<!--                variant="text"-->
-<!--                @click.prevent="openDialog"-->
-<!--            />-->
-<!--          </template>-->
-<!--        </DeleteConfirmDialog>-->
-<!--        -->
-        <CUDListDialog
-            @on-reload="onReload"
-            :selectedList="list.ListName"
-        >
-          <template v-slot:trigger="{ openDialog }">
-            <v-btn
-                icon="mdi-pencil"
-                variant="text" size="40"
-                style="margin-right: 20px"
-                @click.prevent="openDialog"
-            />
-          </template>
-        </CUDListDialog>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <div v-if="list.Book.length === 0">
@@ -122,9 +95,21 @@ getBooksInLists()
           <v-spacer/>
             <AddBookDialog
                 :isBookshelf="true"
-                :selectedList="chosenList"
+                :selectedList="list.ListName"
                 @on-reload="onReload"
             />
+          <v-spacer/>
+          <EditListDialog :list="list" @on-reload="onReload">
+            <template v-slot:trigger="{ openDialog }">
+              <v-btn
+                  class="margin-20"
+                  size="50"
+                  color="secondary"
+                  icon="mdi-pencil"
+                  @click="openDialog"
+              />
+            </template>
+          </EditListDialog>
           <v-spacer/>
         </v-row>
       </v-expansion-panel-text>
